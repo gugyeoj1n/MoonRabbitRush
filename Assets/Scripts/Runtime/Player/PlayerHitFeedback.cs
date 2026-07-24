@@ -8,6 +8,7 @@ namespace MoonRabbitRush.Player
     public sealed class PlayerHitFeedback : MonoBehaviour
     {
         [SerializeField] private Color _hitColor = new(1f, 0.25f, 0.25f, 1f);
+        [SerializeField] private Color _deathColor = new(0.3f, 0.3f, 0.3f, 1f);
         [SerializeField, Min(0f)] private float _hitColorDuration = 0.08f;
         [SerializeField, Min(0.01f)] private float _blinkInterval = 0.08f;
         [SerializeField, Range(0f, 1f)] private float _invincibleAlpha = 0.35f;
@@ -27,13 +28,13 @@ namespace MoonRabbitRush.Player
         private void OnEnable()
         {
             _health.Damaged += PlayHitFeedback;
-            _health.Died += StopFeedback;
+            _health.Died += PlayDeathFeedback;
         }
 
         private void OnDisable()
         {
             _health.Damaged -= PlayHitFeedback;
-            _health.Died -= StopFeedback;
+            _health.Died -= PlayDeathFeedback;
             StopFeedback();
         }
 
@@ -79,6 +80,17 @@ namespace MoonRabbitRush.Player
             {
                 _spriteRenderer.color = _baseColor;
             }
+        }
+
+        private void PlayDeathFeedback()
+        {
+            if (_feedbackRoutine != null)
+            {
+                StopCoroutine(_feedbackRoutine);
+                _feedbackRoutine = null;
+            }
+
+            _spriteRenderer.color = _deathColor;
         }
     }
 }
