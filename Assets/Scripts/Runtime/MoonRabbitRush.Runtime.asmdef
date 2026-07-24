@@ -1,7 +1,9 @@
 {
   "name": "MoonRabbitRush.Runtime",
   "rootNamespace": "MoonRabbitRush",
-  "references": [],
+  "references": [
+    "Unity.InputSystem"
+  ],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
