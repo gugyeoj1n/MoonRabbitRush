@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 8
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9148714399314207990, guid: 965b4259a84af1d4db619e30972c929a, type: 2}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.35, b: 0.2, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 105e7152b8f68e203d95661238b89275, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyActor
   _stats: {fileID: 11400000, guid: e12a47d935864eef97f75df67c3e0189, type: 2}
   _deathFeedbackDuration: 0.2
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 102b4e2f85c35bfd0a6233ef05856f42, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyHealth
 --- !u!114 &786100000000000008
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 103c5f3096d46c0e1b7344f016967053, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyMotor
 --- !u!114 &786100000000000009
 MonoBehaviour:
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 201f8263c9079f314ea6772349ca0386, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.ChaseTargetBehaviour
 --- !u!114 &786100000000000010
 MonoBehaviour:
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30109374da18a0425fb788345adb1497, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.ContactDamage
 --- !u!114 &786100000000000011
 MonoBehaviour:
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4011a485eb29b15360c899456bec25a8, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyHitFeedback
   _hitColor: {r: 1, g: 1, b: 1, a: 1}
   _deathColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
