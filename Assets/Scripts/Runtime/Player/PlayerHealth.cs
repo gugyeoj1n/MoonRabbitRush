@@ -70,6 +70,9 @@ namespace MoonRabbitRush.Player
 
             Damaged?.Invoke(appliedDamage);
             HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
+            Debug.Log(
+                $"[PlayerHealth] HP: {_currentHealth:0.##}/{_stats.MaxHealth:0.##}",
+                this);
 
             if (_currentHealth <= 0f)
             {
@@ -92,6 +95,7 @@ namespace MoonRabbitRush.Player
         {
             _invincibleUntil = 0f;
             _movement?.SetMovementEnabled(false);
+            Debug.Log("[PlayerHealth] Player died.", this);
             Died?.Invoke();
         }
     }
