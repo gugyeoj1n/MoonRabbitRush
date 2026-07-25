@@ -8,6 +8,11 @@ namespace MoonRabbitRush
 
         public SceneManager SceneManager => Instance._SceneManager;
         private SceneManager _SceneManager;
+        public UIManager UIManager => Instance._UIManager;
+        private UIManager _UIManager;
+
+        public CameraMaanger CameraMaanger => Instance._CameraMaanger;
+        private CameraMaanger _CameraMaanger;
 
 
         private void Awake()
@@ -23,6 +28,8 @@ namespace MoonRabbitRush
 
             // 매니저 할당
             _SceneManager = GetComponentInChildren<SceneManager>();
+            _UIManager = GetComponentInChildren<UIManager>();
+            _CameraMaanger = GetComponentInChildren<CameraMaanger>();
         }
     }
 }
