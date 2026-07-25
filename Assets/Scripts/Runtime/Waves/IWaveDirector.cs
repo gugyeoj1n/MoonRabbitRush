@@ -4,6 +4,8 @@ namespace MoonRabbitRush.Waves
     {
         int CurrentWave { get; }
         bool IsRunning { get; }
+        int SpawnedEnemyCount { get; }
+        int RemainingEnemyCount { get; }
         void StartNextWave();
         void Stop();
     }

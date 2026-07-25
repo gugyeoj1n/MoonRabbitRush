@@ -7,6 +7,8 @@ namespace MoonRabbitRush.Enemies
     {
         private static readonly HashSet<EnemyActor> ActiveEnemies = new();
 
+        public static int ActiveCount => ActiveEnemies.Count;
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Clear()
         {
