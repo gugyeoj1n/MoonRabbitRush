@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,11 +8,11 @@ namespace MoonRabbitRush
 {    
     public class SceneManager : MonoBehaviour
     {
-        Scene ActiveScene => EditorSceneManager.GetActiveScene();
+        Scene ActiveScene => UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         float duration = 1.5f;
         public async UniTask<bool> TransitionTo(int index, CancellationToken token)
         {
-            if (ActiveScene == EditorSceneManager.GetSceneByBuildIndex(index))
+            if (ActiveScene.buildIndex == index)
                 return false;
 
             PopupForeGround foreGround = ManagerRoot.Instance.UIManager.GetPopup<PopupForeGround>();
