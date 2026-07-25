@@ -18,6 +18,7 @@ namespace MoonRabbitRush.Progression
         [SerializeField, Min(0f)] private float _bobSpeed = 3f;
 
         private PlayerLootCollector _collector;
+        private Vector3 _visualBaseLocalPosition;
         private float _moveSpeed;
         private float _bobOffset;
         private int _experienceAmount;
@@ -25,6 +26,14 @@ namespace MoonRabbitRush.Progression
         private bool _isReleased;
 
         public event Action<ExperienceDrop> Released;
+
+        private void Awake()
+        {
+            if (_visualTransform != null)
+            {
+                _visualBaseLocalPosition = _visualTransform.localPosition;
+            }
+        }
 
         private void Update()
         {
@@ -58,6 +67,11 @@ namespace MoonRabbitRush.Progression
             _bobOffset = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
             _isAttracted = false;
             _isReleased = false;
+
+            if (_visualTransform != null)
+            {
+                _visualTransform.localPosition = _visualBaseLocalPosition;
+            }
         }
 
         public void Release()
@@ -84,7 +98,8 @@ namespace MoonRabbitRush.Progression
                 _bobHeight;
             if (_visualTransform != null)
             {
-                _visualTransform.localPosition = Vector3.up * offset;
+                _visualTransform.localPosition =
+                    _visualBaseLocalPosition + Vector3.up * offset;
             }
         }
 
@@ -95,7 +110,7 @@ namespace MoonRabbitRush.Progression
                 _moveSpeed + _acceleration * Time.deltaTime);
             if (_visualTransform != null)
             {
-                _visualTransform.localPosition = Vector3.zero;
+                _visualTransform.localPosition = _visualBaseLocalPosition;
             }
             transform.position = Vector2.MoveTowards(
                 transform.position,
