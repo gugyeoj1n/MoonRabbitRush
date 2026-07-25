@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_Wave_01
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Waves.WaveData
   _waveNumber: 1
-  _duration: 30
+  _totalEnemyCount: 20
   _spawnInterval: 1.5
   _spawnCount: 1
   _maxActiveEnemies: 30

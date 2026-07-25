@@ -14,11 +14,14 @@ namespace MoonRabbitRush.Waves
         private EnemySpawner _spawner;
         private Coroutine _waveRoutine;
         private int _waveIndex = -1;
+        private int _currentWaveEnemyCount;
 
         public int CurrentWave { get; private set; }
         public bool IsRunning => _waveRoutine != null;
-        public float ElapsedTime { get; private set; }
-        public float RemainingTime { get; private set; }
+        public int SpawnedEnemyCount { get; private set; }
+        public int RemainingEnemyCount =>
+            Mathf.Max(0, _currentWaveEnemyCount - SpawnedEnemyCount)
+            + EnemyRegistry.ActiveCount;
 
         public event Action<int> WaveStarted;
         public event Action<int> WaveCompleted;
@@ -76,15 +79,15 @@ namespace MoonRabbitRush.Waves
                 _waveRoutine = null;
             }
 
-            ElapsedTime = 0f;
-            RemainingTime = 0f;
+            SpawnedEnemyCount = 0;
+            _currentWaveEnemyCount = 0;
         }
 
         private IEnumerator RunWave(WaveData wave)
         {
             CurrentWave = wave.WaveNumber;
-            ElapsedTime = 0f;
-            RemainingTime = wave.Duration;
+            SpawnedEnemyCount = 0;
+            _currentWaveEnemyCount = wave.TotalEnemyCount;
             WaveStarted?.Invoke(CurrentWave);
             Debug.Log($"Wave {CurrentWave} started.", this);
 
@@ -93,28 +96,15 @@ namespace MoonRabbitRush.Waves
                 SpawnEachEntry(wave);
             }
 
-            float spawnTimer = wave.SpawnInterval;
-
-            while (ElapsedTime < wave.Duration)
+            while (SpawnedEnemyCount < wave.TotalEnemyCount)
             {
-                yield return null;
-
-                float deltaTime = Time.deltaTime;
-                ElapsedTime += deltaTime;
-                RemainingTime = Mathf.Max(0f, wave.Duration - ElapsedTime);
-                spawnTimer -= deltaTime;
-
-                if (spawnTimer > 0f)
-                {
-                    continue;
-                }
-
-                spawnTimer += wave.SpawnInterval;
+                yield return new WaitForSeconds(wave.SpawnInterval);
                 SpawnBatch(wave);
             }
 
+            yield return new WaitUntil(() => EnemyRegistry.ActiveCount == 0);
+
             int completedWave = CurrentWave;
-            RemainingTime = 0f;
             _waveRoutine = null;
             WaveCompleted?.Invoke(completedWave);
             Debug.Log($"Wave {completedWave} completed.", this);
@@ -133,7 +123,15 @@ namespace MoonRabbitRush.Waves
 
                 if (entry != null && entry.IsValid)
                 {
-                    _spawner.Spawn(entry.Prefab);
+                    if (SpawnedEnemyCount >= wave.TotalEnemyCount)
+                    {
+                        return;
+                    }
+
+                    if (_spawner.Spawn(entry.Prefab) != null)
+                    {
+                        SpawnedEnemyCount++;
+                    }
                 }
             }
         }
@@ -141,14 +139,17 @@ namespace MoonRabbitRush.Waves
         private void SpawnBatch(WaveData wave)
         {
             int availableSlots = wave.MaxActiveEnemies - EnemyRegistry.ActiveCount;
-            int spawnCount = Mathf.Min(wave.SpawnCount, availableSlots);
+            int remainingSpawnCount = wave.TotalEnemyCount - SpawnedEnemyCount;
+            int spawnCount = Mathf.Min(
+                Mathf.Min(wave.SpawnCount, availableSlots),
+                remainingSpawnCount);
 
             for (int i = 0; i < spawnCount; i++)
             {
                 EnemyActor prefab = wave.SelectEnemyPrefab();
-                if (prefab != null)
+                if (prefab != null && _spawner.Spawn(prefab) != null)
                 {
-                    _spawner.Spawn(prefab);
+                    SpawnedEnemyCount++;
                 }
             }
         }

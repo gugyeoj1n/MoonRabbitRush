@@ -10,7 +10,7 @@ namespace MoonRabbitRush.Waves
     public sealed class WaveData : ScriptableObject
     {
         [SerializeField, Min(1)] private int _waveNumber = 1;
-        [SerializeField, Min(0.1f)] private float _duration = 30f;
+        [SerializeField, Min(1)] private int _totalEnemyCount = 20;
         [SerializeField, Min(0.05f)] private float _spawnInterval = 1.5f;
         [SerializeField, Min(1)] private int _spawnCount = 1;
         [SerializeField, Min(1)] private int _maxActiveEnemies = 30;
@@ -18,7 +18,7 @@ namespace MoonRabbitRush.Waves
         [SerializeField] private EnemySpawnEntry[] _spawnEntries;
 
         public int WaveNumber => _waveNumber;
-        public float Duration => _duration;
+        public int TotalEnemyCount => _totalEnemyCount;
         public float SpawnInterval => _spawnInterval;
         public int SpawnCount => _spawnCount;
         public int MaxActiveEnemies => _maxActiveEnemies;
