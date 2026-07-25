@@ -43,34 +43,21 @@ namespace MoonRabbitRush.UI
                 return;
             }
 
-            Vector3 screenPosition = _worldCamera.WorldToScreenPoint(worldPosition);
-
-            if (screenPosition.z < 0f)
-            {
-                return;
-            }
-
             Camera uiCamera = _canvas.renderMode == RenderMode.ScreenSpaceOverlay
                 ? null
                 : _canvas.worldCamera;
-
-            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    _container,
-                    screenPosition,
-                    uiCamera,
-                    out Vector2 localPosition))
-            {
-                return;
-            }
-
-            localPosition += new Vector2(
+            Vector2 screenOffset = new(
                 Random.Range(_horizontalOffset.x, _horizontalOffset.y),
                 Random.Range(_verticalOffset.x, _verticalOffset.y));
 
             DamageTextView view = Instantiate(_damageTextPrefab, _container);
             view.Initialize(
                 amount,
-                localPosition,
+                worldPosition,
+                screenOffset,
+                _worldCamera,
+                _container,
+                uiCamera,
                 isPlayer ? _playerDamageColor : (Color32?)null);
         }
 

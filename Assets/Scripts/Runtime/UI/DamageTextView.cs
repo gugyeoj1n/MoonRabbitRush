@@ -14,7 +14,11 @@ namespace MoonRabbitRush.UI
 
         private RectTransform _rectTransform;
         private TMP_Text _text;
-        private Vector2 _startPosition;
+        private Camera _worldCamera;
+        private Camera _uiCamera;
+        private RectTransform _container;
+        private Vector3 _worldPosition;
+        private Vector2 _screenOffset;
         private Color _startColor;
         private float _elapsed;
 
@@ -32,8 +36,7 @@ namespace MoonRabbitRush.UI
             float progress = Mathf.Clamp01(_elapsed / _duration);
             float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
 
-            _rectTransform.anchoredPosition =
-                _startPosition + Vector2.up * (_riseDistance * easedProgress);
+            UpdateScreenPosition(easedProgress);
 
             Color color = _startColor;
             color.a = 1f - progress;
@@ -51,15 +54,52 @@ namespace MoonRabbitRush.UI
 
         public void Initialize(
             float amount,
-            Vector2 anchoredPosition,
+            Vector3 worldPosition,
+            Vector2 screenOffset,
+            Camera worldCamera,
+            RectTransform container,
+            Camera uiCamera,
             Color32? colorOverride = null)
         {
             _elapsed = 0f;
-            _startPosition = anchoredPosition;
+            _worldPosition = worldPosition;
+            _screenOffset = screenOffset;
+            _worldCamera = worldCamera;
+            _container = container;
+            _uiCamera = uiCamera;
             _startColor = colorOverride ?? _text.color;
             _text.color = _startColor;
-            _rectTransform.anchoredPosition = anchoredPosition;
             _text.SetText("{0:0}", amount);
+            UpdateScreenPosition(0f);
+        }
+
+        private void UpdateScreenPosition(float riseProgress)
+        {
+            if (_worldCamera == null || _container == null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Vector3 screenPosition = _worldCamera.WorldToScreenPoint(_worldPosition);
+            if (screenPosition.z < 0f)
+            {
+                _text.enabled = false;
+                return;
+            }
+
+            _text.enabled = true;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    _container,
+                    screenPosition,
+                    _uiCamera,
+                    out Vector2 localPosition))
+            {
+                _rectTransform.anchoredPosition =
+                    localPosition
+                    + _screenOffset
+                    + Vector2.up * (_riseDistance * riseProgress);
+            }
         }
     }
 }
