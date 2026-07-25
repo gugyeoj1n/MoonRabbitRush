@@ -187,6 +187,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyActor
   _stats: {fileID: 11400000, guid: c64a8a58e6a84d93b3b9f445e86cbb19, type: 2}
   _deathFeedbackDuration: 0.2
+  _receivesHitReaction: 1
+  _hitKnockbackDistance: 0.12
+  _hitReactionDuration: 0.08
 --- !u!114 &840100000000000007
 MonoBehaviour:
   m_ObjectHideFlags: 0
