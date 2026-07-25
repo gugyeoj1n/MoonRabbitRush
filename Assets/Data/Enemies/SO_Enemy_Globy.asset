@@ -17,3 +17,4 @@ MonoBehaviour:
   _moveSpeed: 2
   _attackDamage: 10
   _attackInterval: 0.75
+  _experienceReward: 1

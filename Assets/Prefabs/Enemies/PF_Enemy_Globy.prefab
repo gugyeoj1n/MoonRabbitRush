@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyActor
   _stats: {fileID: 11400000, guid: e12a47d935864eef97f75df67c3e0189, type: 2}
+  _experienceDropPrefab: {fileID: 940100000000000004, guid: 3df53ea68548464ba15e7ce9014e98a8, type: 3}
   _deathFeedbackDuration: 0.2
 --- !u!114 &786100000000000007
 MonoBehaviour:
