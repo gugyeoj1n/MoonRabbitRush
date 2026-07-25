@@ -19,6 +19,7 @@ namespace MoonRabbitRush.Enemies
 
         public bool IsActive =>
             gameObject.activeInHierarchy && _health != null && _health.IsAlive;
+        public EnemyHealth Health => _health;
 
         private void Awake()
         {
@@ -31,6 +32,8 @@ namespace MoonRabbitRush.Enemies
 
         private void OnDestroy()
         {
+            EnemyRegistry.Unregister(this);
+
             if (_health != null)
             {
                 _health.Died -= HandleDeath;
@@ -79,6 +82,7 @@ namespace MoonRabbitRush.Enemies
             gameObject.SetActive(true);
             _health.ResetHealth();
             _motor.Resume();
+            EnemyRegistry.Register(this);
 
             foreach (Collider2D enemyCollider in _colliders)
             {
@@ -93,8 +97,14 @@ namespace MoonRabbitRush.Enemies
 
         public void Deactivate()
         {
+            EnemyRegistry.Unregister(this);
             _motor.Stop();
             gameObject.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            EnemyRegistry.Unregister(this);
         }
 
         private void HandleDeath()

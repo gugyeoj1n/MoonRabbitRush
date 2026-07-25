@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa4746130f74c1e819429b123fd45ef, type: 3}
+  m_Name: SO_Weapon_CarrotMissile
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
+  _displayName: 당근 미사일
+  _description: 가장 가까운 적을 추적하는 당근 모양 미사일을 발사합니다.
+  _icon: {fileID: 780878252188070934, guid: eb610d051fcc35b47a539b1a2b0c5866, type: 3}
+  _behaviourPrefab: {fileID: 830100000000000003, guid: bd0010da3ca84e408fdd5b90ae28de5d, type: 3}
+  _levels:
+  - _damage: 20
+    _cooldown: 1.5
+    _projectileCount: 1
+    _projectileSpeed: 7
+    _range: 7
+    _duration: 4
+    _pierceCount: 0
+    _areaRadius: 0
