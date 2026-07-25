@@ -10,7 +10,7 @@ namespace MoonRabbitRush.Weapons
         private readonly List<OrbitingWeaponHitbox> _hitboxes = new();
         private float _angle;
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (Owner == null || _hitboxes.Count == 0)
             {
@@ -18,7 +18,7 @@ namespace MoonRabbitRush.Weapons
             }
 
             _angle = Mathf.Repeat(
-                _angle + Stats.ProjectileSpeed * Time.fixedDeltaTime,
+                _angle + Stats.ProjectileSpeed * Time.deltaTime,
                 360f);
 
             float angleStep = 360f / _hitboxes.Count;
@@ -29,7 +29,7 @@ namespace MoonRabbitRush.Weapons
                 Vector2 offset = new(
                     Mathf.Cos(angle) * Stats.Range,
                     Mathf.Sin(angle) * Stats.Range);
-                _hitboxes[index].MoveTo((Vector2)Owner.position + offset);
+                _hitboxes[index].MoveToLocal(offset);
             }
         }
 
@@ -69,8 +69,8 @@ namespace MoonRabbitRush.Weapons
             {
                 OrbitingWeaponHitbox hitbox = Instantiate(
                     _hitboxPrefab,
-                    Owner.position,
-                    Quaternion.identity);
+                    transform);
+                hitbox.transform.localPosition = Vector3.zero;
                 _hitboxes.Add(hitbox);
             }
 
@@ -80,15 +80,5 @@ namespace MoonRabbitRush.Weapons
             }
         }
 
-        private void OnDestroy()
-        {
-            foreach (OrbitingWeaponHitbox hitbox in _hitboxes)
-            {
-                if (hitbox != null)
-                {
-                    Destroy(hitbox.gameObject);
-                }
-            }
-        }
     }
 }

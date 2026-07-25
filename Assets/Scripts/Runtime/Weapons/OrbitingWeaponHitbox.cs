@@ -5,20 +5,13 @@ using UnityEngine;
 
 namespace MoonRabbitRush.Weapons
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public sealed class OrbitingWeaponHitbox : MonoBehaviour
     {
         private readonly Dictionary<EnemyHealth, float> _nextHitTimes = new();
-        private Rigidbody2D _rigidbody;
         private GameObject _source;
         private float _damage;
         private float _hitInterval;
-
-        private void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-        }
 
         public void Configure(float damage, float hitInterval, GameObject source)
         {
@@ -28,9 +21,9 @@ namespace MoonRabbitRush.Weapons
             _nextHitTimes.Clear();
         }
 
-        public void MoveTo(Vector2 position)
+        public void MoveToLocal(Vector2 position)
         {
-            _rigidbody.MovePosition(position);
+            transform.localPosition = position;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
