@@ -46,7 +46,7 @@ jobs:
           -quit ^
           -nographics ^
           -projectPath "%GITHUB_WORKSPACE%" ^
-          -executeMethod BuildScript.BuildWebGL
+          -executeMethod MoonRabbitRush.Editor.BuildPipeline.BuildScript.BuildWebGL
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
