@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: b7aec863168a82a428b1ef3ec42400c9
+guid: 1cd788717c26e354c9d126849b6a6723
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3696411964825687422
-    second: SatelliteDrone_0
+      213: 2596951714313181842
+    second: AlertExclamation_0
+  - first:
+      213: 1849279837997635932
+    second: AlertExclamation_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +49,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -113,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SatelliteDrone_0
+      name: AlertExclamation_0
       rect:
         serializedVersion: 2
-        x: 297
-        y: 304
-        width: 660
-        height: 752
+        x: 426
+        y: 361
+        width: 402
+        height: 852
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +131,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e7550faf81b4c4330800000000000000
-      internalID: 3696411964825687422
+      spriteID: 29a9a7e23d93a0420800000000000000
+      internalID: 2596951714313181842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlertExclamation_1
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 40
+        width: 308
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c59142af636f9a910800000000000000
+      internalID: 1849279837997635932
       vertices: []
       indices: 
       edges: []
@@ -138,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SatelliteDrone_0: 3696411964825687422
+      AlertExclamation_0: 2596951714313181842
+      AlertExclamation_1: 1849279837997635932
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

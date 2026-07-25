@@ -1,4 +1,5 @@
 using System.Collections;
+using MoonRabbitRush.Combat;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
@@ -9,6 +10,11 @@ namespace MoonRabbitRush.Enemies
     {
         [SerializeField] private EnemyStatsData _stats;
         [SerializeField, Min(0f)] private float _deathFeedbackDuration = 0.2f;
+
+        [Header("Hit Reaction")]
+        [SerializeField] private bool _receivesHitReaction = true;
+        [SerializeField, Min(0f)] private float _hitKnockbackDistance = 0.12f;
+        [SerializeField, Min(0.01f)] private float _hitReactionDuration = 0.08f;
 
         private EnemyHealth _health;
         private EnemyMotor _motor;
@@ -27,6 +33,7 @@ namespace MoonRabbitRush.Enemies
             _motor = GetComponent<EnemyMotor>();
             _behaviours = GetComponents<EnemyBehaviour>();
             _colliders = GetComponents<Collider2D>();
+            _health.DamageReceived += HandleDamageReceived;
             _health.Died += HandleDeath;
         }
 
@@ -36,6 +43,7 @@ namespace MoonRabbitRush.Enemies
 
             if (_health != null)
             {
+                _health.DamageReceived -= HandleDamageReceived;
                 _health.Died -= HandleDeath;
             }
         }
@@ -122,6 +130,37 @@ namespace MoonRabbitRush.Enemies
             }
 
             _deactivateRoutine = StartCoroutine(DeactivateAfterFeedback());
+        }
+
+        private void HandleDamageReceived(DamageInfo damage)
+        {
+            if (!_receivesHitReaction || !_health.IsAlive)
+            {
+                return;
+            }
+
+            Vector2 direction = ResolveHitDirection(damage);
+            _motor.ApplyHitReaction(
+                direction,
+                _hitKnockbackDistance,
+                _hitReactionDuration);
+        }
+
+        private Vector2 ResolveHitDirection(DamageInfo damage)
+        {
+            Vector2 origin = damage.Source != null
+                ? damage.Source.transform.position
+                : damage.HitPoint;
+            Vector2 direction = (Vector2)transform.position - origin;
+
+            if (direction.sqrMagnitude > Mathf.Epsilon)
+            {
+                return direction.normalized;
+            }
+
+            return _motor.MoveDirection == Vector2.zero
+                ? Vector2.up
+                : -_motor.MoveDirection;
         }
 
         private IEnumerator DeactivateAfterFeedback()

@@ -17,9 +17,9 @@ namespace MoonRabbitRush.Enemies
         [SerializeField] private Sprite _fillSprite;
         [SerializeField, Range(0.1f, 1f)] private float _verticalScale = 0.72f;
         [SerializeField] private Color _outlineColor =
-            new Color32(255, 83, 83, 255);
+            new Color32(255, 83, 83, 204);
         [SerializeField] private Color _fillColor =
-            new Color32(255, 129, 129, 140);
+            new Color32(255, 129, 129, 115);
 
         private Component _damageTarget;
         private CircleTelegraphView _activeTelegraph;
