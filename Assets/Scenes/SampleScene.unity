@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5012b596fc3ac26471d9aa567cfd36b9, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemySpawner
   _spawnEntries:
   - _prefab: {fileID: 786100000000000006, guid: f23b58ea46974ff0a8086e078d4f129a, type: 3}
