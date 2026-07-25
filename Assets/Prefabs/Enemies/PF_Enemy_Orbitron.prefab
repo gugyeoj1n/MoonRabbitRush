@@ -244,8 +244,8 @@ MonoBehaviour:
   _outlineSprite: {fileID: -1211162969216489103, guid: e760251f49b44c643bfa21dcb506a5fe, type: 3}
   _fillSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
   _verticalScale: 0.72
-  _outlineColor: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-  _fillColor: {r: 1, g: 0.5058824, b: 0.5058824, a: 0.54901963}
+  _outlineColor: {r: 1, g: 0.3254902, b: 0.3254902, a: 0.8}
+  _fillColor: {r: 1, g: 0.5058824, b: 0.5058824, a: 0.4509804}
 --- !u!114 &840100000000000011
 MonoBehaviour:
   m_ObjectHideFlags: 0

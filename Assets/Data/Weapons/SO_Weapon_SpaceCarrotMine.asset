@@ -22,6 +22,6 @@ MonoBehaviour:
     _projectileCount: 1
     _projectileSpeed: 5
     _range: 1.5
-    _duration: 1
+    _duration: 0.75
     _pierceCount: 0
     _areaRadius: 2.2

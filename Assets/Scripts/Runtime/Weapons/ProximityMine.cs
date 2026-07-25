@@ -36,9 +36,9 @@ namespace MoonRabbitRush.Weapons
         [SerializeField] private Sprite _fillSprite;
         [SerializeField, Range(0.1f, 1f)] private float _verticalScale = 0.72f;
         [SerializeField] private Color _outlineColor =
-            new Color32(72, 210, 255, 255);
+            new Color32(72, 210, 255, 204);
         [SerializeField] private Color _fillColor =
-            new Color32(105, 225, 255, 140);
+            new Color32(105, 225, 255, 115);
 
         private readonly List<EnemyHealth> _targets = new();
         private SpriteRenderer _spriteRenderer;
