@@ -10,6 +10,7 @@ namespace MoonRabbitRush.UI
         [SerializeField] private Camera _worldCamera;
         [SerializeField] private Vector2 _horizontalOffset = new(-22f, 22f);
         [SerializeField] private Vector2 _verticalOffset = new(8f, 30f);
+        [SerializeField] private Color32 _playerDamageColor = new(255, 90, 90, 255);
 
         private RectTransform _container;
         private Canvas _canvas;
@@ -35,7 +36,7 @@ namespace MoonRabbitRush.UI
             DamageFeedbackEvents.DamageApplied -= Spawn;
         }
 
-        private void Spawn(float amount, Vector3 worldPosition)
+        private void Spawn(float amount, Vector3 worldPosition, bool isPlayer)
         {
             if (_damageTextPrefab == null || _worldCamera == null || _canvas == null)
             {
@@ -67,7 +68,10 @@ namespace MoonRabbitRush.UI
                 Random.Range(_verticalOffset.x, _verticalOffset.y));
 
             DamageTextView view = Instantiate(_damageTextPrefab, _container);
-            view.Initialize(amount, localPosition);
+            view.Initialize(
+                amount,
+                localPosition,
+                isPlayer ? _playerDamageColor : (Color32?)null);
         }
 
         private void OnValidate()

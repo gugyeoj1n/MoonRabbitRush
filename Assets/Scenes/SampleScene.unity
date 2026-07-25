@@ -572,6 +572,9 @@ MonoBehaviour:
   _worldCamera: {fileID: 0}
   _horizontalOffset: {x: -22, y: 22}
   _verticalOffset: {x: 8, y: 30}
+  _playerDamageColor:
+    serializedVersion: 2
+    rgba: 4284107519
 --- !u!1 &1746815515
 GameObject:
   m_ObjectHideFlags: 0

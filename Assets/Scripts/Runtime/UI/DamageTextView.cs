@@ -49,13 +49,17 @@ namespace MoonRabbitRush.UI
             }
         }
 
-        public void Initialize(float amount, Vector2 anchoredPosition)
+        public void Initialize(
+            float amount,
+            Vector2 anchoredPosition,
+            Color32? colorOverride = null)
         {
             _elapsed = 0f;
             _startPosition = anchoredPosition;
-            _startColor = _text.color;
+            _startColor = colorOverride ?? _text.color;
+            _text.color = _startColor;
             _rectTransform.anchoredPosition = anchoredPosition;
-            _text.SetText("{0:0.#}", amount);
+            _text.SetText("{0:0}", amount);
         }
     }
 }

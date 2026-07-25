@@ -5,13 +5,16 @@ namespace MoonRabbitRush.Combat
 {
     public static class DamageFeedbackEvents
     {
-        public static event Action<float, Vector3> DamageApplied;
+        public static event Action<float, Vector3, bool> DamageApplied;
 
-        public static void RaiseDamageApplied(float amount, Vector3 worldPosition)
+        public static void RaiseDamageApplied(
+            float amount,
+            Vector3 worldPosition,
+            bool isPlayer)
         {
             if (amount > 0f)
             {
-                DamageApplied?.Invoke(amount, worldPosition);
+                DamageApplied?.Invoke(amount, worldPosition, isPlayer);
             }
         }
 
