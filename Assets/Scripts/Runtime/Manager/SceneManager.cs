@@ -1,24 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MoonRabbitRush
 {
-    public class SceneManager
+    public class SceneManager : MonoBehaviour
     {
-        private static SceneManager instance;
+        Scene ActiveScene;
 
-        public static SceneManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new SceneManager();                
-
-                return instance;
-            }
-        }
-
-        private SceneManager()
-        {
-        }
+        
     }
 }

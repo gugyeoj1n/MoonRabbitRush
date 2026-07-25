@@ -9,7 +9,7 @@ namespace MoonRabbitRush
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            var prefab = Resources.Load("ManagerObject");            
+            var prefab = Resources.Load("ManagerRoot");            
             if(prefab != null)
             {
                 var obj = Instantiate(prefab);
