@@ -1,4 +1,3 @@
-using System.Collections;
 using MoonRabbitRush.Player;
 using UnityEngine;
 
@@ -6,40 +5,23 @@ namespace MoonRabbitRush.Enemies
 {
     public sealed class EnemySpawner : MonoBehaviour
     {
-        [Header("Spawn Content")]
-        [SerializeField] private EnemySpawnEntry[] _spawnEntries;
         [SerializeField] private Transform _target;
 
         [Header("Spawn Rule")]
         [SerializeField] private Vector2 _center = Vector2.zero;
         [SerializeField, Min(0f)] private float _spawnRadius = 10f;
-        [SerializeField, Min(0.05f)] private float _spawnInterval = 5f;
 
-        private Coroutine _spawnRoutine;
-
-        private void OnEnable()
+        private void Awake()
         {
             if (!TryResolveReferences())
             {
                 enabled = false;
-                return;
-            }
-
-            _spawnRoutine = StartCoroutine(SpawnRoutine());
-        }
-
-        private void OnDisable()
-        {
-            if (_spawnRoutine != null)
-            {
-                StopCoroutine(_spawnRoutine);
-                _spawnRoutine = null;
             }
         }
 
-        public EnemyActor SpawnOne()
+        public EnemyActor Spawn(EnemyActor prefab)
         {
-            if (!TryResolveReferences())
+            if (prefab == null || !TryResolveReferences())
             {
                 return null;
             }
@@ -48,15 +30,8 @@ namespace MoonRabbitRush.Enemies
             Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
             Vector2 spawnPosition = _center + direction * _spawnRadius;
 
-            EnemyActor selectedPrefab = SelectEnemyPrefab();
-
-            if (selectedPrefab == null)
-            {
-                return null;
-            }
-
             EnemyActor enemy = Instantiate(
-                selectedPrefab,
+                prefab,
                 spawnPosition,
                 Quaternion.identity,
                 transform);
@@ -64,42 +39,8 @@ namespace MoonRabbitRush.Enemies
             return enemy;
         }
 
-        private IEnumerator SpawnRoutine()
-        {
-            var wait = new WaitForSeconds(_spawnInterval);
-
-            while (enabled)
-            {
-                yield return wait;
-                SpawnOne();
-            }
-        }
-
         private bool TryResolveReferences()
         {
-            if (_spawnEntries == null || _spawnEntries.Length == 0)
-            {
-                Debug.LogError("Enemy spawn entries are not assigned.", this);
-                return false;
-            }
-
-            bool hasValidEntry = false;
-
-            foreach (EnemySpawnEntry entry in _spawnEntries)
-            {
-                if (entry != null && entry.IsValid)
-                {
-                    hasValidEntry = true;
-                    break;
-                }
-            }
-
-            if (!hasValidEntry)
-            {
-                Debug.LogError("No valid enemy spawn entry exists.", this);
-                return false;
-            }
-
             if (_target == null)
             {
                 PlayerHealth player = FindAnyObjectByType<PlayerHealth>();
@@ -113,45 +54,6 @@ namespace MoonRabbitRush.Enemies
             }
 
             return true;
-        }
-
-        private EnemyActor SelectEnemyPrefab()
-        {
-            float totalWeight = 0f;
-
-            foreach (EnemySpawnEntry entry in _spawnEntries)
-            {
-                if (entry != null && entry.IsValid)
-                {
-                    totalWeight += entry.Weight;
-                }
-            }
-
-            if (totalWeight <= 0f)
-            {
-                return null;
-            }
-
-            float selection = Random.Range(0f, totalWeight);
-            EnemyActor fallback = null;
-
-            foreach (EnemySpawnEntry entry in _spawnEntries)
-            {
-                if (entry == null || !entry.IsValid)
-                {
-                    continue;
-                }
-
-                fallback = entry.Prefab;
-                selection -= entry.Weight;
-
-                if (selection <= 0f)
-                {
-                    return entry.Prefab;
-                }
-            }
-
-            return fallback;
         }
 
         private void OnDrawGizmosSelected()
