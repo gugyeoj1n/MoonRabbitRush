@@ -11,7 +11,6 @@ namespace MoonRabbitRush
     {
         Scene ActiveScene => EditorSceneManager.GetActiveScene();
 
-
         public async UniTask<bool> TransitionTo(int index)
         {
             if (ActiveScene == EditorSceneManager.GetSceneByBuildIndex(index))
@@ -19,10 +18,9 @@ namespace MoonRabbitRush
 
             try
             {
-                
                 await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(index);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.LogError($"Scene Transition Error! => {ex}");
             }
