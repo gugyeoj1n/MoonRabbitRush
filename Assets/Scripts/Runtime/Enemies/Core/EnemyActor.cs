@@ -1,5 +1,6 @@
 using System.Collections;
 using MoonRabbitRush.Combat;
+using MoonRabbitRush.Progression;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
@@ -9,6 +10,7 @@ namespace MoonRabbitRush.Enemies
     public sealed class EnemyActor : MonoBehaviour, IEnemy
     {
         [SerializeField] private EnemyStatsData _stats;
+        [SerializeField] private ExperienceDrop _experienceDropPrefab;
         [SerializeField, Min(0f)] private float _deathFeedbackDuration = 0.2f;
 
         [Header("Hit Reaction")]
@@ -21,6 +23,7 @@ namespace MoonRabbitRush.Enemies
         private EnemyBehaviour[] _behaviours;
         private Collider2D[] _colliders;
         private Coroutine _deactivateRoutine;
+        private PlayerLootCollector _lootCollector;
         private bool _isInitialized;
 
         public bool IsActive =>
@@ -64,6 +67,7 @@ namespace MoonRabbitRush.Enemies
 
             _health.Initialize(_stats);
             _motor.Initialize(_stats);
+            _lootCollector = target.GetComponent<PlayerLootCollector>();
 
             foreach (EnemyBehaviour behaviour in _behaviours)
             {
@@ -117,6 +121,7 @@ namespace MoonRabbitRush.Enemies
 
         private void HandleDeath()
         {
+            DropExperience();
             _motor.Stop();
 
             foreach (Collider2D enemyCollider in _colliders)
@@ -130,6 +135,21 @@ namespace MoonRabbitRush.Enemies
             }
 
             _deactivateRoutine = StartCoroutine(DeactivateAfterFeedback());
+        }
+
+        private void DropExperience()
+        {
+            if (_experienceDropPrefab == null)
+            {
+                Debug.LogError("Experience drop prefab is not assigned.", this);
+                return;
+            }
+
+            ExperienceDrop experienceDrop = Instantiate(
+                _experienceDropPrefab,
+                transform.position,
+                Quaternion.identity);
+            experienceDrop.Initialize(_lootCollector, _stats.ExperienceReward);
         }
 
         private void HandleDamageReceived(DamageInfo damage)

@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 1719272712975042423}
   - component: {fileID: 9003775886752669977}
   - component: {fileID: 9103775886752669977}
+  - component: {fileID: 8203775886752669977}
+  - component: {fileID: 8303775886752669977}
   m_Layer: 0
   m_Name: PF_Character_Rabbit
   m_TagString: Untagged
@@ -263,6 +265,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}
   - {fileID: 11400000, guid: f2ab1c01d57042f694bbd4d1d7389576, type: 2}
   - {fileID: 11400000, guid: c57e8fc7f1f349f0a54fdbb608fd70ee, type: 2}
+--- !u!114 &8203775886752669977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631563025026958653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5b8c92dc224740819628e17d3b7f59, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.PlayerExperience
+  _experienceTable: {fileID: 11400000, guid: bc6ab4b70bd94ca99439e24467df54b0, type: 2}
+--- !u!114 &8303775886752669977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631563025026958653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4914ca7c5244a33b39fc833571094cb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.PlayerLootCollector
+  _lootRadius: 2.5
 --- !u!1 &2631563025026958660
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,11 +18,15 @@ namespace MoonRabbitRush.Enemies
         [SerializeField, Min(0f)] private float _attackDamage = 10f;
         [SerializeField, Min(0.05f)] private float _attackInterval = 0.75f;
 
+        [Header("Rewards")]
+        [SerializeField, Min(1)] private int _experienceReward = 1;
+
         public float MaxHealth => _maxHealth;
         public float Defense => _defense;
         public float MoveSpeed => _moveSpeed;
         public float AttackDamage => _attackDamage;
         public float AttackInterval => _attackInterval;
+        public int ExperienceReward => _experienceReward;
 
         private void OnValidate()
         {
@@ -31,6 +35,7 @@ namespace MoonRabbitRush.Enemies
             _moveSpeed = Mathf.Max(0f, _moveSpeed);
             _attackDamage = Mathf.Max(0f, _attackDamage);
             _attackInterval = Mathf.Max(0.05f, _attackInterval);
+            _experienceReward = Mathf.Max(1, _experienceReward);
         }
     }
 }
