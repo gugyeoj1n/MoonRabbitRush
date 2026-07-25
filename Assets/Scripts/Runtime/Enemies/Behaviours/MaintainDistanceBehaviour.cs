@@ -5,7 +5,6 @@ namespace MoonRabbitRush.Enemies
     [RequireComponent(typeof(EnemyMotor))]
     public sealed class MaintainDistanceBehaviour : EnemyBehaviour
     {
-        [SerializeField, Min(0f)] private float _retreatDistance = 3f;
         [SerializeField, Min(0f)] private float _approachDistance = 6f;
 
         private EnemyMotor _motor;
@@ -30,10 +29,6 @@ namespace MoonRabbitRush.Enemies
             {
                 _motor.SetDirection(toTarget.normalized);
             }
-            else if (distance < _retreatDistance)
-            {
-                _motor.SetDirection(-toTarget.normalized);
-            }
             else
             {
                 _motor.SetDirection(Vector2.zero);
@@ -42,8 +37,7 @@ namespace MoonRabbitRush.Enemies
 
         private void OnValidate()
         {
-            _retreatDistance = Mathf.Max(0f, _retreatDistance);
-            _approachDistance = Mathf.Max(_retreatDistance, _approachDistance);
+            _approachDistance = Mathf.Max(0f, _approachDistance);
         }
 
         private void OnDisable()
