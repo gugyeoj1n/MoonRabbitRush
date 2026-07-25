@@ -11,6 +11,7 @@ namespace MoonRabbitRush.Weapons
     public sealed class HomingWeaponProjectile : MonoBehaviour
     {
         [SerializeField, Min(0f)] private float _turnSpeed = 360f;
+        [SerializeField] private SpriteSequenceEffect _impactEffectPrefab;
 
         private readonly HashSet<EnemyHealth> _hitEnemies = new();
         private Rigidbody2D _rigidbody;
@@ -105,11 +106,20 @@ namespace MoonRabbitRush.Weapons
 
             Vector2 hitPoint = other.ClosestPoint(transform.position);
             enemy.TakeDamage(new DamageInfo(_damage, hitPoint, _source));
+            SpawnImpactEffect(hitPoint);
             _remainingHits--;
 
             if (_remainingHits <= 0)
             {
                 Release();
+            }
+        }
+
+        private void SpawnImpactEffect(Vector2 hitPoint)
+        {
+            if (_impactEffectPrefab != null)
+            {
+                Instantiate(_impactEffectPrefab, hitPoint, Quaternion.identity);
             }
         }
 

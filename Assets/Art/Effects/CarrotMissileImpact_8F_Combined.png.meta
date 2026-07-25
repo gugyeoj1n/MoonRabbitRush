@@ -1,0 +1,418 @@
+fileFormatVersion: 2
+guid: df340f039cb4b1f4ab969b84e9299c0f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1677541296766561578
+    second: CarrotMissileImpact_8F_Combined_0
+  - first:
+      213: -816005931285673887
+    second: CarrotMissileImpact_8F_Combined_1
+  - first:
+      213: -7750054676829191310
+    second: CarrotMissileImpact_8F_Combined_2
+  - first:
+      213: -698533159668201357
+    second: CarrotMissileImpact_8F_Combined_3
+  - first:
+      213: -2059191570321329596
+    second: CarrotMissileImpact_8F_Combined_4
+  - first:
+      213: -6971179918676908458
+    second: CarrotMissileImpact_8F_Combined_5
+  - first:
+      213: -4048405927885068411
+    second: CarrotMissileImpact_8F_Combined_6
+  - first:
+      213: -1700576676896656682
+    second: CarrotMissileImpact_8F_Combined_7
+  - first:
+      213: -258840525581962072
+    second: CarrotMissileImpact_8F_Combined_8
+  - first:
+      213: 3376659313732559980
+    second: CarrotMissileImpact_8F_Combined_9
+  - first:
+      213: 3527987929953347027
+    second: CarrotMissileImpact_8F_Combined_10
+  - first:
+      213: 5633495762326129709
+    second: CarrotMissileImpact_8F_Combined_11
+  - first:
+      213: 385616380990280265
+    second: CarrotMissileImpact_8F_Combined_12
+  - first:
+      213: 2073712829457634576
+    second: CarrotMissileImpact_8F_Combined_13
+  - first:
+      213: 5042012628012653650
+    second: CarrotMissileImpact_8F_Combined_14
+  - first:
+      213: 7621216670869427452
+    second: CarrotMissileImpact_8F_Combined_15
+  - first:
+      213: -4705253804155057049
+    second: CarrotMissileImpact_8F_Combined_16
+  - first:
+      213: 1107009456734507227
+    second: CarrotMissileImpact_8F_Combined_17
+  - first:
+      213: -3646509353124222576
+    second: CarrotMissileImpact_8F_Combined_18
+  - first:
+      213: 6972846611565555533
+    second: CarrotMissileImpact_8F_Combined_19
+  - first:
+      213: 7643241270938399538
+    second: CarrotMissileImpact_8F_Combined_20
+  - first:
+      213: -564360166590266750
+    second: CarrotMissileImpact_8F_Combined_21
+  - first:
+      213: -3493612937406943465
+    second: CarrotMissileImpact_8F_Combined_22
+  - first:
+      213: 8419713194815755244
+    second: CarrotMissileImpact_8F_Combined_23
+  - first:
+      213: 7169117543007729756
+    second: CarrotMissileImpact_8F_Combined_24
+  - first:
+      213: 1330045072009291987
+    second: CarrotMissileImpact_8F_Combined_25
+  - first:
+      213: 8110314586922442574
+    second: CarrotMissileImpact_8F_Combined_26
+  - first:
+      213: 6174922433628296578
+    second: CarrotMissileImpact_8F_Combined_27
+  - first:
+      213: 4923527506954172792
+    second: CarrotMissileImpact_8F_Combined_28
+  - first:
+      213: 5863501606928171142
+    second: CarrotMissileImpact_8F_Combined_29
+  - first:
+      213: 8604153604208508540
+    second: CarrotMissileImpact_8F_Combined_30
+  - first:
+      213: 6670424154753317026
+    second: CarrotMissileImpact_8F_Combined_31
+  - first:
+      213: 3123179236552190343
+    second: CarrotMissileImpact_8F_Combined_32
+  - first:
+      213: 4630616496375685065
+    second: CarrotMissileImpact_8F_Combined_33
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d25e2e141d28b8e0800000000000000
+      internalID: -1677541296766561578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1680b1bcde6fca4f0800000000000000
+      internalID: -816005931285673887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 273cdbd3556427490800000000000000
+      internalID: -7750054676829191310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3784522dacf4e46f0800000000000000
+      internalID: -698533159668201357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_4
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 442b4864d284c63e0800000000000000
+      internalID: -2059191570321329596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_5
+      rect:
+        serializedVersion: 2
+        x: 2560
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6562de18cc4614f90800000000000000
+      internalID: -6971179918676908458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_6
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58723d9024c21d7c0800000000000000
+      internalID: -4048405927885068411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CarrotMissileImpact_8F_Combined_7
+      rect:
+        serializedVersion: 2
+        x: 3584
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d2b24cb5865668e0800000000000000
+      internalID: -1700576676896656682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: a51e6a21fa0c7e94a9251d40046f19d4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":1.0},"gridSpriteSize":{"x":512.0,"y":512.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      CarrotMissileImpact_8F_Combined_0: -1677541296766561578
+      CarrotMissileImpact_8F_Combined_1: -816005931285673887
+      CarrotMissileImpact_8F_Combined_2: -7750054676829191310
+      CarrotMissileImpact_8F_Combined_3: -698533159668201357
+      CarrotMissileImpact_8F_Combined_4: -2059191570321329596
+      CarrotMissileImpact_8F_Combined_5: -6971179918676908458
+      CarrotMissileImpact_8F_Combined_6: -4048405927885068411
+      CarrotMissileImpact_8F_Combined_7: -1700576676896656682
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -181,3 +181,4 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.HomingWeaponProjectile
   _turnSpeed: 360
+  _impactEffectPrefab: {fileID: 900100000000000004, guid: f538a06f36cb4eb9b2932fdd55619482, type: 3}
