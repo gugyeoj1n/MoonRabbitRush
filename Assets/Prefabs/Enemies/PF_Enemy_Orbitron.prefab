@@ -223,7 +223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71bf3503915a4fb782c7c98674f72854, type: 3}
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.MaintainDistanceBehaviour
-  _retreatDistance: 5
   _approachDistance: 8
 --- !u!114 &840100000000000010
 MonoBehaviour:
