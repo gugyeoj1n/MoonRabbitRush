@@ -8,7 +8,8 @@
         "UniTask.DOTween",
         "UniTask.Editor",
         "UniTask.Linq",
-        "UniTask.TextMeshPro"
+        "UniTask.TextMeshPro",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
