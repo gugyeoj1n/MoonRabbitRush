@@ -69,6 +69,7 @@ namespace MoonRabbitRush.Player
             _invincibleUntil = Time.time + _stats.InvincibilityDuration;
 
             Damaged?.Invoke(appliedDamage);
+            DamageFeedbackEvents.RaiseDamageApplied(appliedDamage, transform.position);
             HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
             Debug.Log(
                 $"[PlayerHealth] HP: {_currentHealth:0.##}/{_stats.MaxHealth:0.##}",

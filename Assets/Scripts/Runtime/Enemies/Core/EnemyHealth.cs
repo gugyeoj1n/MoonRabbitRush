@@ -54,6 +54,7 @@ namespace MoonRabbitRush.Enemies
             _currentHealth = Mathf.Max(0f, _currentHealth - appliedDamage);
 
             Damaged?.Invoke(appliedDamage);
+            DamageFeedbackEvents.RaiseDamageApplied(appliedDamage, transform.position);
             HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
             Debug.Log(
                 $"[EnemyHealth] HP: {_currentHealth:0.##}/{_stats.MaxHealth:0.##}",
