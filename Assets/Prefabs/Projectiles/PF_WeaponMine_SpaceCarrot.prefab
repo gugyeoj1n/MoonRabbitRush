@@ -105,8 +105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5c6570ab404c09aca231d55e344ebe, type: 3}
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.ProximityMine
-  _burrowDuration: 0.3
+  _buriedSprite: {fileID: -788308785579935192, guid: 21c86fc4e72bcdf4284e058418d607b4, type: 3}
+  _landingHoldDuration: 0.3
+  _burrowDuration: 0.5
   _spinSpeed: 540
+  _alertSprite: {fileID: 21300000, guid: 1cd788717c26e354c9d126849b6a6723, type: 3}
+  _alertDuration: 0.25
+  _alertLocalPosition: {x: 0, y: 11}
+  _alertScale: 0.55
   _outlineSprite: {fileID: -1211162969216489103, guid: e760251f49b44c643bfa21dcb506a5fe, type: 3}
   _fillSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
   _verticalScale: 0.72

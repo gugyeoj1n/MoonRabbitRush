@@ -12,14 +12,24 @@ namespace MoonRabbitRush.Weapons
         {
             Inactive,
             Throwing,
+            Landing,
             Burrowing,
             Armed,
+            Alerting,
             Telegraphing
         }
 
         [Header("Burrow")]
-        [SerializeField, Min(0.05f)] private float _burrowDuration = 0.3f;
+        [SerializeField] private Sprite _buriedSprite;
+        [SerializeField, Min(0f)] private float _landingHoldDuration = 0.3f;
+        [SerializeField, Min(0.05f)] private float _burrowDuration = 0.5f;
         [SerializeField] private float _spinSpeed = 540f;
+
+        [Header("Alert")]
+        [SerializeField] private Sprite _alertSprite;
+        [SerializeField, Min(0.05f)] private float _alertDuration = 0.25f;
+        [SerializeField] private Vector2 _alertLocalPosition = new(0f, 11f);
+        [SerializeField, Min(0.01f)] private float _alertScale = 0.55f;
 
         [Header("Telegraph")]
         [SerializeField] private Sprite _outlineSprite;
@@ -32,6 +42,7 @@ namespace MoonRabbitRush.Weapons
 
         private readonly List<EnemyHealth> _targets = new();
         private SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _alertRenderer;
         private CircleTelegraphView _telegraph;
         private WeaponLevelStats _stats;
         private GameObject _source;
@@ -58,11 +69,17 @@ namespace MoonRabbitRush.Weapons
                 case MineState.Throwing:
                     UpdateThrow();
                     break;
+                case MineState.Landing:
+                    UpdateLanding();
+                    break;
                 case MineState.Burrowing:
                     UpdateBurrow();
                     break;
                 case MineState.Armed:
                     UpdateDetection();
+                    break;
+                case MineState.Alerting:
+                    UpdateAlert();
                     break;
                 case MineState.Telegraphing:
                     UpdateTelegraph();
@@ -104,6 +121,17 @@ namespace MoonRabbitRush.Weapons
                 _elapsed = 0f;
                 transform.position = _landingPosition;
                 transform.rotation = Quaternion.identity;
+                _state = MineState.Landing;
+            }
+        }
+
+        private void UpdateLanding()
+        {
+            _elapsed += Time.deltaTime;
+
+            if (_elapsed >= _landingHoldDuration)
+            {
+                _elapsed = 0f;
                 _state = MineState.Burrowing;
             }
         }
@@ -114,7 +142,7 @@ namespace MoonRabbitRush.Weapons
             float progress = Mathf.Clamp01(_elapsed / _burrowDuration);
             transform.localScale = Vector3.Lerp(
                 _initialScale,
-                Vector3.zero,
+                _initialScale * 0.55f,
                 progress);
 
             Color color = _initialColor;
@@ -124,6 +152,9 @@ namespace MoonRabbitRush.Weapons
             if (progress >= 1f)
             {
                 _elapsed = 0f;
+                _spriteRenderer.sprite = _buriedSprite;
+                _spriteRenderer.color = _initialColor;
+                transform.localScale = _initialScale;
                 _state = MineState.Armed;
             }
         }
@@ -132,6 +163,38 @@ namespace MoonRabbitRush.Weapons
         {
             if (EnemyRegistry.FindClosest(transform.position, _stats.Range) != null)
             {
+                BeginAlert();
+            }
+        }
+
+        private void BeginAlert()
+        {
+            var alertObject = new GameObject("Alert Exclamation");
+            alertObject.transform.SetParent(transform, false);
+            alertObject.transform.localPosition = _alertLocalPosition;
+            alertObject.transform.localScale = Vector3.zero;
+            _alertRenderer = alertObject.AddComponent<SpriteRenderer>();
+            _alertRenderer.sprite = _alertSprite;
+            _alertRenderer.color = Color.white;
+            _alertRenderer.sortingOrder = _spriteRenderer.sortingOrder + 2;
+            _elapsed = 0f;
+            _state = MineState.Alerting;
+        }
+
+        private void UpdateAlert()
+        {
+            _elapsed += Time.deltaTime;
+            float progress = Mathf.Clamp01(_elapsed / _alertDuration);
+            float popScale = progress < 0.6f
+                ? Mathf.Lerp(0f, 1.2f, progress / 0.6f)
+                : Mathf.Lerp(1.2f, 1f, (progress - 0.6f) / 0.4f);
+            _alertRenderer.transform.localScale =
+                Vector3.one * (_alertScale * popScale);
+
+            if (progress >= 1f)
+            {
+                Destroy(_alertRenderer.gameObject);
+                _alertRenderer = null;
                 BeginTelegraph();
             }
         }
@@ -194,7 +257,10 @@ namespace MoonRabbitRush.Weapons
 
         private void OnValidate()
         {
+            _landingHoldDuration = Mathf.Max(0f, _landingHoldDuration);
             _burrowDuration = Mathf.Max(0.05f, _burrowDuration);
+            _alertDuration = Mathf.Max(0.05f, _alertDuration);
+            _alertScale = Mathf.Max(0.01f, _alertScale);
             _verticalScale = Mathf.Clamp(_verticalScale, 0.1f, 1f);
         }
     }
