@@ -7,7 +7,7 @@ namespace MoonRabbitRush.Enemies
     public sealed class EnemySpawner : MonoBehaviour
     {
         [Header("Spawn Content")]
-        [SerializeField] private EnemyActor _enemyPrefab;
+        [SerializeField] private EnemySpawnEntry[] _spawnEntries;
         [SerializeField] private Transform _target;
 
         [Header("Spawn Rule")]
@@ -48,8 +48,15 @@ namespace MoonRabbitRush.Enemies
             Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
             Vector2 spawnPosition = _center + direction * _spawnRadius;
 
+            EnemyActor selectedPrefab = SelectEnemyPrefab();
+
+            if (selectedPrefab == null)
+            {
+                return null;
+            }
+
             EnemyActor enemy = Instantiate(
-                _enemyPrefab,
+                selectedPrefab,
                 spawnPosition,
                 Quaternion.identity,
                 transform);
@@ -70,9 +77,26 @@ namespace MoonRabbitRush.Enemies
 
         private bool TryResolveReferences()
         {
-            if (_enemyPrefab == null)
+            if (_spawnEntries == null || _spawnEntries.Length == 0)
             {
-                Debug.LogError("Enemy prefab is not assigned.", this);
+                Debug.LogError("Enemy spawn entries are not assigned.", this);
+                return false;
+            }
+
+            bool hasValidEntry = false;
+
+            foreach (EnemySpawnEntry entry in _spawnEntries)
+            {
+                if (entry != null && entry.IsValid)
+                {
+                    hasValidEntry = true;
+                    break;
+                }
+            }
+
+            if (!hasValidEntry)
+            {
+                Debug.LogError("No valid enemy spawn entry exists.", this);
                 return false;
             }
 
@@ -89,6 +113,45 @@ namespace MoonRabbitRush.Enemies
             }
 
             return true;
+        }
+
+        private EnemyActor SelectEnemyPrefab()
+        {
+            float totalWeight = 0f;
+
+            foreach (EnemySpawnEntry entry in _spawnEntries)
+            {
+                if (entry != null && entry.IsValid)
+                {
+                    totalWeight += entry.Weight;
+                }
+            }
+
+            if (totalWeight <= 0f)
+            {
+                return null;
+            }
+
+            float selection = Random.Range(0f, totalWeight);
+            EnemyActor fallback = null;
+
+            foreach (EnemySpawnEntry entry in _spawnEntries)
+            {
+                if (entry == null || !entry.IsValid)
+                {
+                    continue;
+                }
+
+                fallback = entry.Prefab;
+                selection -= entry.Weight;
+
+                if (selection <= 0f)
+                {
+                    return entry.Prefab;
+                }
+            }
+
+            return fallback;
         }
 
         private void OnDrawGizmosSelected()
