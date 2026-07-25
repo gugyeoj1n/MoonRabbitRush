@@ -44,7 +44,6 @@ namespace MoonRabbitRush.Weapons
                 transform.position,
                 Quaternion.identity,
                 transform);
-            behaviour.name = data.DisplayName;
             behaviour.Initialize(transform, data, 1);
             _equippedWeapons.Add(data, behaviour);
             WeaponEquipped?.Invoke(data, 1);
