@@ -1,17 +1,23 @@
 {
-  "name": "MoonRabbitRush.Runtime",
-  "rootNamespace": "MoonRabbitRush",
-  "references": [
-    "Unity.InputSystem",
-    "Unity.TextMeshPro"
-  ],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": [],
-  "versionDefines": [],
-  "noEngineReferences": false
+    "name": "MoonRabbitRush.Runtime",
+    "rootNamespace": "MoonRabbitRush",
+    "references": [
+        "Unity.InputSystem",
+        "UniTask",
+        "UniTask.Addressables",
+        "UniTask.DOTween",
+        "UniTask.Editor",
+        "UniTask.Linq",
+        "UniTask.TextMeshPro",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
