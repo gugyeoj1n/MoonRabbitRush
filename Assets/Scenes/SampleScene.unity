@@ -726,6 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Waves.WaveDirector
   _waves:
   - {fileID: 11400000, guid: 08b52d63b1b9413abe0457a91dfa200e, type: 2}
+  - {fileID: 11400000, guid: 95684f9bf0d548bda8ac93ddab7eb3d3, type: 2}
   _startOnEnable: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b37361e7eb2447f8a1fc96070dc37d76, type: 3}
-  m_Name: SO_Wave_01
+  m_Name: SO_Wave_02
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Waves.WaveData
-  _waveNumber: 1
-  _totalEnemyCount: 12
-  _spawnInterval: 0.65
-  _spawnCount: 1
-  _maxActiveEnemies: 12
+  _waveNumber: 2
+  _totalEnemyCount: 18
+  _spawnInterval: 0.6
+  _spawnCount: 2
+  _maxActiveEnemies: 16
   _spawnEachEntryOnStart: 1
   _spawnEntries:
   - _prefab: {fileID: 786100000000000006, guid: f23b58ea46974ff0a8086e078d4f129a, type: 3}
-    _weight: 60
+    _weight: 40
   - _prefab: {fileID: 820100000000000006, guid: b53f7947d59f4d2ea2a8e334d75baa08, type: 3}
-    _weight: 30
+    _weight: 40
   - _prefab: {fileID: 840100000000000006, guid: e86ca0cad8ca46ef90f7ef96e15edd3b, type: 3}
-    _weight: 10
+    _weight: 20
