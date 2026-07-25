@@ -56,5 +56,30 @@ namespace MoonRabbitRush.Enemies
 
             return closest;
         }
+
+        public static void CollectInRange(
+            Vector2 position,
+            float range,
+            List<EnemyHealth> results)
+        {
+            results.Clear();
+            float maxSqrDistance = range * range;
+
+            foreach (EnemyActor enemy in ActiveEnemies)
+            {
+                if (enemy == null || !enemy.IsActive)
+                {
+                    continue;
+                }
+
+                float sqrDistance =
+                    ((Vector2)enemy.transform.position - position).sqrMagnitude;
+
+                if (sqrDistance <= maxSqrDistance)
+                {
+                    results.Add(enemy.Health);
+                }
+            }
+        }
     }
 }

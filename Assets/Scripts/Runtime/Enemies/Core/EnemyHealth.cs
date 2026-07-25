@@ -12,6 +12,7 @@ namespace MoonRabbitRush.Enemies
 
         public event Action<float, float> HealthChanged;
         public event Action<float> Damaged;
+        public event Action<DamageInfo> DamageReceived;
         public event Action Died;
 
         public float CurrentHealth => _currentHealth;
@@ -54,6 +55,7 @@ namespace MoonRabbitRush.Enemies
             _currentHealth = Mathf.Max(0f, _currentHealth - appliedDamage);
 
             Damaged?.Invoke(appliedDamage);
+            DamageReceived?.Invoke(damage);
             DamageFeedbackEvents.RaiseDamageApplied(
                 appliedDamage,
                 transform.position,

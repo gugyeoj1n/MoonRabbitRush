@@ -8,6 +8,9 @@ namespace MoonRabbitRush.Enemies
         private Rigidbody2D _rigidbody;
         private EnemyStatsData _stats;
         private Vector2 _moveDirection;
+        private Vector2 _hitReactionDirection;
+        private float _hitReactionSpeed;
+        private float _hitReactionTimeRemaining;
         private bool _canMove;
 
         public Vector2 MoveDirection => _moveDirection;
@@ -19,7 +22,24 @@ namespace MoonRabbitRush.Enemies
 
         private void FixedUpdate()
         {
-            if (!_canMove || _stats == null || _moveDirection == Vector2.zero)
+            if (!_canMove || _stats == null)
+            {
+                return;
+            }
+
+            if (_hitReactionTimeRemaining > 0f)
+            {
+                float stepDuration = Mathf.Min(
+                    Time.fixedDeltaTime,
+                    _hitReactionTimeRemaining);
+                _rigidbody.MovePosition(
+                    _rigidbody.position +
+                    _hitReactionDirection * (_hitReactionSpeed * stepDuration));
+                _hitReactionTimeRemaining -= stepDuration;
+                return;
+            }
+
+            if (_moveDirection == Vector2.zero)
             {
                 return;
             }
@@ -48,12 +68,31 @@ namespace MoonRabbitRush.Enemies
         {
             _canMove = false;
             _moveDirection = Vector2.zero;
+            _hitReactionTimeRemaining = 0f;
             _rigidbody.linearVelocity = Vector2.zero;
         }
 
         public void Resume()
         {
             _canMove = _stats != null;
+            _hitReactionTimeRemaining = 0f;
+        }
+
+        public void ApplyHitReaction(
+            Vector2 direction,
+            float knockbackDistance,
+            float duration)
+        {
+            if (!_canMove || direction == Vector2.zero ||
+                knockbackDistance <= 0f || duration <= 0f)
+            {
+                return;
+            }
+
+            _hitReactionDirection = direction.normalized;
+            _hitReactionSpeed = knockbackDistance / duration;
+            _hitReactionTimeRemaining = duration;
+            _rigidbody.linearVelocity = Vector2.zero;
         }
     }
 }
