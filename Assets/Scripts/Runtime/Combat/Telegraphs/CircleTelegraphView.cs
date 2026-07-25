@@ -5,27 +5,15 @@ namespace MoonRabbitRush.Combat
 {
     public sealed class CircleTelegraphView : MonoBehaviour
     {
-        private const int TextureSize = 64;
-        private const int RingThickness = 4;
-
-        private static Sprite _ringSprite;
-
-        private SpriteRenderer _renderer;
-        private Color _startColor;
-        private Color _endColor;
+        private SpriteRenderer _outlineRenderer;
+        private SpriteRenderer _fillRenderer;
+        private Transform _fillTransform;
         private float _duration;
         private float _elapsed;
         private bool _isActive;
         private bool _isReleased;
 
         public event Action<CircleTelegraphView> Released;
-
-        private void Awake()
-        {
-            _renderer = gameObject.AddComponent<SpriteRenderer>();
-            _renderer.sprite = GetOrCreateRingSprite();
-            _renderer.sortingOrder = 4;
-        }
 
         private void Update()
         {
@@ -36,10 +24,7 @@ namespace MoonRabbitRush.Combat
 
             _elapsed += Time.deltaTime;
             float progress = Mathf.Clamp01(_elapsed / _duration);
-            _renderer.color = Color.Lerp(_startColor, _endColor, progress);
-
-            float pulse = 1f + Mathf.Sin(progress * Mathf.PI * 8f) * 0.03f;
-            transform.localScale = Vector3.one * (_radiusDiameter * pulse);
+            _fillTransform.localScale = new Vector3(progress, progress, 1f);
 
             if (_elapsed >= _duration)
             {
@@ -47,25 +32,43 @@ namespace MoonRabbitRush.Combat
             }
         }
 
-        private float _radiusDiameter;
-
         public void Initialize(
             Vector2 center,
             float radius,
             float duration,
-            Color startColor,
-            Color endColor)
+            Sprite outlineSprite,
+            Sprite fillSprite,
+            Color outlineColor,
+            Color fillColor,
+            float verticalScale)
         {
+            if (outlineSprite == null || fillSprite == null)
+            {
+                Debug.LogError("Telegraph outline and fill sprites are required.", this);
+                Release();
+                return;
+            }
+
+            CreateRenderersIfNeeded();
             transform.position = center;
-            _radiusDiameter = Mathf.Max(0.01f, radius * 2f);
-            transform.localScale = Vector3.one * _radiusDiameter;
+
+            float diameter = Mathf.Max(0.01f, radius * 2f);
+            float spriteWidth = Mathf.Max(0.01f, outlineSprite.bounds.size.x);
+            float scale = diameter / spriteWidth;
+            transform.localScale = new Vector3(
+                scale,
+                scale * Mathf.Clamp(verticalScale, 0.1f, 1f),
+                1f);
+
+            _outlineRenderer.sprite = outlineSprite;
+            _outlineRenderer.color = outlineColor;
+            _fillRenderer.sprite = fillSprite;
+            _fillRenderer.color = fillColor;
+            _fillTransform.localScale = new Vector3(0f, 0f, 1f);
             _duration = Mathf.Max(0.05f, duration);
-            _startColor = startColor;
-            _endColor = endColor;
             _elapsed = 0f;
             _isReleased = false;
             _isActive = true;
-            _renderer.color = _startColor;
         }
 
         public void Release()
@@ -87,50 +90,23 @@ namespace MoonRabbitRush.Combat
             Destroy(gameObject);
         }
 
-        private static Sprite GetOrCreateRingSprite()
+        private void CreateRenderersIfNeeded()
         {
-            if (_ringSprite != null)
+            if (_outlineRenderer != null && _fillRenderer != null)
             {
-                return _ringSprite;
+                return;
             }
 
-            var texture = new Texture2D(
-                TextureSize,
-                TextureSize,
-                TextureFormat.RGBA32,
-                false)
-            {
-                name = "Generated_CircleTelegraph",
-                filterMode = FilterMode.Bilinear,
-                wrapMode = TextureWrapMode.Clamp,
-                hideFlags = HideFlags.HideAndDontSave
-            };
+            var fillObject = new GameObject("Fill");
+            fillObject.transform.SetParent(transform, false);
+            _fillTransform = fillObject.transform;
+            _fillRenderer = fillObject.AddComponent<SpriteRenderer>();
+            _fillRenderer.sortingOrder = 4;
 
-            var pixels = new Color[TextureSize * TextureSize];
-            Vector2 center = Vector2.one * (TextureSize - 1) * 0.5f;
-            float outerRadius = TextureSize * 0.5f - 1f;
-            float innerRadius = outerRadius - RingThickness;
-
-            for (int y = 0; y < TextureSize; y++)
-            {
-                for (int x = 0; x < TextureSize; x++)
-                {
-                    float distance = Vector2.Distance(new Vector2(x, y), center);
-                    bool isRing = distance >= innerRadius && distance <= outerRadius;
-                    pixels[y * TextureSize + x] = isRing ? Color.white : Color.clear;
-                }
-            }
-
-            texture.SetPixels(pixels);
-            texture.Apply();
-            _ringSprite = Sprite.Create(
-                texture,
-                new Rect(0f, 0f, TextureSize, TextureSize),
-                new Vector2(0.5f, 0.5f),
-                TextureSize);
-            _ringSprite.name = "Generated_CircleTelegraph";
-            _ringSprite.hideFlags = HideFlags.HideAndDontSave;
-            return _ringSprite;
+            var outlineObject = new GameObject("Outline");
+            outlineObject.transform.SetParent(transform, false);
+            _outlineRenderer = outlineObject.AddComponent<SpriteRenderer>();
+            _outlineRenderer.sortingOrder = 5;
         }
     }
 }

@@ -13,10 +13,13 @@ namespace MoonRabbitRush.Enemies
         [SerializeField, Min(0.05f)] private float _telegraphDuration = 1.5f;
 
         [Header("Telegraph")]
-        [SerializeField] private Color _telegraphStartColor =
-            new(1f, 0.85f, 0.1f, 0.55f);
-        [SerializeField] private Color _telegraphEndColor =
-            new(1f, 0.1f, 0.05f, 0.95f);
+        [SerializeField] private Sprite _outlineSprite;
+        [SerializeField] private Sprite _fillSprite;
+        [SerializeField, Range(0.1f, 1f)] private float _verticalScale = 0.72f;
+        [SerializeField] private Color _outlineColor =
+            new Color32(255, 83, 83, 255);
+        [SerializeField] private Color _fillColor =
+            new Color32(255, 129, 129, 140);
 
         private Component _damageTarget;
         private CircleTelegraphView _activeTelegraph;
@@ -82,8 +85,11 @@ namespace MoonRabbitRush.Enemies
                 impactPosition,
                 _impactRadius,
                 _telegraphDuration,
-                _telegraphStartColor,
-                _telegraphEndColor);
+                _outlineSprite,
+                _fillSprite,
+                _outlineColor,
+                _fillColor,
+                _verticalScale);
 
             _activeProjectile = Instantiate(
                 _projectilePrefab,
@@ -105,6 +111,7 @@ namespace MoonRabbitRush.Enemies
             _impactRadius = Mathf.Max(0f, _impactRadius);
             _fallHeight = Mathf.Max(0f, _fallHeight);
             _telegraphDuration = Mathf.Max(0.05f, _telegraphDuration);
+            _verticalScale = Mathf.Clamp(_verticalScale, 0.1f, 1f);
         }
     }
 }
