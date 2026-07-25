@@ -28,6 +28,7 @@ namespace MoonRabbitRush.Editor.BuildPipeline
                 return;
             }
 
+            ConfigureGitHubPagesSettings();
             PrepareOutputDirectory(OutputDirectory);
 
             var buildOptions = new BuildPlayerOptions
@@ -71,6 +72,14 @@ namespace MoonRabbitRush.Editor.BuildPipeline
             return EditorUserBuildSettings.SwitchActiveBuildTarget(
                 BuildTargetGroup.WebGL,
                 BuildTarget.WebGL);
+        }
+
+        private static void ConfigureGitHubPagesSettings()
+        {
+            PlayerSettings.WebGL.compressionFormat = WebGLCompressionFormat.Disabled;
+            PlayerSettings.WebGL.decompressionFallback = false;
+
+            Debug.Log("WebGL compression disabled for GitHub Pages.");
         }
 
         private static void PrepareOutputDirectory(string path)
