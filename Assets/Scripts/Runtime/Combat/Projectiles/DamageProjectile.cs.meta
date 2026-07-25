@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 62d49303fe5840b2a978225f712b89af
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: Reusable projectile - supports pooling through Released
+  assetBundleName: 
+  assetBundleVariant: 
