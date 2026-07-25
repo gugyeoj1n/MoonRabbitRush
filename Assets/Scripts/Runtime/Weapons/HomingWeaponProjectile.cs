@@ -11,7 +11,7 @@ namespace MoonRabbitRush.Weapons
     public sealed class HomingWeaponProjectile : MonoBehaviour
     {
         [SerializeField, Min(0f)] private float _turnSpeed = 360f;
-        [SerializeField] private SpriteSequenceEffect _impactEffectPrefab;
+        [SerializeField] private TimedEffect _impactEffectPrefab;
 
         private readonly HashSet<EnemyHealth> _hitEnemies = new();
         private Rigidbody2D _rigidbody;

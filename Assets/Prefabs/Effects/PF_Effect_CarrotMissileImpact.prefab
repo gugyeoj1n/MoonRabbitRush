@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 900100000000000002}
   - component: {fileID: 900100000000000003}
   - component: {fileID: 900100000000000004}
+  - component: {fileID: 900100000000000005}
   m_Layer: 0
   m_Name: PF_Effect_CarrotMissileImpact
   m_TagString: Untagged
@@ -102,16 +103,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 900100000000000001}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86bad5afc6fd4ccf8170d9d79890ce50, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ddbfb31379849cfbe828a780a7d8a8f, type: 3}
   m_Name:
-  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Combat.SpriteSequenceEffect
-  _frames:
-  - {fileID: -1677541296766561578, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -816005931285673887, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -7750054676829191310, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -698533159668201357, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -2059191570321329596, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -6971179918676908458, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -4048405927885068411, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  - {fileID: -1700576676896656682, guid: df340f039cb4b1f4ab969b84e9299c0f, type: 3}
-  _framesPerSecond: 16
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Combat.TimedEffect
+  _duration: 0.5
+--- !u!95 &900100000000000005
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900100000000000001}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e5a8b0786c94467b8cd1b55790aa24dd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage:
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
