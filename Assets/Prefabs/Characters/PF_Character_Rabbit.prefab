@@ -260,3 +260,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponController
   _startingWeapons:
   - {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}
+  - {fileID: 11400000, guid: f2ab1c01d57042f694bbd4d1d7389576, type: 2}
