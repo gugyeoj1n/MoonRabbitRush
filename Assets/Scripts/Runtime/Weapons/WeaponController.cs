@@ -79,5 +79,12 @@ namespace MoonRabbitRush.Weapons
             level = 0;
             return false;
         }
+
+        public bool TryGetBehaviour(
+            WeaponData data,
+            out WeaponBehaviour behaviour)
+        {
+            return _equippedWeapons.TryGetValue(data, out behaviour);
+        }
     }
 }

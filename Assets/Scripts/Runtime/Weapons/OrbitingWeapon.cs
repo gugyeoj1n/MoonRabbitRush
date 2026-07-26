@@ -6,9 +6,12 @@ namespace MoonRabbitRush.Weapons
     public sealed class OrbitingWeapon : WeaponBehaviour
     {
         [SerializeField] private OrbitingWeaponHitbox _hitboxPrefab;
+        [SerializeField, Min(1f)] private float _activeSpeedMultiplier = 3f;
+        [SerializeField, Min(0.1f)] private float _activeDuration = 5f;
 
         private readonly List<OrbitingWeaponHitbox> _hitboxes = new();
         private float _angle;
+        private float _activeRemaining;
 
         private void Update()
         {
@@ -17,8 +20,13 @@ namespace MoonRabbitRush.Weapons
                 return;
             }
 
+            _activeRemaining = Mathf.Max(
+                0f,
+                _activeRemaining - Time.deltaTime);
+            float speedMultiplier =
+                _activeRemaining > 0f ? _activeSpeedMultiplier : 1f;
             _angle = Mathf.Repeat(
-                _angle + Stats.ProjectileSpeed * Time.deltaTime,
+                _angle + Stats.ProjectileSpeed * speedMultiplier * Time.deltaTime,
                 360f);
 
             float angleStep = 360f / _hitboxes.Count;
@@ -31,6 +39,12 @@ namespace MoonRabbitRush.Weapons
                     Mathf.Sin(angle) * Stats.Range);
                 _hitboxes[index].MoveToLocal(offset);
             }
+        }
+
+        protected override bool OnActivateActiveSkill()
+        {
+            _activeRemaining = _activeDuration;
+            return true;
         }
 
         protected override void OnLevelChanged()

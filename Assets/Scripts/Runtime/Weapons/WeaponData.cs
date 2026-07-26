@@ -16,10 +16,14 @@ namespace MoonRabbitRush.Weapons
         [SerializeField] private WeaponBehaviour _behaviourPrefab;
         [SerializeField] private WeaponLevelStats[] _levels;
 
+        [Header("Active Skill")]
+        [SerializeField, Min(0.1f)] private float _activeCooldown = 10f;
+
         public string DisplayName => _displayName;
         public string Description => _description;
         public Sprite Icon => _icon;
         public WeaponBehaviour BehaviourPrefab => _behaviourPrefab;
+        public float ActiveCooldown => Mathf.Max(0.1f, _activeCooldown);
         public int MaxLevel => _levels?.Length ?? 0;
 
         public bool TryGetLevelStats(int level, out WeaponLevelStats stats)
