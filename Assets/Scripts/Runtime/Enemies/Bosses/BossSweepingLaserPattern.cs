@@ -19,6 +19,15 @@ namespace MoonRabbitRush.Enemies.Bosses
             new Color32(255, 60, 60, 245);
 
         private LineTelegraphView _activeLine;
+        private Collider2D _targetCollider;
+
+        public override void Initialize(
+            Transform target,
+            EnemyStatsData stats)
+        {
+            base.Initialize(target, stats);
+            _targetCollider = target.GetComponent<Collider2D>();
+        }
 
         public override IEnumerator Execute()
         {
@@ -55,10 +64,10 @@ namespace MoonRabbitRush.Enemies.Bosses
                 origin = transform.position;
                 _activeLine.SetDirection(origin, direction);
 
-                if (elapsed >= nextDamageTime)
+                if (elapsed >= nextDamageTime &&
+                    TryDamageTarget(origin, direction))
                 {
                     nextDamageTime = elapsed + _damageInterval;
-                    TryDamageTarget(origin, direction);
                 }
 
                 yield return null;
@@ -96,11 +105,11 @@ namespace MoonRabbitRush.Enemies.Bosses
             return line;
         }
 
-        private void TryDamageTarget(Vector2 origin, Vector2 direction)
+        private bool TryDamageTarget(Vector2 origin, Vector2 direction)
         {
             if (!TargetDamageable.IsAlive)
             {
-                return;
+                return false;
             }
 
             Vector2 targetPosition = Target.position;
@@ -113,8 +122,11 @@ namespace MoonRabbitRush.Enemies.Bosses
                 : 0f;
             projection = Mathf.Clamp01(projection);
             Vector2 closestPoint = origin + segment * projection;
+            Vector2 targetClosestPoint = _targetCollider != null
+                ? _targetCollider.ClosestPoint(closestPoint)
+                : targetPosition;
 
-            if (Vector2.Distance(targetPosition, closestPoint) <=
+            if (Vector2.Distance(targetClosestPoint, closestPoint) <=
                 _beamWidth * 0.5f)
             {
                 TargetDamageable.TakeDamage(
@@ -122,7 +134,10 @@ namespace MoonRabbitRush.Enemies.Bosses
                         Stats.AttackDamage,
                         closestPoint,
                         gameObject));
+                return true;
             }
+
+            return false;
         }
 
         private static Vector2 DirectionFromAngle(float angle)

@@ -9,7 +9,7 @@ namespace MoonRabbitRush.Enemies.Bosses
     {
         [SerializeField, Min(0f)] private float _radius = 6f;
         [SerializeField, Min(0.05f)] private float _chargeDuration = 2.5f;
-        [SerializeField, Min(0f)] private float _resistanceSpeed = 0.75f;
+        [SerializeField, Min(0f)] private float _resistanceSpeed = 1.2f;
         [SerializeField] private Sprite _outlineSprite;
         [SerializeField] private Sprite _fillSprite;
         [SerializeField, Range(0.1f, 1f)] private float _verticalScale = 0.72f;
@@ -55,15 +55,8 @@ namespace MoonRabbitRush.Enemies.Bosses
 
                 if (distance > Mathf.Epsilon && distance <= _radius)
                 {
-                    float normalizedDepth = 1f - distance / _radius;
-                    float resistanceStrength = Mathf.Lerp(
-                        0.25f,
-                        1f,
-                        normalizedDepth);
-
                     _targetMovement?.SetExternalVelocity(
-                        toBoss.normalized *
-                        (_resistanceSpeed * resistanceStrength));
+                        toBoss.normalized * _resistanceSpeed);
                 }
                 else
                 {
