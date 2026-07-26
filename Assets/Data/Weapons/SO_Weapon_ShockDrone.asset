@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
   _displayName: 충격 드론
   _description: 플레이어 주위를 회전하며 접촉한 적에게 피해를 줍니다.
-  _icon: {fileID: 3696411964825687422, guid: b7aec863168a82a428b1ef3ec42400c9, type: 3}
+  _icon: {fileID: 21300000, guid: 022b0515a3f94b25b1f0c556ded14273, type: 3}
   _behaviourPrefab: {fileID: 870100000000000003, guid: e1fcf2621d8b4e82946caed0271b5bfd, type: 3}
   _levels:
   - _damage: 15

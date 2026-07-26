@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
   _displayName: 당근 미사일
   _description: 가장 가까운 적을 추적하는 당근 모양 미사일을 발사합니다.
-  _icon: {fileID: 780878252188070934, guid: eb610d051fcc35b47a539b1a2b0c5866, type: 3}
+  _icon: {fileID: 21300000, guid: 87ef22c505994d579c6de79f5a727dfa, type: 3}
   _behaviourPrefab: {fileID: 830100000000000003, guid: bd0010da3ca84e408fdd5b90ae28de5d, type: 3}
   _levels:
   - _damage: 20
