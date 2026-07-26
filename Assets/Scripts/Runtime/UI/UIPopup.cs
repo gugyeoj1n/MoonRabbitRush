@@ -6,7 +6,7 @@ namespace MoonRabbitRush
 {
     public class UIPopup : MonoBehaviour
     {
-        private UIManager Manager => ManagerRoot.Instance.UIManager;        
+        protected UIManager Manager => ManagerRoot.Instance.UIManager;        
 
         public void EnablePopup(Type type)
         {
@@ -26,7 +26,7 @@ namespace MoonRabbitRush
             }
         }        
 
-        protected void OnClickClose()
+        public void OnClickClose()
         {
             gameObject.SetActive(false);
         }
