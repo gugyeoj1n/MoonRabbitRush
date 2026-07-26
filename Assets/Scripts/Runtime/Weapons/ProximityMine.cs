@@ -119,7 +119,11 @@ namespace MoonRabbitRush.Weapons
                 _alertRenderer = null;
             }
 
-            Explode();
+            if (_state != MineState.Telegraphing)
+            {
+                BeginTelegraph();
+            }
+
             return true;
         }
 
