@@ -1,5 +1,6 @@
 using System.Collections;
 using MoonRabbitRush.Combat;
+using MoonRabbitRush.Player;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies.Bosses
@@ -16,6 +17,16 @@ namespace MoonRabbitRush.Enemies.Bosses
             new Color32(255, 83, 83, 204);
         [SerializeField] private Color _fillColor =
             new Color32(255, 129, 129, 115);
+
+        private PlayerMovement _targetMovement;
+
+        public override void Initialize(
+            Transform target,
+            EnemyStatsData stats)
+        {
+            base.Initialize(target, stats);
+            _targetMovement = target.GetComponent<PlayerMovement>();
+        }
 
         public override IEnumerator Execute()
         {
@@ -50,13 +61,19 @@ namespace MoonRabbitRush.Enemies.Bosses
                         1f,
                         normalizedDepth);
 
-                    Target.position = targetPosition +
+                    _targetMovement?.SetExternalVelocity(
                         toBoss.normalized *
-                        (_resistanceSpeed * resistanceStrength * Time.deltaTime);
+                        (_resistanceSpeed * resistanceStrength));
+                }
+                else
+                {
+                    ClearMovementResistance();
                 }
 
                 yield return null;
             }
+
+            ClearMovementResistance();
 
             if (TargetDamageable.IsAlive &&
                 Vector2.Distance(Target.position, transform.position) <= _radius)
@@ -67,6 +84,16 @@ namespace MoonRabbitRush.Enemies.Bosses
                         Target.position,
                         gameObject));
             }
+        }
+
+        private void OnDisable()
+        {
+            ClearMovementResistance();
+        }
+
+        private void ClearMovementResistance()
+        {
+            _targetMovement?.SetExternalVelocity(Vector2.zero);
         }
 
         private void OnValidate()
