@@ -8,6 +8,7 @@ namespace MoonRabbitRush.Weapons
         public int Level { get; private set; }
         protected Transform Owner { get; private set; }
         protected WeaponLevelStats Stats { get; private set; }
+        public bool IsMaxLevel => Data != null && Level >= Data.MaxLevel;
 
         public void Initialize(Transform owner, WeaponData data, int level)
         {
@@ -30,12 +31,22 @@ namespace MoonRabbitRush.Weapons
             return true;
         }
 
+        public bool TryActivateActiveSkill()
+        {
+            return IsMaxLevel && OnActivateActiveSkill();
+        }
+
         protected virtual void OnInitialized()
         {
         }
 
         protected virtual void OnLevelChanged()
         {
+        }
+
+        protected virtual bool OnActivateActiveSkill()
+        {
+            return false;
         }
     }
 }

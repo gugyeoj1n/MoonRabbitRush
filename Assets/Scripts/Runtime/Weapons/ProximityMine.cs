@@ -104,6 +104,29 @@ namespace MoonRabbitRush.Weapons
             _state = MineState.Throwing;
         }
 
+        public bool TryForceDetonate()
+        {
+            if (_state != MineState.Armed &&
+                _state != MineState.Alerting &&
+                _state != MineState.Telegraphing)
+            {
+                return false;
+            }
+
+            if (_alertRenderer != null)
+            {
+                Destroy(_alertRenderer.gameObject);
+                _alertRenderer = null;
+            }
+
+            if (_state != MineState.Telegraphing)
+            {
+                BeginTelegraph();
+            }
+
+            return true;
+        }
+
         private void UpdateThrow()
         {
             _elapsed += Time.deltaTime;

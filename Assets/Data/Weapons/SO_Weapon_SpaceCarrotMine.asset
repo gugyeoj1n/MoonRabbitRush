@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
   _displayName: 우주 당근 지뢰
   _description: 주변에 매설된 지뢰가 적을 감지하면 범위 공격을 일으킵니다.
-  _icon: {fileID: 4277224689827849193, guid: 26d41ec235a0a8f45bf9f2531b8d0d56, type: 3}
+  _icon: {fileID: 21300000, guid: 475997bf38744a6a9fbf85cc5baaee60, type: 3}
   _behaviourPrefab: {fileID: 890100000000000003, guid: b42b8c554e404d0ea38f0ae4d822859e, type: 3}
+  _activeCooldown: 8
   _levels:
   - _damage: 35
     _cooldown: 4
@@ -25,3 +26,11 @@ MonoBehaviour:
     _duration: 0.75
     _pierceCount: 0
     _areaRadius: 2.2
+  - _damage: 48
+    _cooldown: 3.2
+    _projectileCount: 3
+    _projectileSpeed: 5.5
+    _range: 1.7
+    _duration: 0.65
+    _pierceCount: 0
+    _areaRadius: 3

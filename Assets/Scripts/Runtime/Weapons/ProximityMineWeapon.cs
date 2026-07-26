@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MoonRabbitRush.Weapons
@@ -14,6 +15,7 @@ namespace MoonRabbitRush.Weapons
         [SerializeField] private bool _useRandomDirections = true;
 
         private float _cooldownRemaining;
+        private readonly List<ProximityMine> _spawnedMines = new();
 
         private void Update()
         {
@@ -64,7 +66,22 @@ namespace MoonRabbitRush.Weapons
                     _arcHeight,
                     Stats,
                     Owner.gameObject);
+                _spawnedMines.Add(mine);
             }
+        }
+
+        protected override bool OnActivateActiveSkill()
+        {
+            _spawnedMines.RemoveAll(mine => mine == null);
+            bool detonated = false;
+
+            foreach (ProximityMine mine in _spawnedMines)
+            {
+                detonated |= mine.TryForceDetonate();
+            }
+
+            _spawnedMines.RemoveAll(mine => mine == null);
+            return detonated;
         }
 
         private void OnValidate()
