@@ -1676,6 +1676,7 @@ GameObject:
   - component: {fileID: 2200000004}
   - component: {fileID: 2200000005}
   - component: {fileID: 2200000006}
+  - component: {fileID: 2200000007}
   m_Layer: 0
   m_Name: _Systems
   m_TagString: Untagged
@@ -1762,6 +1763,21 @@ MonoBehaviour:
   _alertText: {fileID: 1951654010}
   _displayDuration: 3
   _scaleStepDuration: 0.16
+--- !u!114 &2200000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2200000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e2c246f5a64724ab7df846176784ad, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.Bosses.BossEncounterController
+  _bossAlert: {fileID: 2200000006}
+  _enemySpawner: {fileID: 2100000003}
+  _bossPrefab: {fileID: 900100000000000006, guid: 8cc1fd80b14d447aa44ae12e9a536d2f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

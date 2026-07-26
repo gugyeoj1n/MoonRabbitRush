@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Waves;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace MoonRabbitRush.UI
         [SerializeField, Min(0.01f)] private float _scaleStepDuration = 0.16f;
 
         private bool _isPlaying;
+
+        public event Action AlertCompleted;
 
         private void Awake()
         {
@@ -100,6 +103,7 @@ namespace MoonRabbitRush.UI
             _alertText.localScale = Vector3.one;
             _alertRoot.SetActive(false);
             _isPlaying = false;
+            AlertCompleted?.Invoke();
         }
 
         private void OnValidate()
