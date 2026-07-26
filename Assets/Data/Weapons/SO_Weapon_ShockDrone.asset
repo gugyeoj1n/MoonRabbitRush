@@ -25,3 +25,11 @@ MonoBehaviour:
     _duration: 1
     _pierceCount: 0
     _areaRadius: 0
+  - _damage: 20
+    _cooldown: 0.4
+    _projectileCount: 2
+    _projectileSpeed: 135
+    _range: 2.4
+    _duration: 1
+    _pierceCount: 0
+    _areaRadius: 0
