@@ -285,9 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b4f97c31ab848cca33a026392e70fc7, type: 3}
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.Bosses.BossGravityBlastPattern
-  _radius: 4.5
-  _chargeDuration: 1.5
-  _pullSpeed: 1.8
+  _radius: 6
+  _chargeDuration: 2.5
+  _resistanceSpeed: 0.75
   _outlineSprite: {fileID: -1211162969216489103, guid: e760251f49b44c643bfa21dcb506a5fe, type: 3}
   _fillSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
   _verticalScale: 0.72

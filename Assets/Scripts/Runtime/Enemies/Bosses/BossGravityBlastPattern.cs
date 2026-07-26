@@ -6,9 +6,9 @@ namespace MoonRabbitRush.Enemies.Bosses
 {
     public sealed class BossGravityBlastPattern : BossAttackPattern
     {
-        [SerializeField, Min(0f)] private float _radius = 4.5f;
-        [SerializeField, Min(0.05f)] private float _chargeDuration = 1.5f;
-        [SerializeField, Min(0f)] private float _pullSpeed = 1.8f;
+        [SerializeField, Min(0f)] private float _radius = 6f;
+        [SerializeField, Min(0.05f)] private float _chargeDuration = 2.5f;
+        [SerializeField, Min(0f)] private float _resistanceSpeed = 0.75f;
         [SerializeField] private Sprite _outlineSprite;
         [SerializeField] private Sprite _fillSprite;
         [SerializeField, Range(0.1f, 1f)] private float _verticalScale = 0.72f;
@@ -40,13 +40,19 @@ namespace MoonRabbitRush.Enemies.Bosses
                 elapsed += Time.deltaTime;
                 Vector2 targetPosition = Target.position;
                 Vector2 toBoss = (Vector2)transform.position - targetPosition;
+                float distance = toBoss.magnitude;
 
-                if (toBoss.sqrMagnitude <= _radius * _radius)
+                if (distance > Mathf.Epsilon && distance <= _radius)
                 {
-                    Target.position = Vector2.MoveTowards(
-                        targetPosition,
-                        transform.position,
-                        _pullSpeed * Time.deltaTime);
+                    float normalizedDepth = 1f - distance / _radius;
+                    float resistanceStrength = Mathf.Lerp(
+                        0.25f,
+                        1f,
+                        normalizedDepth);
+
+                    Target.position = targetPosition +
+                        toBoss.normalized *
+                        (_resistanceSpeed * resistanceStrength * Time.deltaTime);
                 }
 
                 yield return null;
@@ -67,7 +73,7 @@ namespace MoonRabbitRush.Enemies.Bosses
         {
             _radius = Mathf.Max(0f, _radius);
             _chargeDuration = Mathf.Max(0.05f, _chargeDuration);
-            _pullSpeed = Mathf.Max(0f, _pullSpeed);
+            _resistanceSpeed = Mathf.Max(0f, _resistanceSpeed);
             _verticalScale = Mathf.Clamp(_verticalScale, 0.1f, 1f);
         }
     }
