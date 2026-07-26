@@ -45,9 +45,25 @@ namespace MoonRabbitRush
             PopupHash[type].gameObject.SetActive(true);
         }
 
+        public void EnablePopup<T>() where T : UIPopup
+        {
+            if(PopupHash.TryGetValue(typeof(T), out var popup))
+            {
+                popup.gameObject.SetActive(true);
+            }
+        }
+
         public void DisablePopup(Type type)
         {
             PopupHash[type].gameObject.SetActive(false);
+        }
+
+        public void DisablePopup<T>() where T : UIPopup
+        {
+            if( PopupHash.TryGetValue(typeof(T),out var popup))
+            {
+                popup.gameObject.SetActive(false);
+            }
         }
     }
 }
