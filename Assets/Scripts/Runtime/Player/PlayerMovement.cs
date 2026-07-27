@@ -14,6 +14,7 @@ namespace MoonRabbitRush.Player
         private Rigidbody2D _rigidbody;
         private InputAction _moveAction;
         private Vector2 _moveInput;
+        private Vector2 _externalVelocity;
         private bool _canMove = true;
 
         public Vector2 MoveInput => _moveInput;
@@ -51,15 +52,29 @@ namespace MoonRabbitRush.Player
 
         private void FixedUpdate()
         {
-            if (_stats == null || _moveInput == Vector2.zero)
+            if (_stats == null)
             {
                 return;
             }
 
+            Vector2 velocity =
+                _moveInput * _stats.MoveSpeed + _externalVelocity;
+
+            if (velocity == Vector2.zero)
+            {
+                _rigidbody.linearVelocity = Vector2.zero;
+                return;
+            }
+
             Vector2 nextPosition =
-                _rigidbody.position + _moveInput * (_stats.MoveSpeed * Time.fixedDeltaTime);
+                _rigidbody.position + velocity * Time.fixedDeltaTime;
 
             _rigidbody.MovePosition(nextPosition);
+        }
+
+        public void SetExternalVelocity(Vector2 velocity)
+        {
+            _externalVelocity = velocity;
         }
 
         public void SetMovementEnabled(bool isEnabled)
@@ -71,6 +86,12 @@ namespace MoonRabbitRush.Player
                 _moveInput = Vector2.zero;
                 _rigidbody.linearVelocity = Vector2.zero;
             }
+        }
+
+        private void OnDisable()
+        {
+            _externalVelocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
         }
     }
 }
