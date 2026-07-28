@@ -7,6 +7,14 @@ using TMPro;
 
 namespace MoonRabbitRush
 {
+    public enum Property
+    {
+        None = 0,
+        PlayerHealth = 1,
+        PlayerExperience = 2,
+        PlayerLevel = 3,
+        PlayerMaxHealth = 4,
+    }
     /// <summary>
     /// 간단한 데이터 바인딩 도우미와 예제.
     /// 외부 R3 패키지가 없더라도 동작하는 로컬 ObservableProperty 구현과
@@ -15,14 +23,7 @@ namespace MoonRabbitRush
     /// </summary>
     public static class DataBindingManager
     {
-        public enum Property
-        {
-            None = 0,
-            PlayerHealth = 1,
-            PlayerExperience = 2,
-            PlayerLevel = 3,
-
-        }
+        
 
         /// <summary>
         /// Property(열거형) 기반으로 UnityEngine.UI.Text에 바인딩합니다. GameObject 생명주기에 맞춰 구독을 자동 해제합니다.
@@ -102,9 +103,34 @@ namespace MoonRabbitRush
         }
 
         /// <summary>
-        /// 기존에 등록된 프로퍼티가 있으면 값을 설정하고, 없으면 새로 생성합니다 (Register와 동일).
+        /// 값의 증감(+/-) 용도로 사용합니다. 전달된 값은 현재 값에 더해집니다.
+        /// 해당 프로퍼티가 없으면 전달된 값으로 새로 생성합니다.
+        /// (절대값 설정이 필요하면 Register(...)를 사용하세요.)
         /// </summary>
-        public static void SetValue(Property type, int value) => Register(type, value);
+        public static void AddValue(Property type, int delta)
+        {
+            if (_intProperties.TryGetValue(type, out var rp))
+            {
+                rp.Value = rp.Value + delta;
+            }
+        }
+
+        /// <summary>
+        /// 프로퍼티에 절대값을 설정합니다. 기존에 없으면 생성합니다.
+        /// Register와 동일한 동작을 수행하는 편의 메서드입니다.
+        /// </summary>
+        public static void SetValue(Property type, int value)
+        {
+            if (_intProperties.TryGetValue(type, out var rp))
+            {
+                rp.Value = value;
+            }
+            else
+            {
+                var newRp = new ReactiveProperty<int>(value);
+                _intProperties[type] = newRp;
+            }
+        }
 
         /// <summary>
         /// 이름으로 존재하는 프로퍼티에 대해서만 값을 설정합니다. 존재하지 않으면 false를 반환합니다.
@@ -166,6 +192,22 @@ namespace MoonRabbitRush
             if (setInitial && property != null) ui.text = property.Value.ToString();
 
             property.Subscribe(v => { if (ui) ui.text = v.ToString(); });
+        }
+
+        public static void BindSliderRatio(Property current, Property max, Slider slider)
+        {
+            void Refresh()
+            {
+                TryGetValue(current, out var cur);
+                TryGetValue(max, out var total);
+
+                slider.value = total == 0 ? 0f : (float)cur / total;
+            }
+
+            Subscribe(current, _ => Refresh());
+            Subscribe(max, _ => Refresh());
+
+            Refresh();
         }
 
     }
