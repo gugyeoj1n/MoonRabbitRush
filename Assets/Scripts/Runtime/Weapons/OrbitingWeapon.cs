@@ -28,17 +28,7 @@ namespace MoonRabbitRush.Weapons
             _angle = Mathf.Repeat(
                 _angle + Stats.ProjectileSpeed * speedMultiplier * Time.deltaTime,
                 360f);
-
-            float angleStep = 360f / _hitboxes.Count;
-
-            for (int index = 0; index < _hitboxes.Count; index++)
-            {
-                float angle = (_angle + angleStep * index) * Mathf.Deg2Rad;
-                Vector2 offset = new(
-                    Mathf.Cos(angle) * Stats.Range,
-                    Mathf.Sin(angle) * Stats.Range);
-                _hitboxes[index].MoveToLocal(offset);
-            }
+            UpdateHitboxPositions();
         }
 
         protected override bool OnActivateActiveSkill()
@@ -92,7 +82,27 @@ namespace MoonRabbitRush.Weapons
             {
                 hitbox.Configure(Stats.Damage, Stats.Cooldown, Owner.gameObject);
             }
+
+            UpdateHitboxPositions();
         }
 
+        private void UpdateHitboxPositions()
+        {
+            if (_hitboxes.Count == 0)
+            {
+                return;
+            }
+
+            float angleStep = 360f / _hitboxes.Count;
+
+            for (int index = 0; index < _hitboxes.Count; index++)
+            {
+                float angle = (_angle + angleStep * index) * Mathf.Deg2Rad;
+                Vector2 offset = new(
+                    Mathf.Cos(angle) * Stats.Range,
+                    Mathf.Sin(angle) * Stats.Range);
+                _hitboxes[index].MoveToLocal(offset);
+            }
+        }
     }
 }
