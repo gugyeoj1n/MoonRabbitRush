@@ -22,7 +22,7 @@ MonoBehaviour:
     _cooldown: 4
     _projectileCount: 1
     _projectileSpeed: 5
-    _range: 1.5
+    _range: 2.1
     _duration: 0.75
     _pierceCount: 0
     _areaRadius: 2.2
@@ -30,7 +30,7 @@ MonoBehaviour:
     _cooldown: 3.2
     _projectileCount: 3
     _projectileSpeed: 5.5
-    _range: 1.7
+    _range: 2.5
     _duration: 0.65
     _pierceCount: 0
     _areaRadius: 3
