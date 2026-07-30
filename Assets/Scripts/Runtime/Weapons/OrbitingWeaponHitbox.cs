@@ -9,6 +9,7 @@ namespace MoonRabbitRush.Weapons
     public sealed class OrbitingWeaponHitbox : MonoBehaviour
     {
         private readonly Dictionary<EnemyHealth, float> _nextHitTimes = new();
+        [SerializeField] private TimedEffect _impactEffectPrefab;
         private GameObject _source;
         private float _damage;
         private float _hitInterval;
@@ -63,7 +64,16 @@ namespace MoonRabbitRush.Weapons
 
             Vector2 hitPoint = other.ClosestPoint(transform.position);
             enemy.TakeDamage(new DamageInfo(_damage, hitPoint, _source));
+            SpawnImpactEffect(hitPoint);
             _nextHitTimes[enemy] = Time.time + _hitInterval;
+        }
+
+        private void SpawnImpactEffect(Vector2 hitPoint)
+        {
+            if (_impactEffectPrefab != null)
+            {
+                Instantiate(_impactEffectPrefab, hitPoint, Quaternion.identity);
+            }
         }
     }
 }
