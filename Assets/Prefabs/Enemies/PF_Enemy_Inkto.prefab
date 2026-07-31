@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 820100000000000009}
   - component: {fileID: 820100000000000010}
   - component: {fileID: 820100000000000011}
+  - component: {fileID: 9090906617278891084}
   m_Layer: 0
   m_Name: PF_Enemy_Inkto
   m_TagString: Untagged
@@ -261,6 +262,28 @@ MonoBehaviour:
   _hitColor: {r: 1, g: 1, b: 1, a: 1}
   _deathColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   _hitFlashDuration: 0.08
+--- !u!95 &9090906617278891084
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820100000000000001}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 7097282f59018fc47b4f01158e9fa834, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &820100000000000013
 GameObject:
   m_ObjectHideFlags: 0
