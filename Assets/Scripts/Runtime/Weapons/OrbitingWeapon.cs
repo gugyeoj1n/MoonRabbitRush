@@ -12,6 +12,7 @@ namespace MoonRabbitRush.Weapons
         private readonly List<OrbitingWeaponHitbox> _hitboxes = new();
         private float _angle;
         private float _activeRemaining;
+        private bool _isActiveSkillVisual;
 
         private void Update()
         {
@@ -23,27 +24,20 @@ namespace MoonRabbitRush.Weapons
             _activeRemaining = Mathf.Max(
                 0f,
                 _activeRemaining - Time.deltaTime);
+            bool isActive = _activeRemaining > 0f;
+            SetActiveSkillVisual(isActive);
             float speedMultiplier =
-                _activeRemaining > 0f ? _activeSpeedMultiplier : 1f;
+                isActive ? _activeSpeedMultiplier : 1f;
             _angle = Mathf.Repeat(
                 _angle + Stats.ProjectileSpeed * speedMultiplier * Time.deltaTime,
                 360f);
-
-            float angleStep = 360f / _hitboxes.Count;
-
-            for (int index = 0; index < _hitboxes.Count; index++)
-            {
-                float angle = (_angle + angleStep * index) * Mathf.Deg2Rad;
-                Vector2 offset = new(
-                    Mathf.Cos(angle) * Stats.Range,
-                    Mathf.Sin(angle) * Stats.Range);
-                _hitboxes[index].MoveToLocal(offset);
-            }
+            UpdateHitboxPositions();
         }
 
         protected override bool OnActivateActiveSkill()
         {
             _activeRemaining = _activeDuration;
+            SetActiveSkillVisual(true);
             return true;
         }
 
@@ -91,8 +85,44 @@ namespace MoonRabbitRush.Weapons
             foreach (OrbitingWeaponHitbox hitbox in _hitboxes)
             {
                 hitbox.Configure(Stats.Damage, Stats.Cooldown, Owner.gameObject);
+                hitbox.SetActiveSkillVisual(_activeRemaining > 0f);
+            }
+
+            UpdateHitboxPositions();
+        }
+
+        private void UpdateHitboxPositions()
+        {
+            if (_hitboxes.Count == 0)
+            {
+                return;
+            }
+
+            float angleStep = 360f / _hitboxes.Count;
+
+            for (int index = 0; index < _hitboxes.Count; index++)
+            {
+                float angle = (_angle + angleStep * index) * Mathf.Deg2Rad;
+                Vector2 offset = new(
+                    Mathf.Cos(angle) * Stats.Range,
+                    Mathf.Sin(angle) * Stats.Range);
+                _hitboxes[index].MoveToLocal(offset);
             }
         }
 
+        private void SetActiveSkillVisual(bool isActive)
+        {
+            if (_isActiveSkillVisual == isActive)
+            {
+                return;
+            }
+
+            _isActiveSkillVisual = isActive;
+
+            foreach (OrbitingWeaponHitbox hitbox in _hitboxes)
+            {
+                hitbox.SetActiveSkillVisual(isActive);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyStatsData
   _maxHealth: 40
   _defense: 0
-  _moveSpeed: 2
+  _moveSpeed: 0.75
   _attackDamage: 10
   _attackInterval: 0.75
   _experienceReward: 1

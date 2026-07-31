@@ -40,9 +40,20 @@ namespace MoonRabbitRush.Weapons
         [SerializeField] private Color _fillColor =
             new Color32(105, 225, 255, 115);
 
+        [Header("Detection")]
+        [SerializeField] private Sprite _detectionRangeSprite;
+        [SerializeField] private Color _detectionRangeColor =
+            new Color32(105, 225, 255, 92);
+        [SerializeField] private int _detectionRangeSortingOrder = 8;
+        [SerializeField] private float _detectionRangeRotationSpeed = -42f;
+
+        [Header("Explosion")]
+        [SerializeField] private TimedEffect _explosionEffectPrefab;
+
         private readonly List<EnemyHealth> _targets = new();
         private SpriteRenderer _spriteRenderer;
         private SpriteRenderer _alertRenderer;
+        private SpriteRenderer _detectionRangeRenderer;
         private CircleTelegraphView _telegraph;
         private WeaponLevelStats _stats;
         private GameObject _source;
@@ -64,6 +75,8 @@ namespace MoonRabbitRush.Weapons
 
         private void Update()
         {
+            UpdateDetectionRangeVisual();
+
             switch (_state)
             {
                 case MineState.Throwing:
@@ -178,6 +191,7 @@ namespace MoonRabbitRush.Weapons
                 _spriteRenderer.sprite = _buriedSprite;
                 _spriteRenderer.color = _initialColor;
                 transform.localScale = _initialScale;
+                EnsureDetectionRangeVisual();
                 _state = MineState.Armed;
             }
         }
@@ -251,6 +265,8 @@ namespace MoonRabbitRush.Weapons
 
         private void Explode()
         {
+            ReleaseDetectionRangeVisual();
+
             EnemyRegistry.CollectInRange(
                 transform.position,
                 _stats.AreaRadius,
@@ -265,9 +281,85 @@ namespace MoonRabbitRush.Weapons
                 }
             }
 
+            SpawnExplosionEffect();
             _telegraph?.Release();
             _telegraph = null;
             Destroy(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            ReleaseDetectionRangeVisual();
+        }
+
+        private void EnsureDetectionRangeVisual()
+        {
+            if (_detectionRangeSprite == null || _detectionRangeRenderer != null)
+            {
+                return;
+            }
+
+            var detectionRangeObject = new GameObject("Detection Range");
+            _detectionRangeRenderer =
+                detectionRangeObject.AddComponent<SpriteRenderer>();
+            _detectionRangeRenderer.sprite = _detectionRangeSprite;
+            _detectionRangeRenderer.color = _detectionRangeColor;
+            _detectionRangeRenderer.sortingOrder = _detectionRangeSortingOrder;
+            UpdateDetectionRangeTransform();
+        }
+
+        private void UpdateDetectionRangeVisual()
+        {
+            if (_detectionRangeRenderer == null)
+            {
+                return;
+            }
+
+            UpdateDetectionRangeTransform();
+            _detectionRangeRenderer.transform.Rotate(
+                0f,
+                0f,
+                _detectionRangeRotationSpeed * Time.deltaTime);
+        }
+
+        private void UpdateDetectionRangeTransform()
+        {
+            if (_detectionRangeRenderer == null)
+            {
+                return;
+            }
+
+            Transform detectionTransform = _detectionRangeRenderer.transform;
+            detectionTransform.position = transform.position;
+
+            float spriteWidth = Mathf.Max(
+                0.01f,
+                _detectionRangeSprite.bounds.size.x);
+            float diameter = Mathf.Max(0.01f, _stats.Range * 2f);
+            float scale = diameter / spriteWidth;
+            detectionTransform.localScale = new Vector3(scale, scale, 1f);
+        }
+
+        private void ReleaseDetectionRangeVisual()
+        {
+            if (_detectionRangeRenderer == null)
+            {
+                return;
+            }
+
+            Destroy(_detectionRangeRenderer.gameObject);
+            _detectionRangeRenderer = null;
+        }
+
+        private void SpawnExplosionEffect()
+        {
+            if (_explosionEffectPrefab != null)
+            {
+                Instantiate(
+                    _explosionEffectPrefab,
+                    transform.position,
+                    Quaternion.identity);
+            }
         }
 
         private void OnDestroy()

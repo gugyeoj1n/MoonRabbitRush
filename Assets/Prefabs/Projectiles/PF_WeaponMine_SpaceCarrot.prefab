@@ -118,3 +118,8 @@ MonoBehaviour:
   _verticalScale: 0.72
   _outlineColor: {r: 0.28235295, g: 0.8235294, b: 1, a: 0.8}
   _fillColor: {r: 0.4117647, g: 0.88235295, b: 1, a: 0.4509804}
+  _detectionRangeSprite: {fileID: 21300000, guid: 0b12fad221d174748ba62fcf9c749dfa, type: 3}
+  _detectionRangeColor: {r: 0.4117647, g: 0.88235295, b: 1, a: 0.22}
+  _detectionRangeSortingOrder: 8
+  _detectionRangeRotationSpeed: -24
+  _explosionEffectPrefab: {fileID: 900300000000000004, guid: 0fca4689d3264f93bb8c6489e3250670, type: 3}
