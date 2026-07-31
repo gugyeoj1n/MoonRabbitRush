@@ -16,6 +16,10 @@ namespace MoonRabbitRush.Weapons
             new(0.64f, 0.96f, 1f, 0.34f);
         [SerializeField] private Color _endColor =
             new(0.34f, 0.76f, 1f, 0f);
+        [SerializeField] private Color _activeStartColor =
+            new(1f, 0.87f, 0.25f, 0.75f);
+        [SerializeField] private Color _activeEndColor =
+            new(1f, 0.42f, 0.08f, 0f);
 
         [Header("Sorting")]
         [SerializeField] private string _sortingLayerName = "Default";
@@ -24,6 +28,7 @@ namespace MoonRabbitRush.Weapons
         private TrailRenderer _trailRenderer;
         private Material _runtimeMaterial;
         private bool _pendingEnableEmission;
+        private bool _isActiveSkill;
 
         private void Awake()
         {
@@ -34,6 +39,7 @@ namespace MoonRabbitRush.Weapons
             }
 
             ConfigureTrailRenderer();
+            ApplyTrailColor();
         }
 
         private void OnEnable()
@@ -77,6 +83,17 @@ namespace MoonRabbitRush.Weapons
             }
         }
 
+        public void SetActiveSkill(bool isActive)
+        {
+            if (_isActiveSkill == isActive)
+            {
+                return;
+            }
+
+            _isActiveSkill = isActive;
+            ApplyTrailColor();
+        }
+
         private void ConfigureTrailRenderer()
         {
             _trailRenderer.time = Mathf.Max(0.01f, _trailTime);
@@ -95,15 +112,25 @@ namespace MoonRabbitRush.Weapons
             _trailRenderer.autodestruct = false;
             _trailRenderer.sortingLayerName = _sortingLayerName;
             _trailRenderer.sortingOrder = _sortingOrder;
-            _trailRenderer.startColor = _startColor;
-            _trailRenderer.endColor = _endColor;
-
             Shader shader = Shader.Find("Sprites/Default");
             if (shader != null)
             {
                 _runtimeMaterial = new Material(shader);
                 _trailRenderer.material = _runtimeMaterial;
             }
+        }
+
+        private void ApplyTrailColor()
+        {
+            if (_trailRenderer == null)
+            {
+                return;
+            }
+
+            _trailRenderer.startColor =
+                _isActiveSkill ? _activeStartColor : _startColor;
+            _trailRenderer.endColor =
+                _isActiveSkill ? _activeEndColor : _endColor;
         }
     }
 }

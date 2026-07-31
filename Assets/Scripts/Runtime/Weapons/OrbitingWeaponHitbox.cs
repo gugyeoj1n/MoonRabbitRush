@@ -27,6 +27,13 @@ namespace MoonRabbitRush.Weapons
             transform.localPosition = position;
         }
 
+        public void SetActiveSkillVisual(bool isActive)
+        {
+            ShockDroneTrailView trailView =
+                GetComponent<ShockDroneTrailView>();
+            trailView?.SetActiveSkill(isActive);
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             TryDamage(other);

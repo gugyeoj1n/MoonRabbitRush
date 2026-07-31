@@ -163,5 +163,7 @@ MonoBehaviour:
   _endCapVertices: 4
   _startColor: {r: 0.64, g: 0.96, b: 1, a: 0.34}
   _endColor: {r: 0.34, g: 0.76, b: 1, a: 0}
+  _activeStartColor: {r: 1, g: 0.87, b: 0.25, a: 0.75}
+  _activeEndColor: {r: 1, g: 0.42, b: 0.08, a: 0}
   _sortingLayerName: Default
   _sortingOrder: 10
