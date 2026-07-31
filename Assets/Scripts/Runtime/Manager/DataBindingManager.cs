@@ -10,10 +10,13 @@ namespace MoonRabbitRush
     public enum Property
     {
         None = 0,
-        PlayerHealth = 1,
-        PlayerExperience = 2,
-        PlayerLevel = 3,
-        PlayerMaxHealth = 4,
+        PlayerHealth,
+        PlayerMaxHealth,
+        PlayerExperience,
+        PlayerMaxExperience,
+        PlayerLevel,
+        MonsterRemain,
+        Wave,
     }
     /// <summary>
     /// 간단한 데이터 바인딩 도우미와 예제.
