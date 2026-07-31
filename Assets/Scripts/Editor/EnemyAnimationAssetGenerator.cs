@@ -38,8 +38,20 @@ namespace MoonRabbitRush.Editor.Animation
         [InitializeOnLoadMethod]
         private static void GenerateMissingAssets()
         {
-            if (AssetDatabase.LoadAssetAtPath<AnimatorController>(
-                    BaseControllerPath) == null)
+            bool isBaseControllerMissing =
+                AssetDatabase.LoadAssetAtPath<AnimatorController>(
+                    BaseControllerPath) == null;
+            bool isFacingViewMissing = Definitions.Any(definition =>
+            {
+                GameObject prefab =
+                    AssetDatabase.LoadAssetAtPath<GameObject>(
+                        definition.PrefabPath);
+                return prefab == null ||
+                    prefab.GetComponent<
+                        MoonRabbitRush.Enemies.EnemyFacingView>() == null;
+            });
+
+            if (isBaseControllerMissing || isFacingViewMissing)
             {
                 EditorApplication.delayCall += Generate;
             }
@@ -243,6 +255,14 @@ namespace MoonRabbitRush.Editor.Animation
                 animator.applyRootMotion = false;
                 animator.updateMode = AnimatorUpdateMode.Normal;
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+
+                if (prefabRoot.GetComponent<
+                        MoonRabbitRush.Enemies.EnemyFacingView>() == null)
+                {
+                    prefabRoot.AddComponent<
+                        MoonRabbitRush.Enemies.EnemyFacingView>();
+                }
+
                 PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
             }
             finally
