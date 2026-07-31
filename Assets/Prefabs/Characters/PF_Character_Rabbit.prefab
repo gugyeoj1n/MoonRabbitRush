@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d5b8c92dc224740819628e17d3b7f59, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.PlayerExperience
   _experienceTable: {fileID: 11400000, guid: bc6ab4b70bd94ca99439e24467df54b0, type: 2}
 --- !u!114 &8303775886752669977
@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4914ca7c5244a33b39fc833571094cb, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.PlayerLootCollector
   _lootRadius: 2.5
 --- !u!1 &2631563025026958660
