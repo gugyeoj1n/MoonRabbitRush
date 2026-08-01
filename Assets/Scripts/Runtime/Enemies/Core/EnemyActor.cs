@@ -13,7 +13,10 @@ namespace MoonRabbitRush.Enemies
     {
         [SerializeField] private EnemyStatsData _stats;
         [SerializeField] private ExperienceDrop _experienceDropPrefab;
+
+        [Header("Death Feedback")]
         [SerializeField, Min(0f)] private float _deathFeedbackDuration = 0.2f;
+        [SerializeField, Min(0f)] private float _deathHoldDuration = 0.2f;
 
         [Header("Hit Reaction")]
         [SerializeField] private bool _receivesHitReaction = true;
@@ -32,6 +35,8 @@ namespace MoonRabbitRush.Enemies
             gameObject.activeInHierarchy && _health != null && _health.IsAlive;
         public EnemyHealth Health => _health;
         public float DeathFeedbackDuration => _deathFeedbackDuration;
+        public float DeathDeactivationDelay =>
+            _deathFeedbackDuration + _deathHoldDuration;
 
         private void Awake()
         {
@@ -191,7 +196,7 @@ namespace MoonRabbitRush.Enemies
             try
             {
                 await UniTask.Delay(
-                    TimeSpan.FromSeconds(_deathFeedbackDuration),
+                    TimeSpan.FromSeconds(DeathDeactivationDelay),
                     DelayType.DeltaTime,
                     PlayerLoopTiming.Update,
                     cancellationToken);
