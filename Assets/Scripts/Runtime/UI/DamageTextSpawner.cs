@@ -90,6 +90,15 @@ namespace MoonRabbitRush.UI
             }
 
             _worldCamera = Camera.main;
+            if (_worldCamera != null)
+            {
+                return;
+            }
+
+            if (ManagerRoot.Instance?.CameraMaanger != null)
+            {
+                _worldCamera = ManagerRoot.Instance.CameraMaanger.MainCamera;
+            }
         }
     }
 }
