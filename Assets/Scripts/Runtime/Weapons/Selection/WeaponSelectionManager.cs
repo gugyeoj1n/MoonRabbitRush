@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Core;
 using MoonRabbitRush.Progression;
 using UnityEngine;
@@ -10,14 +10,15 @@ namespace MoonRabbitRush.Weapons.Selection
     {
         private const int OptionCount = 3;
 
-        [SerializeField] private PlayerExperience _playerExperience;
-        [SerializeField] private WeaponController _weaponController;
+        [SerializeField] private Transform _playerRoot;
         [SerializeField] private GameStateManager _gameStateManager;
         [SerializeField] private WeaponSelectionPopup _selectionPopup;
         [SerializeField] private WeaponData[] _weaponPool;
 
         private readonly List<WeaponSelectionOption> _candidates = new();
         private readonly List<WeaponSelectionOption> _visibleOptions = new();
+        private PlayerExperience _playerExperience;
+        private WeaponController _weaponController;
         private int _pendingSelections;
         private bool _isSelecting;
 
@@ -108,16 +109,16 @@ namespace MoonRabbitRush.Weapons.Selection
 
             if (_pendingSelections > 0)
             {
-                StartCoroutine(OpenNextSelection());
+                OpenNextSelectionAsync().Forget();
                 return;
             }
 
             _gameStateManager.TryChangeState(InGameState.Playing);
         }
 
-        private IEnumerator OpenNextSelection()
+        private async UniTaskVoid OpenNextSelectionAsync()
         {
-            yield return null;
+            await UniTask.NextFrame();
             OpenSelection();
         }
 
@@ -170,11 +171,11 @@ namespace MoonRabbitRush.Weapons.Selection
 
         private void ResolveReferences()
         {
-            _playerExperience ??= FindAnyObjectByType<PlayerExperience>();
-            _weaponController ??= FindAnyObjectByType<WeaponController>();
-            _gameStateManager ??= FindAnyObjectByType<GameStateManager>();
-            _selectionPopup ??= FindAnyObjectByType<WeaponSelectionPopup>(
-                FindObjectsInactive.Include);
+            if (_playerRoot != null)
+            {
+                _playerExperience ??= _playerRoot.GetComponent<PlayerExperience>();
+                _weaponController ??= _playerRoot.GetComponent<WeaponController>();
+            }
         }
 
         private bool ValidateReferences()

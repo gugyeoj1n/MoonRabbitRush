@@ -1,4 +1,6 @@
 using System.Globalization;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +15,7 @@ namespace MoonRabbitRush.Weapons.Active
         [SerializeField] private TMP_Text _keyBindText;
 
         private WeaponActiveSlot _slot;
+        private CancellationTokenSource _refreshCts;
 
         public void Bind(WeaponActiveSlot slot)
         {
@@ -21,11 +24,17 @@ namespace MoonRabbitRush.Weapons.Active
             _weaponIcon.enabled = slot.Data.Icon != null;
             _keyBindText.text = slot.KeyLabel;
             Refresh();
+            RestartRefreshLoop();
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            Refresh();
+            RestartRefreshLoop();
+        }
+
+        private void OnDisable()
+        {
+            CancelRefreshLoop();
         }
 
         private void Refresh()
@@ -43,6 +52,42 @@ namespace MoonRabbitRush.Weapons.Active
                 _cooldownText.text = _slot.CooldownRemaining.ToString(
                     "00.00",
                     CultureInfo.InvariantCulture);
+            }
+        }
+
+        private void RestartRefreshLoop()
+        {
+            if (!isActiveAndEnabled || _slot == null)
+            {
+                return;
+            }
+
+            CancelRefreshLoop();
+            _refreshCts = CancellationTokenSource.CreateLinkedTokenSource(
+                destroyCancellationToken);
+            RefreshLoopAsync(_refreshCts.Token).Forget();
+        }
+
+        private void CancelRefreshLoop()
+        {
+            if (_refreshCts == null)
+            {
+                return;
+            }
+
+            _refreshCts.Cancel();
+            _refreshCts.Dispose();
+            _refreshCts = null;
+        }
+
+        private async UniTaskVoid RefreshLoopAsync(CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                Refresh();
+                await UniTask.Yield(
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
             }
         }
     }

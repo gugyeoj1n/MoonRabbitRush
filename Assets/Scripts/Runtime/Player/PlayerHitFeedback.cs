@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MoonRabbitRush.Player
@@ -16,7 +18,7 @@ namespace MoonRabbitRush.Player
         private PlayerHealth _health;
         private SpriteRenderer _spriteRenderer;
         private Color _baseColor;
-        private Coroutine _feedbackRoutine;
+        private CancellationTokenSource _feedbackCts;
 
         private void Awake()
         {
@@ -40,41 +42,49 @@ namespace MoonRabbitRush.Player
 
         private void PlayHitFeedback(float _)
         {
-            if (_feedbackRoutine != null)
-            {
-                StopCoroutine(_feedbackRoutine);
-            }
-
-            _feedbackRoutine = StartCoroutine(HitFeedbackRoutine());
+            CancelFeedbackTask();
+            _feedbackCts = new CancellationTokenSource();
+            PlayHitFeedbackAsync(_feedbackCts.Token).Forget();
         }
 
-        private IEnumerator HitFeedbackRoutine()
+        private async UniTaskVoid PlayHitFeedbackAsync(
+            CancellationToken cancellationToken)
         {
-            _spriteRenderer.color = _hitColor;
-            yield return new WaitForSeconds(_hitColorDuration);
-
-            bool isDimmed = false;
-
-            while (_health.IsInvincible)
+            try
             {
-                isDimmed = !isDimmed;
-                Color color = _baseColor;
-                color.a = isDimmed ? _invincibleAlpha : _baseColor.a;
-                _spriteRenderer.color = color;
-                yield return new WaitForSeconds(_blinkInterval);
-            }
+                _spriteRenderer.color = _hitColor;
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_hitColorDuration),
+                    DelayType.DeltaTime,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
 
-            _spriteRenderer.color = _baseColor;
-            _feedbackRoutine = null;
+                bool isDimmed = false;
+
+                while (_health.IsInvincible)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    isDimmed = !isDimmed;
+                    Color color = _baseColor;
+                    color.a = isDimmed ? _invincibleAlpha : _baseColor.a;
+                    _spriteRenderer.color = color;
+                    await UniTask.Delay(
+                        TimeSpan.FromSeconds(_blinkInterval),
+                        DelayType.DeltaTime,
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
+
+                _spriteRenderer.color = _baseColor;
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         private void StopFeedback()
         {
-            if (_feedbackRoutine != null)
-            {
-                StopCoroutine(_feedbackRoutine);
-                _feedbackRoutine = null;
-            }
+            CancelFeedbackTask();
 
             if (_spriteRenderer != null)
             {
@@ -84,13 +94,20 @@ namespace MoonRabbitRush.Player
 
         private void PlayDeathFeedback()
         {
-            if (_feedbackRoutine != null)
+            CancelFeedbackTask();
+            _spriteRenderer.color = _deathColor;
+        }
+
+        private void CancelFeedbackTask()
+        {
+            if (_feedbackCts == null)
             {
-                StopCoroutine(_feedbackRoutine);
-                _feedbackRoutine = null;
+                return;
             }
 
-            _spriteRenderer.color = _deathColor;
+            _feedbackCts.Cancel();
+            _feedbackCts.Dispose();
+            _feedbackCts = null;
         }
     }
 }

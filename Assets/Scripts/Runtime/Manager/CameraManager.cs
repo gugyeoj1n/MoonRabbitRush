@@ -4,10 +4,16 @@ namespace MoonRabbitRush
 {
     public class CameraMaanger : MonoBehaviour
     {
-        Camera MainCamera;
-        private void Start()
+        public Camera MainCamera { get; private set; }
+
+        private void Awake()
         {
-            
+            MainCamera = GetComponent<Camera>();
+
+            if (MainCamera == null)
+            {
+                MainCamera = GetComponentInChildren<Camera>();
+            }
         }
     }
 }

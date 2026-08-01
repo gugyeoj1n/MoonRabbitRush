@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using MoonRabbitRush.Player;
 using UnityEngine;
@@ -28,7 +30,8 @@ namespace MoonRabbitRush.Enemies.Bosses
             _targetMovement = target.GetComponent<PlayerMovement>();
         }
 
-        public override IEnumerator Execute()
+        public override async UniTask ExecuteAsync(
+            CancellationToken cancellationToken)
         {
             var telegraphObject =
                 new GameObject("Boss Gravity Telegraph");
@@ -44,29 +47,37 @@ namespace MoonRabbitRush.Enemies.Bosses
                 _fillColor,
                 _verticalScale);
 
-            float elapsed = 0f;
-
-            while (elapsed < _chargeDuration)
+            try
             {
-                elapsed += Time.deltaTime;
-                Vector2 targetPosition = Target.position;
-                Vector2 toBoss = (Vector2)transform.position - targetPosition;
-                float distance = toBoss.magnitude;
+                float elapsed = 0f;
 
-                if (distance > Mathf.Epsilon && distance <= _radius)
+                while (elapsed < _chargeDuration)
                 {
-                    _targetMovement?.SetExternalVelocity(
-                        toBoss.normalized * _resistanceSpeed);
-                }
-                else
-                {
-                    ClearMovementResistance();
-                }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    elapsed += Time.deltaTime;
+                    Vector2 targetPosition = Target.position;
+                    Vector2 toBoss = (Vector2)transform.position - targetPosition;
+                    float distance = toBoss.magnitude;
 
-                yield return null;
+                    if (distance > Mathf.Epsilon && distance <= _radius)
+                    {
+                        _targetMovement?.SetExternalVelocity(
+                            toBoss.normalized * _resistanceSpeed);
+                    }
+                    else
+                    {
+                        ClearMovementResistance();
+                    }
+
+                    await UniTask.Yield(
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
             }
-
-            ClearMovementResistance();
+            finally
+            {
+                ClearMovementResistance();
+            }
 
             if (TargetDamageable.IsAlive &&
                 Vector2.Distance(Target.position, transform.position) <= _radius)

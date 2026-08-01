@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies.Bosses
@@ -9,7 +11,7 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField, Min(0f)] private float _initialDelay = 0.8f;
         [SerializeField, Min(0f)] private float _patternInterval = 0.7f;
 
-        private Coroutine _patternRoutine;
+        private CancellationTokenSource _patternCts;
 
         public override void Initialize(
             Transform target,
@@ -22,51 +24,58 @@ namespace MoonRabbitRush.Enemies.Bosses
                 _patterns = GetComponents<BossAttackPattern>();
             }
 
-            if (_patternRoutine != null)
-            {
-                StopCoroutine(_patternRoutine);
-            }
-
-            _patternRoutine = StartCoroutine(RunPatterns());
+            CancelPatternLoop();
+            _patternCts = new CancellationTokenSource();
+            RunPatternsAsync(_patternCts.Token).Forget();
         }
 
         private void OnDisable()
         {
-            if (_patternRoutine != null)
-            {
-                StopCoroutine(_patternRoutine);
-                _patternRoutine = null;
-            }
+            CancelPatternLoop();
         }
 
-        private IEnumerator RunPatterns()
+        private async UniTaskVoid RunPatternsAsync(CancellationToken cancellationToken)
         {
-            if (_initialDelay > 0f)
+            try
             {
-                yield return new WaitForSeconds(_initialDelay);
+                if (_initialDelay > 0f)
+                {
+                    await UniTask.Delay(
+                        TimeSpan.FromSeconds(_initialDelay),
+                        DelayType.DeltaTime,
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
+
+                int patternIndex = 0;
+
+                while (enabled && gameObject.activeInHierarchy)
+                {
+                    if (_patterns == null || _patterns.Length == 0)
+                    {
+                        return;
+                    }
+
+                    BossAttackPattern pattern = _patterns[patternIndex];
+                    patternIndex = (patternIndex + 1) % _patterns.Length;
+
+                    if (pattern != null && pattern.IsReady)
+                    {
+                        await pattern.ExecuteAsync(cancellationToken);
+                    }
+
+                    if (_patternInterval > 0f)
+                    {
+                        await UniTask.Delay(
+                            TimeSpan.FromSeconds(_patternInterval),
+                            DelayType.DeltaTime,
+                            PlayerLoopTiming.Update,
+                            cancellationToken);
+                    }
+                }
             }
-
-            int patternIndex = 0;
-
-            while (enabled && gameObject.activeInHierarchy)
+            catch (OperationCanceledException)
             {
-                if (_patterns == null || _patterns.Length == 0)
-                {
-                    yield break;
-                }
-
-                BossAttackPattern pattern = _patterns[patternIndex];
-                patternIndex = (patternIndex + 1) % _patterns.Length;
-
-                if (pattern != null && pattern.IsReady)
-                {
-                    yield return pattern.Execute();
-                }
-
-                if (_patternInterval > 0f)
-                {
-                    yield return new WaitForSeconds(_patternInterval);
-                }
             }
         }
 
@@ -74,6 +83,18 @@ namespace MoonRabbitRush.Enemies.Bosses
         {
             _initialDelay = Mathf.Max(0f, _initialDelay);
             _patternInterval = Mathf.Max(0f, _patternInterval);
+        }
+
+        private void CancelPatternLoop()
+        {
+            if (_patternCts == null)
+            {
+                return;
+            }
+
+            _patternCts.Cancel();
+            _patternCts.Dispose();
+            _patternCts = null;
         }
     }
 }

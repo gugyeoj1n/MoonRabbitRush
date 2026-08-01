@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using MoonRabbitRush.Progression;
 using UnityEngine;
@@ -22,7 +24,7 @@ namespace MoonRabbitRush.Enemies
         private EnemyMotor _motor;
         private EnemyBehaviour[] _behaviours;
         private Collider2D[] _colliders;
-        private Coroutine _deactivateRoutine;
+        private CancellationTokenSource _deactivateCts;
         private PlayerLootCollector _lootCollector;
         private bool _isInitialized;
 
@@ -85,11 +87,7 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
-            if (_deactivateRoutine != null)
-            {
-                StopCoroutine(_deactivateRoutine);
-                _deactivateRoutine = null;
-            }
+            CancelDeactivateTask();
 
             gameObject.SetActive(true);
             _health.ResetHealth();
@@ -116,6 +114,7 @@ namespace MoonRabbitRush.Enemies
 
         private void OnDisable()
         {
+            CancelDeactivateTask();
             EnemyRegistry.Unregister(this);
         }
 
@@ -134,7 +133,9 @@ namespace MoonRabbitRush.Enemies
                 behaviour.enabled = false;
             }
 
-            _deactivateRoutine = StartCoroutine(DeactivateAfterFeedback());
+            CancelDeactivateTask();
+            _deactivateCts = new CancellationTokenSource();
+            DeactivateAfterFeedbackAsync(_deactivateCts.Token).Forget();
         }
 
         private void DropExperience()
@@ -183,11 +184,33 @@ namespace MoonRabbitRush.Enemies
                 : -_motor.MoveDirection;
         }
 
-        private IEnumerator DeactivateAfterFeedback()
+        private async UniTaskVoid DeactivateAfterFeedbackAsync(
+            CancellationToken cancellationToken)
         {
-            yield return new WaitForSeconds(_deathFeedbackDuration);
-            _deactivateRoutine = null;
-            Deactivate();
+            try
+            {
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_deathFeedbackDuration),
+                    DelayType.DeltaTime,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
+                Deactivate();
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        private void CancelDeactivateTask()
+        {
+            if (_deactivateCts == null)
+            {
+                return;
+            }
+
+            _deactivateCts.Cancel();
+            _deactivateCts.Dispose();
+            _deactivateCts = null;
         }
     }
 }

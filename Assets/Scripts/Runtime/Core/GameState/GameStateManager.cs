@@ -6,7 +6,9 @@ namespace MoonRabbitRush.Core
 {
     public sealed class GameStateManager : MonoBehaviour
     {
-        [SerializeField] private PlayerHealth _playerHealth;
+        [SerializeField] private Transform _playerRoot;
+
+        private PlayerHealth _playerHealth;
 
         public InGameState CurrentState { get; private set; } =
             InGameState.Playing;
@@ -99,9 +101,9 @@ namespace MoonRabbitRush.Core
 
         private void ResolvePlayerHealth()
         {
-            if (_playerHealth == null)
+            if (_playerHealth == null && _playerRoot != null)
             {
-                _playerHealth = FindAnyObjectByType<PlayerHealth>();
+                _playerHealth = _playerRoot.GetComponent<PlayerHealth>();
             }
         }
 

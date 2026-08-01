@@ -1,5 +1,6 @@
 using System;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MoonRabbitRush.Combat
@@ -8,7 +9,7 @@ namespace MoonRabbitRush.Combat
     {
         [SerializeField, Min(0f)] private float _duration = 0.5f;
 
-        private Coroutine _releaseRoutine;
+        private CancellationTokenSource _releaseCts;
         private bool _isReleased;
 
         public event Action<TimedEffect> Released;
@@ -16,16 +17,14 @@ namespace MoonRabbitRush.Combat
         private void OnEnable()
         {
             _isReleased = false;
-            _releaseRoutine = StartCoroutine(ReleaseAfterDuration());
+            CancelReleaseTask();
+            _releaseCts = new CancellationTokenSource();
+            ReleaseAfterDurationAsync(_releaseCts.Token).Forget();
         }
 
         private void OnDisable()
         {
-            if (_releaseRoutine != null)
-            {
-                StopCoroutine(_releaseRoutine);
-                _releaseRoutine = null;
-            }
+            CancelReleaseTask();
         }
 
         public void Release()
@@ -46,11 +45,33 @@ namespace MoonRabbitRush.Combat
             Destroy(gameObject);
         }
 
-        private IEnumerator ReleaseAfterDuration()
+        private async UniTaskVoid ReleaseAfterDurationAsync(
+            CancellationToken cancellationToken)
         {
-            yield return new WaitForSeconds(_duration);
-            _releaseRoutine = null;
-            Release();
+            try
+            {
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_duration),
+                    DelayType.DeltaTime,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
+                Release();
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+
+        private void CancelReleaseTask()
+        {
+            if (_releaseCts == null)
+            {
+                return;
+            }
+
+            _releaseCts.Cancel();
+            _releaseCts.Dispose();
+            _releaseCts = null;
         }
     }
 }

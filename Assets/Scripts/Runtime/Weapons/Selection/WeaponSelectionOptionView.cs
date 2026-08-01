@@ -1,5 +1,6 @@
 using System;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ namespace MoonRabbitRush.Weapons.Selection
         private RectTransform _rectTransform;
         private WeaponSelectionOption _option;
         private Action<WeaponSelectionOption> _selected;
+        private CancellationTokenSource _entranceCts;
         private bool _canSelect;
 
         private void Awake()
@@ -58,8 +60,9 @@ namespace MoonRabbitRush.Weapons.Selection
                     : $"Lv.{option.CurrentLevel} >> Lv.{option.TargetLevel}");
             _descriptionText.SetText(option.Weapon.Description);
 
-            StopAllCoroutines();
-            StartCoroutine(PlayEntrance(entranceDelay));
+            CancelEntranceTask();
+            _entranceCts = new CancellationTokenSource();
+            PlayEntranceAsync(entranceDelay, _entranceCts.Token).Forget();
         }
 
         public void SetInteractable(bool interactable)
@@ -68,32 +71,46 @@ namespace MoonRabbitRush.Weapons.Selection
             _button.interactable = interactable;
         }
 
-        private IEnumerator PlayEntrance(float delay)
+        private async UniTaskVoid PlayEntranceAsync(
+            float delay,
+            CancellationToken cancellationToken)
         {
-            _canvasGroup.alpha = 0f;
-            _rectTransform.localScale = Vector3.one * _entranceScale;
-
-            float delayElapsed = 0f;
-            while (delayElapsed < delay)
+            try
             {
-                delayElapsed += Time.unscaledDeltaTime;
-                yield return null;
-            }
+                _canvasGroup.alpha = 0f;
+                _rectTransform.localScale = Vector3.one * _entranceScale;
 
-            float elapsed = 0f;
-            while (elapsed < _entranceDuration)
+                float delayElapsed = 0f;
+                while (delayElapsed < delay)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    delayElapsed += Time.unscaledDeltaTime;
+                    await UniTask.Yield(
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
+
+                float elapsed = 0f;
+                while (elapsed < _entranceDuration)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    elapsed += Time.unscaledDeltaTime;
+                    float progress = Mathf.Clamp01(elapsed / _entranceDuration);
+                    float eased = 1f - Mathf.Pow(1f - progress, 3f);
+                    _canvasGroup.alpha = eased;
+                    _rectTransform.localScale =
+                        Vector3.one * Mathf.Lerp(_entranceScale, 1f, eased);
+                    await UniTask.Yield(
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
+
+                _canvasGroup.alpha = 1f;
+                _rectTransform.localScale = Vector3.one;
+            }
+            catch (OperationCanceledException)
             {
-                elapsed += Time.unscaledDeltaTime;
-                float progress = Mathf.Clamp01(elapsed / _entranceDuration);
-                float eased = 1f - Mathf.Pow(1f - progress, 3f);
-                _canvasGroup.alpha = eased;
-                _rectTransform.localScale =
-                    Vector3.one * Mathf.Lerp(_entranceScale, 1f, eased);
-                yield return null;
             }
-
-            _canvasGroup.alpha = 1f;
-            _rectTransform.localScale = Vector3.one;
         }
 
         private void HandleClick()
@@ -105,6 +122,23 @@ namespace MoonRabbitRush.Weapons.Selection
 
             _canSelect = false;
             _selected?.Invoke(_option);
+        }
+
+        private void OnDisable()
+        {
+            CancelEntranceTask();
+        }
+
+        private void CancelEntranceTask()
+        {
+            if (_entranceCts == null)
+            {
+                return;
+            }
+
+            _entranceCts.Cancel();
+            _entranceCts.Dispose();
+            _entranceCts = null;
         }
     }
 }

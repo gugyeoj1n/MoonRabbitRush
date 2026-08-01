@@ -11,10 +11,11 @@ namespace MoonRabbitRush.Weapons.Active
         private static readonly Key[] SlotKeys = { Key.Q, Key.W, Key.E };
         private static readonly string[] SlotLabels = { "Q", "W", "E" };
 
-        [SerializeField] private WeaponController _weaponController;
+        [SerializeField] private Transform _playerRoot;
         [SerializeField] private GameStateManager _gameStateManager;
 
         private readonly List<WeaponActiveSlot> _slots = new();
+        private WeaponController _weaponController;
 
         public IReadOnlyList<WeaponActiveSlot> Slots => _slots;
         public event Action<WeaponActiveSlot> SlotAdded;
@@ -46,11 +47,6 @@ namespace MoonRabbitRush.Weapons.Active
 
         private void Update()
         {
-            foreach (WeaponActiveSlot slot in _slots)
-            {
-                slot.Tick(Time.deltaTime);
-            }
-
             if (_gameStateManager != null && !_gameStateManager.IsPlaying)
             {
                 return;
@@ -105,14 +101,9 @@ namespace MoonRabbitRush.Weapons.Active
 
         private void ResolveReferences()
         {
-            if (_weaponController == null)
+            if (_weaponController == null && _playerRoot != null)
             {
-                _weaponController = FindAnyObjectByType<WeaponController>();
-            }
-
-            if (_gameStateManager == null)
-            {
-                _gameStateManager = FindAnyObjectByType<GameStateManager>();
+                _weaponController = _playerRoot.GetComponent<WeaponController>();
             }
         }
     }

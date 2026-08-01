@@ -5,6 +5,7 @@ namespace MoonRabbitRush.Weapons.Active
     public sealed class WeaponActiveSlot
     {
         private readonly WeaponBehaviour _behaviour;
+        private float _cooldownReadyTime;
 
         public WeaponActiveSlot(
             WeaponBehaviour behaviour,
@@ -19,14 +20,9 @@ namespace MoonRabbitRush.Weapons.Active
         public WeaponData Data => _behaviour.Data;
         public Key Key { get; }
         public string KeyLabel { get; }
-        public float CooldownRemaining { get; private set; }
+        public float CooldownRemaining =>
+            UnityEngine.Mathf.Max(0f, _cooldownReadyTime - UnityEngine.Time.time);
         public bool IsCoolingDown => CooldownRemaining > 0f;
-
-        public void Tick(float deltaTime)
-        {
-            CooldownRemaining =
-                UnityEngine.Mathf.Max(0f, CooldownRemaining - deltaTime);
-        }
 
         public bool TryActivate()
         {
@@ -35,7 +31,7 @@ namespace MoonRabbitRush.Weapons.Active
                 return false;
             }
 
-            CooldownRemaining = Data.ActiveCooldown;
+            _cooldownReadyTime = UnityEngine.Time.time + Data.ActiveCooldown;
             return true;
         }
     }

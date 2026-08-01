@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,18 +9,23 @@ namespace MoonRabbitRush.Enemies
         private static readonly HashSet<EnemyActor> ActiveEnemies = new();
 
         public static int ActiveCount => ActiveEnemies.Count;
+        public static event Action<int> ActiveCountChanged;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void Clear()
         {
             ActiveEnemies.Clear();
+            ActiveCountChanged = null;
         }
 
         public static void Register(EnemyActor enemy)
         {
             if (enemy != null)
             {
-                ActiveEnemies.Add(enemy);
+                if (ActiveEnemies.Add(enemy))
+                {
+                    ActiveCountChanged?.Invoke(ActiveEnemies.Count);
+                }
             }
         }
 
@@ -27,7 +33,10 @@ namespace MoonRabbitRush.Enemies
         {
             if (enemy != null)
             {
-                ActiveEnemies.Remove(enemy);
+                if (ActiveEnemies.Remove(enemy))
+                {
+                    ActiveCountChanged?.Invoke(ActiveEnemies.Count);
+                }
             }
         }
 
