@@ -18,12 +18,8 @@ namespace MoonRabbitRush.UI
         private void Awake()
         {
             _container = (RectTransform)transform;
-            _canvas = GetComponentInParent<Canvas>();
-
-            if (_worldCamera == null)
-            {
-                _worldCamera = Camera.main;
-            }
+            ResolveCanvas();
+            ResolveWorldCamera();
         }
 
         private void OnEnable()
@@ -38,6 +34,9 @@ namespace MoonRabbitRush.UI
 
         private void Spawn(float amount, Vector3 worldPosition, bool isPlayer)
         {
+            ResolveCanvas();
+            ResolveWorldCamera();
+
             if (_damageTextPrefab == null || _worldCamera == null || _canvas == null)
             {
                 return;
@@ -72,6 +71,28 @@ namespace MoonRabbitRush.UI
             if (range.x > range.y)
             {
                 (range.x, range.y) = (range.y, range.x);
+            }
+        }
+
+        private void ResolveCanvas()
+        {
+            if (_canvas == null)
+            {
+                _canvas = GetComponentInParent<Canvas>();
+            }
+        }
+
+        private void ResolveWorldCamera()
+        {
+            if (_worldCamera != null)
+            {
+                return;
+            }
+
+            _worldCamera = Camera.main;
+            if (_worldCamera == null)
+            {
+                _worldCamera = FindAnyObjectByType<Camera>();
             }
         }
     }
