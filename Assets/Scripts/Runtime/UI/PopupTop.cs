@@ -32,8 +32,6 @@ namespace MoonRabbitRush
             DataBindingManager.BindText(Property.PlayerMaxHealth, totalHP);
             DataBindingManager.BindSliderRatio(Property.PlayerHealth, Property.PlayerMaxHealth, HpSlider);
 
-            DataBindingManager.BindText(Property.PlayerExperience, curHP);
-            DataBindingManager.BindText(Property.PlayerExperience, totalHP);
             DataBindingManager.BindSliderRatio(Property.PlayerExperience, Property.PlayerMaxExperience, ExpSlider);
 
             DataBindingManager.BindText(Property.MonsterRemain, monsterNumber);
