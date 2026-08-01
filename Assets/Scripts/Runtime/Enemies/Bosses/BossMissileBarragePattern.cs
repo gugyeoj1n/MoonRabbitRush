@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using UnityEngine;
 
@@ -23,15 +25,17 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField] private Color _fillColor =
             new Color32(255, 129, 129, 115);
 
-        public override IEnumerator Execute()
+        public override async UniTask ExecuteAsync(
+            CancellationToken cancellationToken)
         {
             if (_projectilePrefab == null)
             {
-                yield break;
+                return;
             }
 
             for (int index = 0; index < _missileCount; index++)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 Vector2 offset = index == 0
                     ? Vector2.zero
                     : Random.insideUnitCircle * _randomOffsetRadius;
@@ -66,11 +70,19 @@ namespace MoonRabbitRush.Enemies.Bosses
 
                 if (_spawnInterval > 0f)
                 {
-                    yield return new WaitForSeconds(_spawnInterval);
+                    await UniTask.Delay(
+                        TimeSpan.FromSeconds(_spawnInterval),
+                        DelayType.DeltaTime,
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
                 }
             }
 
-            yield return new WaitForSeconds(_telegraphDuration);
+            await UniTask.Delay(
+                TimeSpan.FromSeconds(_telegraphDuration),
+                DelayType.DeltaTime,
+                PlayerLoopTiming.Update,
+                cancellationToken);
         }
 
         private void OnValidate()

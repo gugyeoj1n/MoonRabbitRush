@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using UnityEngine;
 
@@ -29,7 +31,8 @@ namespace MoonRabbitRush.Enemies.Bosses
             _targetCollider = target.GetComponent<Collider2D>();
         }
 
-        public override IEnumerator Execute()
+        public override async UniTask ExecuteAsync(
+            CancellationToken cancellationToken)
         {
             Vector2 origin = transform.position;
             Vector2 targetDirection =
@@ -49,32 +52,47 @@ namespace MoonRabbitRush.Enemies.Bosses
                 _telegraphWidth,
                 _telegraphColor);
 
-            yield return new WaitForSeconds(_telegraphDuration);
-
-            _activeLine.SetColor(_beamColor);
-            float elapsed = 0f;
-            float nextDamageTime = 0f;
-
-            while (elapsed < _sweepDuration)
+            try
             {
-                elapsed += Time.deltaTime;
-                float progress = Mathf.Clamp01(elapsed / _sweepDuration);
-                float angle = Mathf.Lerp(startAngle, endAngle, progress);
-                Vector2 direction = DirectionFromAngle(angle);
-                origin = transform.position;
-                _activeLine.SetDirection(origin, direction);
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_telegraphDuration),
+                    DelayType.DeltaTime,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
 
-                if (elapsed >= nextDamageTime &&
-                    TryDamageTarget(origin, direction))
+                _activeLine.SetColor(_beamColor);
+                float elapsed = 0f;
+                float nextDamageTime = 0f;
+
+                while (elapsed < _sweepDuration)
                 {
-                    nextDamageTime = elapsed + _damageInterval;
+                    cancellationToken.ThrowIfCancellationRequested();
+                    elapsed += Time.deltaTime;
+                    float progress = Mathf.Clamp01(elapsed / _sweepDuration);
+                    float angle = Mathf.Lerp(startAngle, endAngle, progress);
+                    Vector2 direction = DirectionFromAngle(angle);
+                    origin = transform.position;
+                    _activeLine.SetDirection(origin, direction);
+
+                    if (elapsed >= nextDamageTime &&
+                        TryDamageTarget(origin, direction))
+                    {
+                        nextDamageTime = elapsed + _damageInterval;
+                    }
+
+                    await UniTask.Yield(
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
                 }
-
-                yield return null;
             }
-
-            _activeLine.Release();
-            _activeLine = null;
+            finally
+            {
+                if (_activeLine != null)
+                {
+                    _activeLine.Release();
+                    _activeLine = null;
+                }
+            }
         }
 
         private void OnDisable()

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Core;
 using MoonRabbitRush.Progression;
 using UnityEngine;
@@ -108,16 +109,16 @@ namespace MoonRabbitRush.Weapons.Selection
 
             if (_pendingSelections > 0)
             {
-                StartCoroutine(OpenNextSelection());
+                OpenNextSelectionAsync().Forget();
                 return;
             }
 
             _gameStateManager.TryChangeState(InGameState.Playing);
         }
 
-        private IEnumerator OpenNextSelection()
+        private async UniTaskVoid OpenNextSelectionAsync()
         {
-            yield return null;
+            await UniTask.NextFrame();
             OpenSelection();
         }
 

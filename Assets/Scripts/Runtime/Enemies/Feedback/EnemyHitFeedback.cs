@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
@@ -14,7 +16,7 @@ namespace MoonRabbitRush.Enemies
         private EnemyHealth _health;
         private SpriteRenderer _spriteRenderer;
         private Color _baseColor;
-        private Coroutine _flashRoutine;
+        private CancellationTokenSource _flashCts;
 
         private void Awake()
         {
@@ -34,41 +36,51 @@ namespace MoonRabbitRush.Enemies
         {
             _health.Damaged -= PlayHitFlash;
             _health.Died -= PlayDeathFeedback;
-
-            if (_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-                _flashRoutine = null;
-            }
+            CancelFlashTask();
+            _spriteRenderer.color = _baseColor;
         }
 
         private void PlayHitFlash(float _)
         {
-            if (_flashRoutine != null)
-            {
-                StopCoroutine(_flashRoutine);
-            }
-
-            _flashRoutine = StartCoroutine(HitFlashRoutine());
+            CancelFlashTask();
+            _flashCts = new CancellationTokenSource();
+            PlayHitFlashAsync(_flashCts.Token).Forget();
         }
 
-        private IEnumerator HitFlashRoutine()
+        private async UniTaskVoid PlayHitFlashAsync(
+            CancellationToken cancellationToken)
         {
-            _spriteRenderer.color = _hitColor;
-            yield return new WaitForSeconds(_hitFlashDuration);
-            _spriteRenderer.color = _baseColor;
-            _flashRoutine = null;
+            try
+            {
+                _spriteRenderer.color = _hitColor;
+                await UniTask.Delay(
+                    TimeSpan.FromSeconds(_hitFlashDuration),
+                    DelayType.DeltaTime,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
+                _spriteRenderer.color = _baseColor;
+            }
+            catch (OperationCanceledException)
+            {
+            }
         }
 
         private void PlayDeathFeedback()
         {
-            if (_flashRoutine != null)
+            CancelFlashTask();
+            _spriteRenderer.color = _deathColor;
+        }
+
+        private void CancelFlashTask()
+        {
+            if (_flashCts == null)
             {
-                StopCoroutine(_flashRoutine);
-                _flashRoutine = null;
+                return;
             }
 
-            _spriteRenderer.color = _deathColor;
+            _flashCts.Cancel();
+            _flashCts.Dispose();
+            _flashCts = null;
         }
     }
 }

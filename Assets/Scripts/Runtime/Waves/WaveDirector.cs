@@ -1,5 +1,6 @@
 using System;
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Enemies;
 using UnityEngine;
 
@@ -12,12 +13,12 @@ namespace MoonRabbitRush.Waves
         [SerializeField] private bool _startOnEnable = true;
 
         private EnemySpawner _spawner;
-        private Coroutine _waveRoutine;
+        private CancellationTokenSource _waveCts;
         private int _waveIndex = -1;
         private int _currentWaveEnemyCount;
 
         public int CurrentWave { get; private set; }
-        public bool IsRunning => _waveRoutine != null;
+        public bool IsRunning => _waveCts != null;
         public int SpawnedEnemyCount { get; private set; }
         public int RemainingEnemyCount =>
             Mathf.Max(0, _currentWaveEnemyCount - SpawnedEnemyCount)
@@ -72,15 +73,17 @@ namespace MoonRabbitRush.Waves
             }
 
             _waveIndex = nextIndex;
-            _waveRoutine = StartCoroutine(RunWave(wave));
+            _waveCts = new CancellationTokenSource();
+            RunWaveAsync(wave, _waveCts.Token).Forget();
         }
 
         public void Stop()
         {
-            if (_waveRoutine != null)
+            if (_waveCts != null)
             {
-                StopCoroutine(_waveRoutine);
-                _waveRoutine = null;
+                _waveCts.Cancel();
+                _waveCts.Dispose();
+                _waveCts = null;
             }
 
             SpawnedEnemyCount = 0;
@@ -88,35 +91,51 @@ namespace MoonRabbitRush.Waves
             RemainingEnemyCountChanged?.Invoke(0);
         }
 
-        private IEnumerator RunWave(WaveData wave)
+        private async UniTaskVoid RunWaveAsync(
+            WaveData wave,
+            CancellationToken cancellationToken)
         {
-            CurrentWave = wave.WaveNumber;
-            SpawnedEnemyCount = 0;
-            _currentWaveEnemyCount = wave.TotalEnemyCount;
-            WaveStarted?.Invoke(CurrentWave);
-            RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
-            Debug.Log($"Wave {CurrentWave} started.", this);
-
-            if (wave.SpawnEachEntryOnStart)
+            try
             {
-                SpawnEachEntry(wave);
-            }
+                CurrentWave = wave.WaveNumber;
+                SpawnedEnemyCount = 0;
+                _currentWaveEnemyCount = wave.TotalEnemyCount;
+                WaveStarted?.Invoke(CurrentWave);
+                RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
+                Debug.Log($"Wave {CurrentWave} started.", this);
 
-            while (SpawnedEnemyCount < wave.TotalEnemyCount)
+                if (wave.SpawnEachEntryOnStart)
+                {
+                    SpawnEachEntry(wave);
+                }
+
+                while (SpawnedEnemyCount < wave.TotalEnemyCount)
+                {
+                    await UniTask.Delay(
+                        TimeSpan.FromSeconds(wave.SpawnInterval),
+                        DelayType.DeltaTime,
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                    SpawnBatch(wave);
+                }
+
+                await UniTask.WaitUntil(
+                    () => EnemyRegistry.ActiveCount == 0,
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
+
+                int completedWave = CurrentWave;
+                ClearWaveTask();
+                WaveCompleted?.Invoke(completedWave);
+                RemainingEnemyCountChanged?.Invoke(0);
+                Debug.Log($"Wave {completedWave} completed.", this);
+
+                StartNextWave();
+            }
+            catch (OperationCanceledException)
             {
-                yield return new WaitForSeconds(wave.SpawnInterval);
-                SpawnBatch(wave);
+                ClearWaveTask();
             }
-
-            yield return new WaitUntil(() => EnemyRegistry.ActiveCount == 0);
-
-            int completedWave = CurrentWave;
-            _waveRoutine = null;
-            WaveCompleted?.Invoke(completedWave);
-            RemainingEnemyCountChanged?.Invoke(0);
-            Debug.Log($"Wave {completedWave} completed.", this);
-
-            StartNextWave();
         }
 
         private void SpawnEachEntry(WaveData wave)
@@ -171,6 +190,17 @@ namespace MoonRabbitRush.Waves
             }
 
             RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
+        }
+
+        private void ClearWaveTask()
+        {
+            if (_waveCts == null)
+            {
+                return;
+            }
+
+            _waveCts.Dispose();
+            _waveCts = null;
         }
     }
 }

@@ -1,4 +1,5 @@
-using System.Collections;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using UnityEngine;
 
@@ -28,6 +29,6 @@ namespace MoonRabbitRush.Enemies.Bosses
             }
         }
 
-        public abstract IEnumerator Execute();
+        public abstract UniTask ExecuteAsync(CancellationToken cancellationToken);
     }
 }

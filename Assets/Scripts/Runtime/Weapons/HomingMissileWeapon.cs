@@ -1,5 +1,7 @@
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Enemies;
-using System.Collections;
 using UnityEngine;
 
 namespace MoonRabbitRush.Weapons
@@ -12,6 +14,7 @@ namespace MoonRabbitRush.Weapons
         [SerializeField, Min(0.01f)] private float _activeFireInterval = 0.08f;
 
         private float _cooldownRemaining;
+        private CancellationTokenSource _activeBurstCts;
 
         private void Update()
         {
@@ -52,24 +55,37 @@ namespace MoonRabbitRush.Weapons
                 return false;
             }
 
-            StartCoroutine(FireActiveBurst());
+            CancelActiveBurst();
+            _activeBurstCts = new CancellationTokenSource();
+            FireActiveBurstAsync(_activeBurstCts.Token).Forget();
             return true;
         }
 
-        private IEnumerator FireActiveBurst()
+        private async UniTaskVoid FireActiveBurstAsync(
+            CancellationToken cancellationToken)
         {
-            for (int index = 0; index < _activeMissileCount; index++)
+            try
             {
-                EnemyHealth target = EnemyRegistry.FindClosest(
-                    Owner.position,
-                    Stats.Range);
-
-                if (target != null)
+                for (int index = 0; index < _activeMissileCount; index++)
                 {
-                    FireSingle(target, Vector2.zero);
-                }
+                    EnemyHealth target = EnemyRegistry.FindClosest(
+                        Owner.position,
+                        Stats.Range);
 
-                yield return new WaitForSeconds(_activeFireInterval);
+                    if (target != null)
+                    {
+                        FireSingle(target, Vector2.zero);
+                    }
+
+                    await UniTask.Delay(
+                        TimeSpan.FromSeconds(_activeFireInterval),
+                        DelayType.DeltaTime,
+                        PlayerLoopTiming.Update,
+                        cancellationToken);
+                }
+            }
+            catch (OperationCanceledException)
+            {
             }
         }
 
@@ -119,6 +135,23 @@ namespace MoonRabbitRush.Weapons
                 -_spreadAngle * 0.5f,
                 _spreadAngle * 0.5f,
                 index / (float)(count - 1));
+        }
+
+        private void OnDisable()
+        {
+            CancelActiveBurst();
+        }
+
+        private void CancelActiveBurst()
+        {
+            if (_activeBurstCts == null)
+            {
+                return;
+            }
+
+            _activeBurstCts.Cancel();
+            _activeBurstCts.Dispose();
+            _activeBurstCts = null;
         }
     }
 }
