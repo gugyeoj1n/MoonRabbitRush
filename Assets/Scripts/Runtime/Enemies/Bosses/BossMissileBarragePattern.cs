@@ -38,7 +38,7 @@ namespace MoonRabbitRush.Enemies.Bosses
                 cancellationToken.ThrowIfCancellationRequested();
                 Vector2 offset = index == 0
                     ? Vector2.zero
-                    : Random.insideUnitCircle * _randomOffsetRadius;
+                    : UnityEngine.Random.insideUnitCircle * _randomOffsetRadius;
                 Vector2 impactPosition = (Vector2)Target.position + offset;
 
                 var telegraphObject =

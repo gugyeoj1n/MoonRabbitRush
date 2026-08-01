@@ -40,7 +40,8 @@ namespace MoonRabbitRush.Enemies.Bosses
             float centerAngle = Mathf.Atan2(
                 targetDirection.y,
                 targetDirection.x) * Mathf.Rad2Deg;
-            float sweepDirection = Random.value < 0.5f ? -1f : 1f;
+            float sweepDirection =
+                UnityEngine.Random.value < 0.5f ? -1f : 1f;
             float startAngle =
                 centerAngle - _sweepAngle * 0.5f * sweepDirection;
             float endAngle =
