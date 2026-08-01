@@ -31,6 +31,7 @@ namespace MoonRabbitRush.Enemies
         public bool IsActive =>
             gameObject.activeInHierarchy && _health != null && _health.IsAlive;
         public EnemyHealth Health => _health;
+        public float DeathFeedbackDuration => _deathFeedbackDuration;
 
         private void Awake()
         {

@@ -17,11 +17,13 @@ namespace MoonRabbitRush.Enemies
         private SpriteRenderer _spriteRenderer;
         private Color _baseColor;
         private CancellationTokenSource _flashCts;
+        private EnemyDeathSpriteAnimation _deathSpriteAnimation;
 
         private void Awake()
         {
             _health = GetComponent<EnemyHealth>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _deathSpriteAnimation = GetComponent<EnemyDeathSpriteAnimation>();
             _baseColor = _spriteRenderer.color;
         }
 
@@ -67,6 +69,11 @@ namespace MoonRabbitRush.Enemies
 
         private void PlayDeathFeedback()
         {
+            if (_deathSpriteAnimation != null)
+            {
+                return;
+            }
+
             CancelFlashTask();
             _spriteRenderer.color = _deathColor;
         }
