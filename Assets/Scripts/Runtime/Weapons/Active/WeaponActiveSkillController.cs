@@ -47,11 +47,6 @@ namespace MoonRabbitRush.Weapons.Active
 
         private void Update()
         {
-            foreach (WeaponActiveSlot slot in _slots)
-            {
-                slot.Tick(Time.deltaTime);
-            }
-
             if (_gameStateManager != null && !_gameStateManager.IsPlaying)
             {
                 return;

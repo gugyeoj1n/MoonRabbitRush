@@ -1,3 +1,5 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +23,7 @@ namespace MoonRabbitRush.UI
         private Vector2 _screenOffset;
         private Color _startColor;
         private float _elapsed;
+        private CancellationTokenSource _animationCts;
 
         private void Awake()
         {
@@ -30,26 +33,9 @@ namespace MoonRabbitRush.UI
             _text.outlineWidth = _outlineWidth;
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            _elapsed += Time.deltaTime;
-            float progress = Mathf.Clamp01(_elapsed / _duration);
-            float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
-
-            UpdateScreenPosition(easedProgress);
-
-            Color color = _startColor;
-            color.a = 1f - progress;
-            _text.color = color;
-
-            Color outlineColor = _outlineColor;
-            outlineColor.a = 1f - progress;
-            _text.outlineColor = outlineColor;
-
-            if (progress >= 1f)
-            {
-                Destroy(gameObject);
-            }
+            CancelAnimation();
         }
 
         public void Initialize(
@@ -71,6 +57,7 @@ namespace MoonRabbitRush.UI
             _text.color = _startColor;
             _text.SetText("{0:0}", amount);
             UpdateScreenPosition(0f);
+            RestartAnimation();
         }
 
         private void UpdateScreenPosition(float riseProgress)
@@ -99,6 +86,55 @@ namespace MoonRabbitRush.UI
                     localPosition
                     + _screenOffset
                     + Vector2.up * (_riseDistance * riseProgress);
+            }
+        }
+
+        private void RestartAnimation()
+        {
+            CancelAnimation();
+            _animationCts = CancellationTokenSource.CreateLinkedTokenSource(
+                destroyCancellationToken);
+            AnimateAsync(_animationCts.Token).Forget();
+        }
+
+        private void CancelAnimation()
+        {
+            if (_animationCts == null)
+            {
+                return;
+            }
+
+            _animationCts.Cancel();
+            _animationCts.Dispose();
+            _animationCts = null;
+        }
+
+        private async UniTaskVoid AnimateAsync(CancellationToken cancellationToken)
+        {
+            while (_elapsed < _duration && !cancellationToken.IsCancellationRequested)
+            {
+                _elapsed += Time.deltaTime;
+                float progress = Mathf.Clamp01(_elapsed / _duration);
+                float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
+
+                UpdateScreenPosition(easedProgress);
+
+                Color color = _startColor;
+                color.a = 1f - progress;
+                _text.color = color;
+
+                Color outlineColor = _outlineColor;
+                outlineColor.a = 1f - progress;
+                _text.outlineColor = outlineColor;
+
+                await UniTask.Yield(
+                    PlayerLoopTiming.Update,
+                    cancellationToken);
+            }
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                Destroy(gameObject);
             }
         }
     }
