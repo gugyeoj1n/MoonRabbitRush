@@ -305,6 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyFacingView
   _horizontalDeadZone: 0.01
+  _faceTarget: 1
 --- !u!114 &47826906064824912
 MonoBehaviour:
   m_ObjectHideFlags: 0

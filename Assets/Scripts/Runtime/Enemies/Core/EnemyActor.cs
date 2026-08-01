@@ -34,6 +34,7 @@ namespace MoonRabbitRush.Enemies
         public bool IsActive =>
             gameObject.activeInHierarchy && _health != null && _health.IsAlive;
         public EnemyHealth Health => _health;
+        public Transform Target { get; private set; }
         public float DeathFeedbackDuration => _deathFeedbackDuration;
         public float DeathDeactivationDelay =>
             _deathFeedbackDuration + _deathHoldDuration;
@@ -75,6 +76,7 @@ namespace MoonRabbitRush.Enemies
 
             _health.Initialize(_stats);
             _motor.Initialize(_stats);
+            Target = target;
             _lootCollector = target.GetComponent<PlayerLootCollector>();
 
             foreach (EnemyBehaviour behaviour in _behaviours)
