@@ -9,12 +9,6 @@ namespace MoonRabbitRush.Weapons.Active
 
         private void Start()
         {
-            if (_controller == null)
-            {
-                _controller =
-                    FindAnyObjectByType<WeaponActiveSkillController>();
-            }
-
             if (_controller == null || _slotPrefab == null)
             {
                 Debug.LogError("Active skill HUD references are incomplete.", this);

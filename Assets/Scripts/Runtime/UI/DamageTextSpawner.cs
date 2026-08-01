@@ -90,10 +90,6 @@ namespace MoonRabbitRush.UI
             }
 
             _worldCamera = Camera.main;
-            if (_worldCamera == null)
-            {
-                _worldCamera = FindAnyObjectByType<Camera>();
-            }
         }
     }
 }

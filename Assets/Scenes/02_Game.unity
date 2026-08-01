@@ -725,9 +725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681d22afe94a98e439202594cefec268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.GameplayHudDataBinder
-  _playerHealth: {fileID: 0}
-  _playerExperience: {fileID: 0}
-  _waveDirector: {fileID: 0}
+  _playerRoot: {fileID: 1354020402}
+  _waveDirector: {fileID: 6868057621540435540}
 --- !u!222 &351521362011174366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1080,7 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5012b596fc3ac26471d9aa567cfd36b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemySpawner
-  _target: {fileID: 0}
+  _target: {fileID: 1354020402}
   _center: {x: 0, y: 0}
   _spawnRadius: 10
 --- !u!222 &3242020790767318288
@@ -1304,7 +1303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e5a64f16114dff8228bce2bdac2fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Core.GameStateManager
-  _playerHealth: {fileID: 0}
+  _playerRoot: {fileID: 1354020402}
 --- !u!224 &4873850590276001405
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1895,8 +1894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4174a5ee116b407cb4923390b75d9f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.Selection.WeaponSelectionManager
-  _playerExperience: {fileID: 0}
-  _weaponController: {fileID: 0}
+  _playerRoot: {fileID: 1354020402}
   _gameStateManager: {fileID: 4626767931489275137}
   _selectionPopup: {fileID: 6030482846431399053}
   _weaponPool:
@@ -2012,7 +2010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5232aac4aae4f21bb16f6b9af51062a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.Active.WeaponActiveSkillController
-  _weaponController: {fileID: 0}
+  _playerRoot: {fileID: 1354020402}
   _gameStateManager: {fileID: 4626767931489275137}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

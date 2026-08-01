@@ -43,12 +43,6 @@ namespace MoonRabbitRush.Enemies
         {
             if (_target == null)
             {
-                PlayerHealth player = FindAnyObjectByType<PlayerHealth>();
-                _target = player != null ? player.transform : null;
-            }
-
-            if (_target == null)
-            {
                 Debug.LogError("Player target was not found.", this);
                 return false;
             }

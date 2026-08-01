@@ -7,12 +7,15 @@ namespace MoonRabbitRush.UI
 {
     public sealed class GameplayHudDataBinder : MonoBehaviour
     {
-        [SerializeField] private PlayerHealth _playerHealth;
-        [SerializeField] private PlayerExperience _playerExperience;
+        [SerializeField] private Transform _playerRoot;
         [SerializeField] private WaveDirector _waveDirector;
+
+        private PlayerHealth _playerHealth;
+        private PlayerExperience _playerExperience;
 
         private void Awake()
         {
+            ResolveReferences();
             PublishAll();
         }
 
@@ -55,6 +58,16 @@ namespace MoonRabbitRush.UI
                 _waveDirector.WaveStarted -= HandleWaveStarted;
                 _waveDirector.WaveCompleted -= HandleWaveCompleted;
                 _waveDirector.RemainingEnemyCountChanged -= HandleRemainingEnemyCountChanged;
+            }
+        }
+
+        private void ResolveReferences()
+        {
+            if (_playerRoot != null)
+            {
+                _playerHealth ??= _playerRoot.GetComponent<PlayerHealth>();
+                _playerExperience ??=
+                    _playerRoot.GetComponent<PlayerExperience>();
             }
         }
 
