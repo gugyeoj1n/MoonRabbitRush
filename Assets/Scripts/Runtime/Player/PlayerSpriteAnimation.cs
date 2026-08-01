@@ -3,8 +3,6 @@ using UnityEngine;
 namespace MoonRabbitRush.Player
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(PlayerMovement))]
-    [RequireComponent(typeof(PlayerHealth))]
     public sealed class PlayerSpriteAnimation : MonoBehaviour
     {
         [SerializeField] private Sprite[] _idleFrames;
@@ -24,8 +22,8 @@ namespace MoonRabbitRush.Player
 
         private void Awake()
         {
-            _movement = GetComponent<PlayerMovement>();
-            _health = GetComponent<PlayerHealth>();
+            _movement = GetComponentInParent<PlayerMovement>();
+            _health = GetComponentInParent<PlayerHealth>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 

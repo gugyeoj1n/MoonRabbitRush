@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace MoonRabbitRush.Player
 {
-    [RequireComponent(typeof(PlayerHealth))]
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class PlayerHitFeedback : MonoBehaviour
     {
@@ -22,7 +21,7 @@ namespace MoonRabbitRush.Player
 
         private void Awake()
         {
-            _health = GetComponent<PlayerHealth>();
+            _health = GetComponentInParent<PlayerHealth>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _baseColor = _spriteRenderer.color;
         }
