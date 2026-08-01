@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 840100000000000011}
   - component: {fileID: 9006477486304473560}
   - component: {fileID: 47826906064824911}
+  - component: {fileID: 47826906064824912}
   m_Layer: 0
   m_Name: PF_Enemy_Orbitron
   m_TagString: Untagged
@@ -190,7 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyActor
   _stats: {fileID: 11400000, guid: c64a8a58e6a84d93b3b9f445e86cbb19, type: 2}
   _experienceDropPrefab: {fileID: 940100000000000004, guid: 3df53ea68548464ba15e7ce9014e98a8, type: 3}
-  _deathFeedbackDuration: 0.2
+  _deathFeedbackDuration: 1
+  _deathHoldDuration: 0.2
   _receivesHitReaction: 1
   _hitKnockbackDistance: 0.12
   _hitReactionDuration: 0.08
@@ -303,6 +305,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyFacingView
   _horizontalDeadZone: 0.01
+  _faceTarget: 1
+--- !u!114 &47826906064824912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840100000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fcc963ac7394cd9bc2410a0709db998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
+  _deathFrames:
+  - {fileID: -5816745944590912643, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: 5921776091968955516, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: 7721346067165603941, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: 2141356027412642797, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: 8104858605832700280, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: -2825019000954280948, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: -3838155439691791839, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: 6290465102867622998, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  _animator: {fileID: 9006477486304473560}
 --- !u!1 &840100000000000013
 GameObject:
   m_ObjectHideFlags: 0

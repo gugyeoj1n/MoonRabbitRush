@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 786100000000000011}
   - component: {fileID: 7103522253275733065}
   - component: {fileID: 5836073300727821452}
+  - component: {fileID: 5836073300727821453}
   m_Layer: 0
   m_Name: PF_Enemy_Globy
   m_TagString: Untagged
@@ -190,7 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyActor
   _stats: {fileID: 11400000, guid: e12a47d935864eef97f75df67c3e0189, type: 2}
   _experienceDropPrefab: {fileID: 940100000000000004, guid: 3df53ea68548464ba15e7ce9014e98a8, type: 3}
-  _deathFeedbackDuration: 0.2
+  _deathFeedbackDuration: 1
+  _deathHoldDuration: 0.2
   _receivesHitReaction: 1
   _hitKnockbackDistance: 0.12
   _hitReactionDuration: 0.08
@@ -292,6 +294,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyFacingView
   _horizontalDeadZone: 0.01
+--- !u!114 &5836073300727821453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786100000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fcc963ac7394cd9bc2410a0709db998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
+  _deathFrames:
+  - {fileID: 3691810971171414277, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: -5731992080997608659, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: -8350306553325770151, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: 519143647669190423, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: -1706744500091289936, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: 5043797828953276273, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: 816724941896934663, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  - {fileID: -977085326390636110, guid: 062087f8935254e4597c38440eda85c7, type: 3}
+  _animator: {fileID: 7103522253275733065}
 --- !u!1 &786100000000000012
 GameObject:
   m_ObjectHideFlags: 0

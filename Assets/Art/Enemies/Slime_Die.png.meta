@@ -1,0 +1,578 @@
+fileFormatVersion: 2
+guid: 062087f8935254e4597c38440eda85c7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3691810971171414277
+    second: Slime_Die_0
+  - first:
+      213: -5731992080997608659
+    second: Slime_Die_1
+  - first:
+      213: -8350306553325770151
+    second: Slime_Die_2
+  - first:
+      213: 519143647669190423
+    second: Slime_Die_3
+  - first:
+      213: -1706744500091289936
+    second: Slime_Die_4
+  - first:
+      213: 5043797828953276273
+    second: Slime_Die_5
+  - first:
+      213: 816724941896934663
+    second: Slime_Die_6
+  - first:
+      213: -977085326390636110
+    second: Slime_Die_7
+  - first:
+      213: -1059838031729694146
+    second: Slime_Die_8
+  - first:
+      213: -1908789381045174337
+    second: Slime_Die_9
+  - first:
+      213: -5091481387451272339
+    second: Slime_Die_10
+  - first:
+      213: 6169479934605988093
+    second: Slime_Die_11
+  - first:
+      213: -1410205500071198801
+    second: Slime_Die_12
+  - first:
+      213: -7912724470982351391
+    second: Slime_Die_13
+  - first:
+      213: -7811763018610804452
+    second: Slime_Die_14
+  - first:
+      213: -7165830907101998244
+    second: Slime_Die_15
+  - first:
+      213: -1452442974921671160
+    second: Slime_Die_16
+  - first:
+      213: 1769431419810144090
+    second: Slime_Die_17
+  - first:
+      213: -8860700543599382500
+    second: Slime_Die_18
+  - first:
+      213: -5296172921344294873
+    second: Slime_Die_19
+  - first:
+      213: 7213554484362454706
+    second: Slime_Die_20
+  - first:
+      213: 2378797876441811530
+    second: Slime_Die_21
+  - first:
+      213: -7381414663339449067
+    second: Slime_Die_22
+  - first:
+      213: -2031648641223428472
+    second: Slime_Die_23
+  - first:
+      213: -1171407473687816792
+    second: Slime_Die_24
+  - first:
+      213: -817873313893969276
+    second: Slime_Die_25
+  - first:
+      213: -5941063381618511121
+    second: Slime_Die_26
+  - first:
+      213: 5717248589442033517
+    second: Slime_Die_27
+  - first:
+      213: 7062502091180151499
+    second: Slime_Die_28
+  - first:
+      213: -2186666507451483473
+    second: Slime_Die_29
+  - first:
+      213: -5769369210115750835
+    second: Slime_Die_30
+  - first:
+      213: -5297762474515112693
+    second: Slime_Die_31
+  - first:
+      213: -3032053009880305054
+    second: Slime_Die_32
+  - first:
+      213: 2701094564322712037
+    second: Slime_Die_33
+  - first:
+      213: 1267459585020798366
+    second: Slime_Die_34
+  - first:
+      213: -1045217160792181336
+    second: Slime_Die_35
+  - first:
+      213: 216310064268376625
+    second: Slime_Die_36
+  - first:
+      213: -9145245416444257374
+    second: Slime_Die_37
+  - first:
+      213: 7929138986425779212
+    second: Slime_Die_38
+  - first:
+      213: 4583757489242655108
+    second: Slime_Die_39
+  - first:
+      213: 1874276847532087138
+    second: Slime_Die_40
+  - first:
+      213: -8861482730766344170
+    second: Slime_Die_41
+  - first:
+      213: 5983231811494732781
+    second: Slime_Die_42
+  - first:
+      213: 3490958095153617401
+    second: Slime_Die_43
+  - first:
+      213: -6414430601684840120
+    second: Slime_Die_44
+  - first:
+      213: -8328234019708819517
+    second: Slime_Die_45
+  - first:
+      213: 5780431276741291722
+    second: Slime_Die_46
+  - first:
+      213: -838682886280485183
+    second: Slime_Die_47
+  - first:
+      213: -7887325913714461060
+    second: Slime_Die_48
+  - first:
+      213: 6432575233960664119
+    second: Slime_Die_49
+  - first:
+      213: 6770440278139353275
+    second: Slime_Die_50
+  - first:
+      213: -3544092963021892445
+    second: Slime_Die_51
+  - first:
+      213: -2348151672811507556
+    second: Slime_Die_52
+  - first:
+      213: 8585830581220648099
+    second: Slime_Die_53
+  - first:
+      213: 560305431190730121
+    second: Slime_Die_54
+  - first:
+      213: 6509794858563369124
+    second: Slime_Die_55
+  - first:
+      213: 2839448597938890835
+    second: Slime_Die_56
+  - first:
+      213: -1059223716768606831
+    second: Slime_Die_57
+  - first:
+      213: 1545462030636869149
+    second: Slime_Die_58
+  - first:
+      213: -1969401641576005955
+    second: Slime_Die_59
+  - first:
+      213: 2932713956217689356
+    second: Slime_Die_60
+  - first:
+      213: 8361288133599646469
+    second: Slime_Die_61
+  - first:
+      213: 51593740314651421
+    second: Slime_Die_62
+  - first:
+      213: 714728829046466441
+    second: Slime_Die_63
+  - first:
+      213: 9187646530917402778
+    second: Slime_Die_64
+  - first:
+      213: -3583205190702346957
+    second: Slime_Die_65
+  - first:
+      213: -847777480417229634
+    second: Slime_Die_66
+  - first:
+      213: -7896416258591706765
+    second: Slime_Die_67
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Slime_Die_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f4694579c7447a499d342a685098321
+      internalID: 3691810971171414277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_1
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4baec132cb893c4e80608923f3934dc
+      internalID: -5731992080997608659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 981998326bb4040429078fe09437f308
+      internalID: -8350306553325770151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_3
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 512
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 349a05e23549ddb44aea9ccaa319fd70
+      internalID: 519143647669190423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c27fd7dc9e2b6204fafaba884b4d3a52
+      internalID: -1706744500091289936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_5
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6cd0cafa4072514d9f1d93030f3815b
+      internalID: 5043797828953276273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_6
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 914ca3d4ed74d7b45bdd88a29d8e294d
+      internalID: 816724941896934663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime_Die_7
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab340a12d6349e84fb3d8f0d484d1ab0
+      internalID: -977085326390636110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9e523e39a8c05e54a974d407e8e1fd64
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Slime_Die_0: 3691810971171414277
+      Slime_Die_1: -5731992080997608659
+      Slime_Die_10: -5091481387451272339
+      Slime_Die_11: 6169479934605988093
+      Slime_Die_12: -1410205500071198801
+      Slime_Die_13: -7912724470982351391
+      Slime_Die_14: -7811763018610804452
+      Slime_Die_15: -7165830907101998244
+      Slime_Die_16: -1452442974921671160
+      Slime_Die_17: 1769431419810144090
+      Slime_Die_18: -8860700543599382500
+      Slime_Die_19: -5296172921344294873
+      Slime_Die_2: -8350306553325770151
+      Slime_Die_20: 7213554484362454706
+      Slime_Die_21: 2378797876441811530
+      Slime_Die_22: -7381414663339449067
+      Slime_Die_23: -2031648641223428472
+      Slime_Die_24: -1171407473687816792
+      Slime_Die_25: -817873313893969276
+      Slime_Die_26: -5941063381618511121
+      Slime_Die_27: 5717248589442033517
+      Slime_Die_28: 7062502091180151499
+      Slime_Die_29: -2186666507451483473
+      Slime_Die_3: 519143647669190423
+      Slime_Die_30: -5769369210115750835
+      Slime_Die_31: -5297762474515112693
+      Slime_Die_32: -3032053009880305054
+      Slime_Die_33: 2701094564322712037
+      Slime_Die_34: 1267459585020798366
+      Slime_Die_35: -1045217160792181336
+      Slime_Die_36: 216310064268376625
+      Slime_Die_37: -9145245416444257374
+      Slime_Die_38: 7929138986425779212
+      Slime_Die_39: 4583757489242655108
+      Slime_Die_4: -1706744500091289936
+      Slime_Die_40: 1874276847532087138
+      Slime_Die_41: -8861482730766344170
+      Slime_Die_42: 5983231811494732781
+      Slime_Die_43: 3490958095153617401
+      Slime_Die_44: -6414430601684840120
+      Slime_Die_45: -8328234019708819517
+      Slime_Die_46: 5780431276741291722
+      Slime_Die_47: -838682886280485183
+      Slime_Die_48: -7887325913714461060
+      Slime_Die_49: 6432575233960664119
+      Slime_Die_5: 5043797828953276273
+      Slime_Die_50: 6770440278139353275
+      Slime_Die_51: -3544092963021892445
+      Slime_Die_52: -2348151672811507556
+      Slime_Die_53: 8585830581220648099
+      Slime_Die_54: 560305431190730121
+      Slime_Die_55: 6509794858563369124
+      Slime_Die_56: 2839448597938890835
+      Slime_Die_57: -1059223716768606831
+      Slime_Die_58: 1545462030636869149
+      Slime_Die_59: -1969401641576005955
+      Slime_Die_6: 816724941896934663
+      Slime_Die_60: 2932713956217689356
+      Slime_Die_61: 8361288133599646469
+      Slime_Die_62: 51593740314651421
+      Slime_Die_63: 714728829046466441
+      Slime_Die_64: 9187646530917402778
+      Slime_Die_65: -3583205190702346957
+      Slime_Die_66: -847777480417229634
+      Slime_Die_67: -7896416258591706765
+      Slime_Die_7: -977085326390636110
+      Slime_Die_8: -1059838031729694146
+      Slime_Die_9: -1908789381045174337
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

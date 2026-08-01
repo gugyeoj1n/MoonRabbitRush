@@ -7,12 +7,15 @@ namespace MoonRabbitRush.Enemies
     public sealed class EnemyFacingView : MonoBehaviour
     {
         [SerializeField, Min(0f)] private float _horizontalDeadZone = 0.01f;
+        [SerializeField] private bool _faceTarget;
 
+        private EnemyActor _actor;
         private EnemyMotor _motor;
         private SpriteRenderer _spriteRenderer;
 
         private void Awake()
         {
+            _actor = GetComponent<EnemyActor>();
             _motor = GetComponent<EnemyMotor>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -25,6 +28,12 @@ namespace MoonRabbitRush.Enemies
         private void LateUpdate()
         {
             float horizontalDirection = _motor.MoveDirection.x;
+
+            if (_faceTarget && _actor != null && _actor.Target != null)
+            {
+                horizontalDirection =
+                    _actor.Target.position.x - transform.position.x;
+            }
 
             if (Mathf.Abs(horizontalDirection) <= _horizontalDeadZone)
             {
