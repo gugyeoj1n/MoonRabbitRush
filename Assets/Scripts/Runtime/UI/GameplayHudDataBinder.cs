@@ -11,18 +11,13 @@ namespace MoonRabbitRush.UI
         [SerializeField] private PlayerExperience _playerExperience;
         [SerializeField] private WaveDirector _waveDirector;
 
-        private int _lastRemainingEnemyCount = -1;
-
         private void Awake()
         {
-            ResolveReferences();
             PublishAll();
         }
 
         private void OnEnable()
         {
-            ResolveReferences();
-
             if (_playerHealth != null)
             {
                 _playerHealth.HealthChanged += HandleHealthChanged;
@@ -37,33 +32,10 @@ namespace MoonRabbitRush.UI
             {
                 _waveDirector.WaveStarted += HandleWaveStarted;
                 _waveDirector.WaveCompleted += HandleWaveCompleted;
+                _waveDirector.RemainingEnemyCountChanged += HandleRemainingEnemyCountChanged;
             }
 
             PublishAll();
-        }
-
-        private void Start()
-        {
-            PublishAll();
-        }
-
-        private void Update()
-        {
-            if (_waveDirector == null)
-            {
-                return;
-            }
-
-            int remainingEnemyCount = _waveDirector.RemainingEnemyCount;
-            if (remainingEnemyCount == _lastRemainingEnemyCount)
-            {
-                return;
-            }
-
-            _lastRemainingEnemyCount = remainingEnemyCount;
-            DataBindingManager.SetValue(
-                Property.MonsterRemain,
-                remainingEnemyCount);
         }
 
         private void OnDisable()
@@ -82,14 +54,8 @@ namespace MoonRabbitRush.UI
             {
                 _waveDirector.WaveStarted -= HandleWaveStarted;
                 _waveDirector.WaveCompleted -= HandleWaveCompleted;
+                _waveDirector.RemainingEnemyCountChanged -= HandleRemainingEnemyCountChanged;
             }
-        }
-
-        private void ResolveReferences()
-        {
-            _playerHealth ??= FindAnyObjectByType<PlayerHealth>();
-            _playerExperience ??= FindAnyObjectByType<PlayerExperience>();
-            _waveDirector ??= FindAnyObjectByType<WaveDirector>();
         }
 
         private void PublishAll()
@@ -114,12 +80,9 @@ namespace MoonRabbitRush.UI
                 DataBindingManager.SetValue(
                     Property.Wave,
                     _waveDirector.CurrentWave);
-
-                _lastRemainingEnemyCount =
-                    _waveDirector.RemainingEnemyCount;
                 DataBindingManager.SetValue(
                     Property.MonsterRemain,
-                    _lastRemainingEnemyCount);
+                    _waveDirector.RemainingEnemyCount);
             }
         }
 
@@ -154,13 +117,21 @@ namespace MoonRabbitRush.UI
         private void HandleWaveStarted(int wave)
         {
             DataBindingManager.SetValue(Property.Wave, wave);
-            _lastRemainingEnemyCount = -1;
+            DataBindingManager.SetValue(
+                Property.MonsterRemain,
+                _waveDirector != null ? _waveDirector.RemainingEnemyCount : 0);
         }
 
         private void HandleWaveCompleted(int wave)
         {
             DataBindingManager.SetValue(Property.MonsterRemain, 0);
-            _lastRemainingEnemyCount = 0;
+        }
+
+        private void HandleRemainingEnemyCountChanged(int remainingEnemyCount)
+        {
+            DataBindingManager.SetValue(
+                Property.MonsterRemain,
+                remainingEnemyCount);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace MoonRabbitRush.Waves
 
         public event Action<int> WaveStarted;
         public event Action<int> WaveCompleted;
+        public event Action<int> RemainingEnemyCountChanged;
         public event Action AllConfiguredWavesCompleted;
 
         private void Awake()
@@ -34,6 +35,8 @@ namespace MoonRabbitRush.Waves
 
         private void OnEnable()
         {
+            EnemyRegistry.ActiveCountChanged += HandleActiveEnemyCountChanged;
+
             if (_startOnEnable)
             {
                 StartNextWave();
@@ -42,6 +45,7 @@ namespace MoonRabbitRush.Waves
 
         private void OnDisable()
         {
+            EnemyRegistry.ActiveCountChanged -= HandleActiveEnemyCountChanged;
             Stop();
         }
 
@@ -81,6 +85,7 @@ namespace MoonRabbitRush.Waves
 
             SpawnedEnemyCount = 0;
             _currentWaveEnemyCount = 0;
+            RemainingEnemyCountChanged?.Invoke(0);
         }
 
         private IEnumerator RunWave(WaveData wave)
@@ -89,6 +94,7 @@ namespace MoonRabbitRush.Waves
             SpawnedEnemyCount = 0;
             _currentWaveEnemyCount = wave.TotalEnemyCount;
             WaveStarted?.Invoke(CurrentWave);
+            RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
             Debug.Log($"Wave {CurrentWave} started.", this);
 
             if (wave.SpawnEachEntryOnStart)
@@ -107,6 +113,7 @@ namespace MoonRabbitRush.Waves
             int completedWave = CurrentWave;
             _waveRoutine = null;
             WaveCompleted?.Invoke(completedWave);
+            RemainingEnemyCountChanged?.Invoke(0);
             Debug.Log($"Wave {completedWave} completed.", this);
 
             StartNextWave();
@@ -131,6 +138,7 @@ namespace MoonRabbitRush.Waves
                     if (_spawner.Spawn(entry.Prefab) != null)
                     {
                         SpawnedEnemyCount++;
+                        RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
                     }
                 }
             }
@@ -150,8 +158,19 @@ namespace MoonRabbitRush.Waves
                 if (prefab != null && _spawner.Spawn(prefab) != null)
                 {
                     SpawnedEnemyCount++;
+                    RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
                 }
             }
+        }
+
+        private void HandleActiveEnemyCountChanged(int _)
+        {
+            if (!enabled)
+            {
+                return;
+            }
+
+            RemainingEnemyCountChanged?.Invoke(RemainingEnemyCount);
         }
     }
 }
