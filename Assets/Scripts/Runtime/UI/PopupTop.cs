@@ -46,7 +46,7 @@ namespace MoonRabbitRush
             DataBindingManager.Register(Property.PlayerHealth, 100);
             DataBindingManager.Register(Property.PlayerMaxHealth, 100);
             CacheExperienceWidgets();
-            SetBossHpVisible(false);
+            SetBossHpVisible(false);            
         }
 
         private void OnEnable()
