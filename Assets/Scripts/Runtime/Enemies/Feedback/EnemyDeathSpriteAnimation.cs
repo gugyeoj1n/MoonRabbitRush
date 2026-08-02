@@ -33,6 +33,8 @@ namespace MoonRabbitRush.Enemies
             if (_animator != null)
             {
                 _animator.enabled = true;
+                _animator.Rebind();
+                _animator.Update(0f);
             }
 
             _health.Died += PlayDeathAnimation;

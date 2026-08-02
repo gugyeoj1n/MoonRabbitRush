@@ -86,6 +86,7 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
+            _activeTelegraph.Released += HandleTelegraphReleased;
             _activeTelegraph.Initialize(
                 impactPosition,
                 _impactRadius,
@@ -95,6 +96,10 @@ namespace MoonRabbitRush.Enemies
                 _outlineColor,
                 _fillColor,
                 _verticalScale);
+            if (_activeTelegraph == null)
+            {
+                return;
+            }
 
             _activeProjectile = GetProjectile(impactPosition);
             if (_activeProjectile == null)
@@ -127,6 +132,20 @@ namespace MoonRabbitRush.Enemies
             PoolingManager.Release(
                 PoolType.ProjectileOrbitronMissile,
                 projectile.gameObject);
+        }
+
+        private void HandleTelegraphReleased(CircleTelegraphView telegraph)
+        {
+            telegraph.Released -= HandleTelegraphReleased;
+
+            if (_activeTelegraph == telegraph)
+            {
+                _activeTelegraph = null;
+            }
+
+            PoolingManager.Release(
+                PoolType.TelegraphCircle,
+                telegraph.gameObject);
         }
 
         private FallingAreaProjectile GetProjectile(Vector2 position)

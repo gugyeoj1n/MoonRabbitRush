@@ -11,13 +11,25 @@ namespace MoonRabbitRush.Combat
         [SerializeField] private PoolType _poolType;
 
         private CancellationTokenSource _releaseCts;
+        private Animator _animator;
         private bool _isReleased;
 
         public event Action<TimedEffect> Released;
         public PoolType PoolKey => _poolType;
 
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
         private void OnEnable()
         {
+            if (_animator != null)
+            {
+                _animator.Rebind();
+                _animator.Update(0f);
+            }
+
             _isReleased = false;
             CancelReleaseTask();
             _releaseCts = new CancellationTokenSource();
