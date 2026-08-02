@@ -21,6 +21,8 @@ namespace MoonRabbitRush.UI
         [SerializeField] private RectTransform _alertText;
         [SerializeField, Min(0.1f)] private float _displayDuration = 3f;
         [SerializeField, Min(0.01f)] private float _scaleStepDuration = 0.16f;
+        [SerializeField, Min(0f)] private float _shakeAmplitude = 0.18f;
+        [SerializeField, Min(0f)] private float _shakeFrequency = 7f;
 
         private bool _isPlaying;
 
@@ -38,7 +40,7 @@ namespace MoonRabbitRush.UI
         {
             if (_waveDirector != null)
             {
-                _waveDirector.AllConfiguredWavesCompleted += HandleWavesCompleted;
+                _waveDirector.BossEncounterRequested += HandleBossEncounterRequested;
             }
         }
 
@@ -46,16 +48,21 @@ namespace MoonRabbitRush.UI
         {
             if (_waveDirector != null)
             {
-                _waveDirector.AllConfiguredWavesCompleted -= HandleWavesCompleted;
+                _waveDirector.BossEncounterRequested -= HandleBossEncounterRequested;
             }
         }
 
-        private void HandleWavesCompleted()
+        private void HandleBossEncounterRequested(int _)
         {
             if (_isPlaying || _alertRoot == null || _alertText == null)
             {
                 return;
             }
+
+            ManagerRoot.Instance?.CameraMaanger?.PlayShake(
+                _displayDuration,
+                _shakeAmplitude,
+                _shakeFrequency);
 
             PlayAlertAsync()
                 .SuppressCancellationThrow()
@@ -110,6 +117,8 @@ namespace MoonRabbitRush.UI
         {
             _displayDuration = Mathf.Max(0.1f, _displayDuration);
             _scaleStepDuration = Mathf.Max(0.01f, _scaleStepDuration);
+            _shakeAmplitude = Mathf.Max(0f, _shakeAmplitude);
+            _shakeFrequency = Mathf.Max(0f, _shakeFrequency);
         }
     }
 }

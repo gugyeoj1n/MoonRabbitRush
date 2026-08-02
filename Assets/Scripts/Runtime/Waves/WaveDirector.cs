@@ -16,8 +16,10 @@ namespace MoonRabbitRush.Waves
         private CancellationTokenSource _waveCts;
         private int _waveIndex = -1;
         private int _currentWaveEnemyCount;
+        private bool _isBossEncounterPending;
 
         public int CurrentWave { get; private set; }
+        public int CurrentBossRound { get; private set; }
         public bool IsRunning => _waveCts != null;
         public int SpawnedEnemyCount { get; private set; }
         public int RemainingEnemyCount =>
@@ -27,7 +29,8 @@ namespace MoonRabbitRush.Waves
         public event Action<int> WaveStarted;
         public event Action<int> WaveCompleted;
         public event Action<int> RemainingEnemyCountChanged;
-        public event Action AllConfiguredWavesCompleted;
+        public event Action<int> BossEncounterRequested;
+        public event Action<int> BossEncounterCompleted;
 
         private void Awake()
         {
@@ -57,14 +60,18 @@ namespace MoonRabbitRush.Waves
                 return;
             }
 
-            int nextIndex = _waveIndex + 1;
-            if (_waves == null || nextIndex >= _waves.Length)
+            if (_isBossEncounterPending)
             {
-                AllConfiguredWavesCompleted?.Invoke();
-                Debug.Log("All configured waves completed. Boss wave is not configured yet.", this);
                 return;
             }
 
+            if (_waves == null || _waves.Length == 0)
+            {
+                Debug.LogError("No wave data is configured.", this);
+                return;
+            }
+
+            int nextIndex = (_waveIndex + 1) % _waves.Length;
             WaveData wave = _waves[nextIndex];
             if (wave == null || !wave.HasValidEntry)
             {
@@ -75,6 +82,18 @@ namespace MoonRabbitRush.Waves
             _waveIndex = nextIndex;
             _waveCts = new CancellationTokenSource();
             RunWaveAsync(wave, _waveCts.Token).Forget();
+        }
+
+        public void CompleteBossEncounter()
+        {
+            if (!_isBossEncounterPending)
+            {
+                return;
+            }
+
+            _isBossEncounterPending = false;
+            BossEncounterCompleted?.Invoke(CurrentBossRound);
+            StartNextWave();
         }
 
         public void Stop()
@@ -88,6 +107,7 @@ namespace MoonRabbitRush.Waves
 
             SpawnedEnemyCount = 0;
             _currentWaveEnemyCount = 0;
+            _isBossEncounterPending = false;
             RemainingEnemyCountChanged?.Invoke(0);
         }
 
@@ -97,7 +117,7 @@ namespace MoonRabbitRush.Waves
         {
             try
             {
-                CurrentWave = wave.WaveNumber;
+                CurrentWave++;
                 SpawnedEnemyCount = 0;
                 _currentWaveEnemyCount = wave.TotalEnemyCount;
                 WaveStarted?.Invoke(CurrentWave);
@@ -130,12 +150,20 @@ namespace MoonRabbitRush.Waves
                 RemainingEnemyCountChanged?.Invoke(0);
                 Debug.Log($"Wave {completedWave} completed.", this);
 
-                StartNextWave();
+                BeginBossEncounter();
             }
             catch (OperationCanceledException)
             {
                 ClearWaveTask();
             }
+        }
+
+        private void BeginBossEncounter()
+        {
+            _isBossEncounterPending = true;
+            CurrentBossRound++;
+            BossEncounterRequested?.Invoke(CurrentBossRound);
+            Debug.Log($"Boss round {CurrentBossRound} requested.", this);
         }
 
         private void SpawnEachEntry(WaveData wave)

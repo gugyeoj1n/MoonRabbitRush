@@ -2,42 +2,106 @@ using UnityEngine;
 
 namespace MoonRabbitRush.Combat
 {
-    [RequireComponent(typeof(LineRenderer))]
     public sealed class LineTelegraphView : MonoBehaviour
     {
-        private LineRenderer _lineRenderer;
-        private Material _runtimeMaterial;
+        private const int ChargeSortingOrder = 12;
+        private const int BeamSortingOrder = 13;
+
+        private SpriteRenderer _chargeRenderer;
+        private SpriteRenderer _beamRenderer;
+        private Sprite[] _beamFrames;
+        private float _beamFrameRate;
         private float _length;
+        private float _width;
+        private float _beamElapsed;
+        private bool _isBeamActive;
 
         private void Awake()
         {
-            _lineRenderer = GetComponent<LineRenderer>();
-            _lineRenderer.useWorldSpace = true;
-            _lineRenderer.positionCount = 2;
-            _lineRenderer.numCapVertices = 4;
-            _lineRenderer.sortingOrder = 6;
-
-            Shader shader = Shader.Find("Sprites/Default");
-            if (shader != null)
-            {
-                _runtimeMaterial = new Material(shader);
-                _lineRenderer.material = _runtimeMaterial;
-            }
+            CreateRenderersIfNeeded();
         }
 
-        public void Initialize(
+        private void Update()
+        {
+            if (!_isBeamActive || _beamFrames == null || _beamFrames.Length == 0)
+            {
+                return;
+            }
+
+            _beamElapsed += Time.deltaTime;
+            int frameIndex = Mathf.FloorToInt(_beamElapsed * _beamFrameRate);
+            frameIndex %= _beamFrames.Length;
+            _beamRenderer.sprite = _beamFrames[frameIndex];
+        }
+
+        public void InitializeCharge(
             Vector2 origin,
-            Vector2 direction,
-            float length,
-            float width,
+            float diameter,
+            Sprite[] chargeFrames,
             Color color)
         {
+            CreateRenderersIfNeeded();
+            transform.position = origin;
+            transform.rotation = Quaternion.identity;
+            _length = 0f;
+            _width = 0f;
+            _beamElapsed = 0f;
+            _isBeamActive = false;
+            _beamRenderer.enabled = false;
+
+            _chargeRenderer.enabled = chargeFrames != null && chargeFrames.Length > 0;
+            _chargeRenderer.color = color;
+            _chargeRenderer.drawMode = SpriteDrawMode.Simple;
+            _chargeRenderer.sprite = _chargeRenderer.enabled ? chargeFrames[0] : null;
+
+            if (_chargeRenderer.sprite == null)
+            {
+                return;
+            }
+
+            float spriteWidth = Mathf.Max(0.01f, _chargeRenderer.sprite.bounds.size.x);
+            float scale = Mathf.Max(0.01f, diameter) / spriteWidth;
+            _chargeRenderer.transform.localScale = new Vector3(scale, scale, 1f);
+        }
+
+        public void SetChargeProgress(Sprite[] chargeFrames, float progress)
+        {
+            if (!_chargeRenderer.enabled ||
+                chargeFrames == null ||
+                chargeFrames.Length == 0)
+            {
+                return;
+            }
+
+            int frameIndex = Mathf.Clamp(
+                Mathf.FloorToInt(Mathf.Clamp01(progress) * chargeFrames.Length),
+                0,
+                chargeFrames.Length - 1);
+            _chargeRenderer.sprite = chargeFrames[frameIndex];
+        }
+
+        public void StartBeam(
+            float length,
+            float width,
+            Sprite[] beamFrames,
+            Color color,
+            float beamFrameRate)
+        {
+            CreateRenderersIfNeeded();
+            _chargeRenderer.enabled = false;
+
             _length = Mathf.Max(0.01f, length);
-            _lineRenderer.startWidth = Mathf.Max(0.01f, width);
-            _lineRenderer.endWidth = Mathf.Max(0.01f, width);
-            _lineRenderer.startColor = color;
-            _lineRenderer.endColor = color;
-            SetDirection(origin, direction);
+            _width = Mathf.Max(0.01f, width);
+            _beamFrames = beamFrames;
+            _beamFrameRate = Mathf.Max(1f, beamFrameRate);
+            _beamElapsed = 0f;
+            _isBeamActive = beamFrames != null && beamFrames.Length > 0;
+
+            _beamRenderer.enabled = _isBeamActive;
+            _beamRenderer.color = color;
+            _beamRenderer.drawMode = SpriteDrawMode.Sliced;
+            _beamRenderer.size = new Vector2(_length, _width);
+            _beamRenderer.sprite = _isBeamActive ? beamFrames[0] : null;
         }
 
         public void SetDirection(Vector2 origin, Vector2 direction)
@@ -45,16 +109,16 @@ namespace MoonRabbitRush.Combat
             Vector2 normalizedDirection = direction.sqrMagnitude > 0f
                 ? direction.normalized
                 : Vector2.right;
-            _lineRenderer.SetPosition(0, origin);
-            _lineRenderer.SetPosition(
-                1,
-                origin + normalizedDirection * _length);
-        }
+            float angle = Mathf.Atan2(normalizedDirection.y, normalizedDirection.x) *
+                          Mathf.Rad2Deg;
 
-        public void SetColor(Color color)
-        {
-            _lineRenderer.startColor = color;
-            _lineRenderer.endColor = color;
+            transform.position = origin + normalizedDirection * (_length * 0.5f);
+            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+
+            if (_beamRenderer.enabled)
+            {
+                _beamRenderer.size = new Vector2(_length, _width);
+            }
         }
 
         public void Release()
@@ -62,11 +126,23 @@ namespace MoonRabbitRush.Combat
             Destroy(gameObject);
         }
 
-        private void OnDestroy()
+        private void CreateRenderersIfNeeded()
         {
-            if (_runtimeMaterial != null)
+            if (_chargeRenderer == null)
             {
-                Destroy(_runtimeMaterial);
+                var chargeObject = new GameObject("Charge");
+                chargeObject.transform.SetParent(transform, false);
+                _chargeRenderer = chargeObject.AddComponent<SpriteRenderer>();
+                _chargeRenderer.sortingOrder = ChargeSortingOrder;
+            }
+
+            if (_beamRenderer == null)
+            {
+                var beamObject = new GameObject("Beam");
+                beamObject.transform.SetParent(transform, false);
+                _beamRenderer = beamObject.AddComponent<SpriteRenderer>();
+                _beamRenderer.sortingOrder = BeamSortingOrder;
+                _beamRenderer.enabled = false;
             }
         }
     }

@@ -82,6 +82,11 @@ namespace MoonRabbitRush.Combat
                 return;
             }
 
+            if (other.isTrigger)
+            {
+                return;
+            }
+
             Transform targetTransform = _targetComponent.transform;
             bool hitTarget =
                 other.transform == targetTransform ||

@@ -79,15 +79,14 @@ namespace MoonRabbitRush.Core
         {
             if (nextState == InGameState.GameOver)
             {
-                return currentState != InGameState.Victory;
+                return currentState != InGameState.GameOver;
             }
 
             return currentState switch
             {
                 InGameState.Playing =>
                     nextState is InGameState.LevelUp
-                        or InGameState.Paused
-                        or InGameState.Victory,
+                        or InGameState.Paused,
                 InGameState.LevelUp => nextState == InGameState.Playing,
                 InGameState.Paused => nextState == InGameState.Playing,
                 _ => false

@@ -1,4 +1,7 @@
+using System;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.UI;
+using MoonRabbitRush.Waves;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies.Bosses
@@ -8,8 +11,17 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField] private BossAlertController _bossAlert;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private EnemyActor _bossPrefab;
+        [SerializeField] private WaveDirector _waveDirector;
+        [SerializeField, Min(0f)] private float _bossDeathShakeDuration = 1f;
+        [SerializeField, Min(0f)] private float _bossDeathShakeAmplitude = 0.4f;
+        [SerializeField, Min(0f)] private float _bossDeathShakeFrequency = 9f;
 
         private EnemyActor _activeBoss;
+
+        private void Awake()
+        {
+            _waveDirector ??= FindAnyObjectByType<WaveDirector>();
+        }
 
         private void OnEnable()
         {
@@ -25,6 +37,8 @@ namespace MoonRabbitRush.Enemies.Bosses
             {
                 _bossAlert.AlertCompleted -= SpawnBoss;
             }
+
+            UnsubscribeBossDeath();
         }
 
         private void SpawnBoss()
@@ -43,6 +57,49 @@ namespace MoonRabbitRush.Enemies.Bosses
             }
 
             _activeBoss = _enemySpawner.Spawn(_bossPrefab);
+
+            if (_activeBoss?.Health != null)
+            {
+                _activeBoss.Health.Died += HandleBossDied;
+            }
+        }
+
+        private void HandleBossDied()
+        {
+            HandleBossDiedAsync().Forget();
+        }
+
+        private async UniTaskVoid HandleBossDiedAsync()
+        {
+            float deathDelay = _activeBoss != null
+                ? Mathf.Max(0f, _activeBoss.DeathDeactivationDelay)
+                : 0f;
+
+            UnsubscribeBossDeath();
+
+            ManagerRoot.Instance?.CameraMaanger?.PlayShake(
+                _bossDeathShakeDuration,
+                _bossDeathShakeAmplitude,
+                _bossDeathShakeFrequency);
+
+            await UniTask.Delay(
+                TimeSpan.FromSeconds(deathDelay),
+                DelayType.DeltaTime,
+                PlayerLoopTiming.Update,
+                destroyCancellationToken);
+
+            _activeBoss = null;
+            _waveDirector?.CompleteBossEncounter();
+        }
+
+        private void UnsubscribeBossDeath()
+        {
+            if (_activeBoss?.Health == null)
+            {
+                return;
+            }
+
+            _activeBoss.Health.Died -= HandleBossDied;
         }
     }
 }
