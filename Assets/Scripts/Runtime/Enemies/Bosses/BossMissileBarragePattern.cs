@@ -41,10 +41,14 @@ namespace MoonRabbitRush.Enemies.Bosses
                     : UnityEngine.Random.insideUnitCircle * _randomOffsetRadius;
                 Vector2 impactPosition = (Vector2)Target.position + offset;
 
-                var telegraphObject =
-                    new GameObject("Boss Missile Telegraph");
                 CircleTelegraphView telegraph =
-                    telegraphObject.AddComponent<CircleTelegraphView>();
+                    CircleTelegraphView.GetFromPool(
+                        "Boss Missile Telegraph");
+                if (telegraph == null)
+                {
+                    continue;
+                }
+
                 telegraph.Initialize(
                     impactPosition,
                     _impactRadius,

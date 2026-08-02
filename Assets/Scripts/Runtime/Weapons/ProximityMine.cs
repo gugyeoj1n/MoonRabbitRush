@@ -246,8 +246,14 @@ namespace MoonRabbitRush.Weapons
 
         private void BeginTelegraph()
         {
-            var telegraphObject = new GameObject("Player Mine Telegraph");
-            _telegraph = telegraphObject.AddComponent<CircleTelegraphView>();
+            _telegraph = CircleTelegraphView.GetFromPool(
+                "Player Mine Telegraph");
+            if (_telegraph == null)
+            {
+                _state = MineState.Armed;
+                return;
+            }
+
             _telegraph.Initialize(
                 transform.position,
                 _stats.AreaRadius,
@@ -364,13 +370,25 @@ namespace MoonRabbitRush.Weapons
 
         private void SpawnExplosionEffect()
         {
-            if (_explosionEffectPrefab != null)
+            if (_explosionEffectPrefab == null)
             {
-                Instantiate(
-                    _explosionEffectPrefab,
-                    transform.position,
-                    Quaternion.identity);
+                return;
             }
+
+            PoolType poolType = _explosionEffectPrefab.PoolKey;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_explosionEffectPrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject effectObject);
+            effectObject?.transform.SetPositionAndRotation(
+                transform.position,
+                Quaternion.identity);
         }
 
         private void OnDestroy()

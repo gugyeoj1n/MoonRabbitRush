@@ -8,11 +8,13 @@ namespace MoonRabbitRush.Combat
     public sealed class TimedEffect : MonoBehaviour
     {
         [SerializeField, Min(0f)] private float _duration = 0.5f;
+        [SerializeField] private PoolType _poolType;
 
         private CancellationTokenSource _releaseCts;
         private bool _isReleased;
 
         public event Action<TimedEffect> Released;
+        public PoolType PoolKey => _poolType;
 
         private void OnEnable()
         {
@@ -42,7 +44,7 @@ namespace MoonRabbitRush.Combat
                 return;
             }
 
-            Destroy(gameObject);
+            PoolingManager.Release(_poolType, gameObject);
         }
 
         private async UniTaskVoid ReleaseAfterDurationAsync(

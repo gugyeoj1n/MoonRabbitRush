@@ -79,8 +79,13 @@ namespace MoonRabbitRush.Enemies
         {
             _nextAttackTime = Time.time + Stats.AttackInterval;
 
-            var telegraphObject = new GameObject("Circle Telegraph");
-            _activeTelegraph = telegraphObject.AddComponent<CircleTelegraphView>();
+            _activeTelegraph = CircleTelegraphView.GetFromPool(
+                "Circle Telegraph");
+            if (_activeTelegraph == null)
+            {
+                return;
+            }
+
             _activeTelegraph.Initialize(
                 impactPosition,
                 _impactRadius,

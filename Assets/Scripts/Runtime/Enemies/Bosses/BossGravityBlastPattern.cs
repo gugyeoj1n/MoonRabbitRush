@@ -36,10 +36,14 @@ namespace MoonRabbitRush.Enemies.Bosses
         public override async UniTask ExecuteAsync(
             CancellationToken cancellationToken)
         {
-            var telegraphObject =
-                new GameObject("Boss Gravity Telegraph");
             CircleTelegraphView telegraph =
-                telegraphObject.AddComponent<CircleTelegraphView>();
+                CircleTelegraphView.GetFromPool(
+                    "Boss Gravity Telegraph");
+            if (telegraph == null)
+            {
+                return;
+            }
+
             telegraph.Initialize(
                 transform.position,
                 _radius,

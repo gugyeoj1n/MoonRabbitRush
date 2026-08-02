@@ -15,6 +15,36 @@ namespace MoonRabbitRush.Combat
 
         public event Action<CircleTelegraphView> Released;
 
+        public static CircleTelegraphView GetFromPool(string objectName)
+        {
+            const PoolType poolType = PoolType.TelegraphCircle;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () =>
+                    {
+                        var telegraphObject = new GameObject(objectName);
+                        return telegraphObject
+                            .AddComponent<CircleTelegraphView>()
+                            .gameObject;
+                    },
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject pooledObject);
+            if (pooledObject == null ||
+                !pooledObject.TryGetComponent(
+                    out CircleTelegraphView telegraph))
+            {
+                return null;
+            }
+
+            pooledObject.name = objectName;
+            return telegraph;
+        }
+
         private void Update()
         {
             if (!_isActive)
@@ -87,7 +117,7 @@ namespace MoonRabbitRush.Combat
                 return;
             }
 
-            Destroy(gameObject);
+            PoolingManager.Release(PoolType.TelegraphCircle, gameObject);
         }
 
         private void CreateRenderersIfNeeded()

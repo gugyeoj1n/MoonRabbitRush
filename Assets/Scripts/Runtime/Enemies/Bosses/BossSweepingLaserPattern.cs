@@ -59,6 +59,10 @@ namespace MoonRabbitRush.Enemies.Bosses
             _activeLine = CreateLine(
                 "Boss Laser Telegraph",
                 startAngle);
+            if (_activeLine == null)
+            {
+                return;
+            }
 
             try
             {
@@ -134,9 +138,13 @@ namespace MoonRabbitRush.Enemies.Bosses
             string objectName,
             float angle)
         {
-            var lineObject = new GameObject(objectName);
             LineTelegraphView line =
-                lineObject.AddComponent<LineTelegraphView>();
+                LineTelegraphView.GetFromPool(objectName);
+            if (line == null)
+            {
+                return null;
+            }
+
             line.InitializeCharge(
                 GetOrigin(DirectionFromAngle(angle)),
                 _chargeDiameter,
