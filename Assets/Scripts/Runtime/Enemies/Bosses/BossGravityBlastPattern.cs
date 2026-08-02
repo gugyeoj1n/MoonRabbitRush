@@ -19,6 +19,9 @@ namespace MoonRabbitRush.Enemies.Bosses
             new Color32(255, 83, 83, 204);
         [SerializeField] private Color _fillColor =
             new Color32(255, 129, 129, 115);
+        [SerializeField, Min(0f)] private float _blastShakeDuration = 0.35f;
+        [SerializeField, Min(0f)] private float _blastShakeAmplitude = 0.28f;
+        [SerializeField, Min(0f)] private float _blastShakeFrequency = 18f;
 
         private PlayerMovement _targetMovement;
 
@@ -79,6 +82,11 @@ namespace MoonRabbitRush.Enemies.Bosses
                 ClearMovementResistance();
             }
 
+            ManagerRoot.Instance?.CameraMaanger?.PlayShake(
+                _blastShakeDuration,
+                _blastShakeAmplitude,
+                _blastShakeFrequency);
+
             if (TargetDamageable.IsAlive &&
                 Vector2.Distance(Target.position, transform.position) <= _radius)
             {
@@ -106,6 +114,9 @@ namespace MoonRabbitRush.Enemies.Bosses
             _chargeDuration = Mathf.Max(0.05f, _chargeDuration);
             _resistanceSpeed = Mathf.Max(0f, _resistanceSpeed);
             _verticalScale = Mathf.Clamp(_verticalScale, 0.1f, 1f);
+            _blastShakeDuration = Mathf.Max(0f, _blastShakeDuration);
+            _blastShakeAmplitude = Mathf.Max(0f, _blastShakeAmplitude);
+            _blastShakeFrequency = Mathf.Max(0f, _blastShakeFrequency);
         }
     }
 }

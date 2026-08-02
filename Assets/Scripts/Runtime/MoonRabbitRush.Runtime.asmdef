@@ -2,6 +2,7 @@
     "name": "MoonRabbitRush.Runtime",
     "rootNamespace": "MoonRabbitRush",
     "references": [
+        "Unity.Cinemachine",
         "Unity.InputSystem",
         "UniTask",
         "UniTask.Addressables",

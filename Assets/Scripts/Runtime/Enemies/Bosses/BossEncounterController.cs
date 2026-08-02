@@ -1,3 +1,5 @@
+using System;
+using Cysharp.Threading.Tasks;
 using MoonRabbitRush.UI;
 using MoonRabbitRush.Waves;
 using UnityEngine;
@@ -10,6 +12,9 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private EnemyActor _bossPrefab;
         [SerializeField] private WaveDirector _waveDirector;
+        [SerializeField, Min(0f)] private float _bossDeathShakeDuration = 1f;
+        [SerializeField, Min(0f)] private float _bossDeathShakeAmplitude = 0.4f;
+        [SerializeField, Min(0f)] private float _bossDeathShakeFrequency = 9f;
 
         private EnemyActor _activeBoss;
 
@@ -61,7 +66,28 @@ namespace MoonRabbitRush.Enemies.Bosses
 
         private void HandleBossDied()
         {
+            HandleBossDiedAsync().Forget();
+        }
+
+        private async UniTaskVoid HandleBossDiedAsync()
+        {
+            float deathDelay = _activeBoss != null
+                ? Mathf.Max(0f, _activeBoss.DeathDeactivationDelay)
+                : 0f;
+
             UnsubscribeBossDeath();
+
+            ManagerRoot.Instance?.CameraMaanger?.PlayShake(
+                _bossDeathShakeDuration,
+                _bossDeathShakeAmplitude,
+                _bossDeathShakeFrequency);
+
+            await UniTask.Delay(
+                TimeSpan.FromSeconds(deathDelay),
+                DelayType.DeltaTime,
+                PlayerLoopTiming.Update,
+                destroyCancellationToken);
+
             _activeBoss = null;
             _waveDirector?.CompleteBossEncounter();
         }
