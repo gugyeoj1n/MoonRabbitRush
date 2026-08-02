@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using MoonRabbitRush.Combat;
 using MoonRabbitRush.Progression;
+using MoonRabbitRush.Score;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
@@ -38,6 +39,7 @@ namespace MoonRabbitRush.Enemies
         public float DeathFeedbackDuration => _deathFeedbackDuration;
         public float DeathDeactivationDelay =>
             _deathFeedbackDuration + _deathHoldDuration;
+        public int ScoreReward => _stats != null ? _stats.ScoreReward : 0;
 
         private void Awake()
         {
@@ -129,6 +131,7 @@ namespace MoonRabbitRush.Enemies
         private void HandleDeath()
         {
             DropExperience();
+            ScoreManager.RegisterEnemyDefeat(this);
             _motor.Stop();
 
             foreach (Collider2D enemyCollider in _colliders)
