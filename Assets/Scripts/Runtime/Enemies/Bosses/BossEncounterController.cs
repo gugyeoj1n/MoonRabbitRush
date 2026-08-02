@@ -8,6 +8,9 @@ namespace MoonRabbitRush.Enemies.Bosses
 {
     public sealed class BossEncounterController : MonoBehaviour
     {
+        public event Action<EnemyActor> BossSpawned;
+        public event Action BossDefeated;
+
         [SerializeField] private BossAlertController _bossAlert;
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private EnemyActor _bossPrefab;
@@ -57,6 +60,7 @@ namespace MoonRabbitRush.Enemies.Bosses
             }
 
             _activeBoss = _enemySpawner.Spawn(_bossPrefab);
+            BossSpawned?.Invoke(_activeBoss);
 
             if (_activeBoss?.Health != null)
             {
@@ -77,6 +81,7 @@ namespace MoonRabbitRush.Enemies.Bosses
 
             UnsubscribeBossDeath();
 
+            BossDefeated?.Invoke();
             ManagerRoot.Instance?.CameraMaanger?.PlayShake(
                 _bossDeathShakeDuration,
                 _bossDeathShakeAmplitude,
