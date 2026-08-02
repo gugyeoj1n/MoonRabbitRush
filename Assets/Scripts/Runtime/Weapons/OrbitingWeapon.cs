@@ -69,15 +69,33 @@ namespace MoonRabbitRush.Weapons
             while (_hitboxes.Count > requiredCount)
             {
                 int lastIndex = _hitboxes.Count - 1;
-                Destroy(_hitboxes[lastIndex].gameObject);
+                PoolingManager.Release(
+                    PoolType.WeaponShockDrone,
+                    _hitboxes[lastIndex].gameObject);
                 _hitboxes.RemoveAt(lastIndex);
             }
 
             while (_hitboxes.Count < requiredCount)
             {
-                OrbitingWeaponHitbox hitbox = Instantiate(
-                    _hitboxPrefab,
-                    transform);
+                const PoolType poolType = PoolType.WeaponShockDrone;
+                if (!PoolingManager.IsRegistered(poolType))
+                {
+                    PoolingManager.RegisterPool(
+                        poolType,
+                        () => Instantiate(_hitboxPrefab).gameObject,
+                        defaultCapacity: 3,
+                        maxSize: 10);
+                }
+
+                PoolingManager.GetObject(poolType, out GameObject hitboxObject);
+                if (hitboxObject == null ||
+                    !hitboxObject.TryGetComponent(
+                        out OrbitingWeaponHitbox hitbox))
+                {
+                    break;
+                }
+
+                hitbox.transform.SetParent(transform, false);
                 hitbox.transform.localPosition = Vector3.zero;
                 _hitboxes.Add(hitbox);
             }

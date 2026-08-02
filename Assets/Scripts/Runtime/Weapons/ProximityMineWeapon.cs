@@ -56,8 +56,24 @@ namespace MoonRabbitRush.Weapons
                 float distance = Stats.ProjectileSpeed * _throwDuration *
                     Random.Range(_minimumDistanceRatio, 1f);
 
-                ProximityMine mine = Instantiate(
-                    _minePrefab,
+                const PoolType poolType = PoolType.WeaponSpaceCarrotMine;
+                if (!PoolingManager.IsRegistered(poolType))
+                {
+                    PoolingManager.RegisterPool(
+                        poolType,
+                        () => Instantiate(_minePrefab).gameObject,
+                        defaultCapacity: 10,
+                        maxSize: 100);
+                }
+
+                PoolingManager.GetObject(poolType, out GameObject mineObject);
+                if (mineObject == null ||
+                    !mineObject.TryGetComponent(out ProximityMine mine))
+                {
+                    continue;
+                }
+
+                mine.transform.SetPositionAndRotation(
                     Owner.position,
                     Quaternion.identity);
                 mine.Launch(
@@ -72,7 +88,8 @@ namespace MoonRabbitRush.Weapons
 
         protected override bool OnActivateActiveSkill()
         {
-            _spawnedMines.RemoveAll(mine => mine == null);
+            _spawnedMines.RemoveAll(
+                mine => mine == null || !mine.IsActive);
             bool detonated = false;
 
             foreach (ProximityMine mine in _spawnedMines)
@@ -80,7 +97,8 @@ namespace MoonRabbitRush.Weapons
                 detonated |= mine.TryForceDetonate();
             }
 
-            _spawnedMines.RemoveAll(mine => mine == null);
+            _spawnedMines.RemoveAll(
+                mine => mine == null || !mine.IsActive);
             return detonated;
         }
 

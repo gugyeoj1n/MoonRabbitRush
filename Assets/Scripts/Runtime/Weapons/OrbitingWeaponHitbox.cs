@@ -77,10 +77,25 @@ namespace MoonRabbitRush.Weapons
 
         private void SpawnImpactEffect(Vector2 hitPoint)
         {
-            if (_impactEffectPrefab != null)
+            if (_impactEffectPrefab == null)
             {
-                Instantiate(_impactEffectPrefab, hitPoint, Quaternion.identity);
+                return;
             }
+
+            PoolType poolType = _impactEffectPrefab.PoolKey;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_impactEffectPrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject effectObject);
+            effectObject?.transform.SetPositionAndRotation(
+                hitPoint,
+                Quaternion.identity);
         }
     }
 }

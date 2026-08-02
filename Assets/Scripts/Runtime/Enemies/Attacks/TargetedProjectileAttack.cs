@@ -49,8 +49,24 @@ namespace MoonRabbitRush.Enemies
                 ? _muzzle.position
                 : transform.position;
 
-            DamageProjectile projectile = Instantiate(
-                _projectilePrefab,
+            const PoolType poolType = PoolType.ProjectileInktoInk;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_projectilePrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject projectileObject);
+            if (projectileObject == null ||
+                !projectileObject.TryGetComponent(out DamageProjectile projectile))
+            {
+                return;
+            }
+
+            projectile.transform.SetPositionAndRotation(
                 spawnPosition,
                 Quaternion.identity);
             projectile.Launch(

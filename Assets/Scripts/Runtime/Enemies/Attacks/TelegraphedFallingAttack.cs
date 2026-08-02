@@ -79,8 +79,14 @@ namespace MoonRabbitRush.Enemies
         {
             _nextAttackTime = Time.time + Stats.AttackInterval;
 
-            var telegraphObject = new GameObject("Circle Telegraph");
-            _activeTelegraph = telegraphObject.AddComponent<CircleTelegraphView>();
+            _activeTelegraph = CircleTelegraphView.GetFromPool(
+                "Circle Telegraph");
+            if (_activeTelegraph == null)
+            {
+                return;
+            }
+
+            _activeTelegraph.Released += HandleTelegraphReleased;
             _activeTelegraph.Initialize(
                 impactPosition,
                 _impactRadius,
@@ -90,11 +96,20 @@ namespace MoonRabbitRush.Enemies
                 _outlineColor,
                 _fillColor,
                 _verticalScale);
+            if (_activeTelegraph == null)
+            {
+                return;
+            }
 
-            _activeProjectile = Instantiate(
-                _projectilePrefab,
-                impactPosition,
-                Quaternion.identity);
+            _activeProjectile = GetProjectile(impactPosition);
+            if (_activeProjectile == null)
+            {
+                _activeTelegraph.Release();
+                _activeTelegraph = null;
+                return;
+            }
+
+            _activeProjectile.Released += HandleProjectileReleased;
             _activeProjectile.Launch(
                 impactPosition,
                 _fallHeight,
@@ -103,6 +118,60 @@ namespace MoonRabbitRush.Enemies
                 Stats.AttackDamage,
                 _damageTarget,
                 gameObject);
+        }
+
+        private void HandleProjectileReleased(FallingAreaProjectile projectile)
+        {
+            projectile.Released -= HandleProjectileReleased;
+
+            if (_activeProjectile == projectile)
+            {
+                _activeProjectile = null;
+            }
+
+            PoolingManager.Release(
+                PoolType.ProjectileOrbitronMissile,
+                projectile.gameObject);
+        }
+
+        private void HandleTelegraphReleased(CircleTelegraphView telegraph)
+        {
+            telegraph.Released -= HandleTelegraphReleased;
+
+            if (_activeTelegraph == telegraph)
+            {
+                _activeTelegraph = null;
+            }
+
+            PoolingManager.Release(
+                PoolType.TelegraphCircle,
+                telegraph.gameObject);
+        }
+
+        private FallingAreaProjectile GetProjectile(Vector2 position)
+        {
+            const PoolType poolType = PoolType.ProjectileOrbitronMissile;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_projectilePrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject projectileObject);
+            if (projectileObject == null ||
+                !projectileObject.TryGetComponent(
+                    out FallingAreaProjectile projectile))
+            {
+                return null;
+            }
+
+            projectile.transform.SetPositionAndRotation(
+                position,
+                Quaternion.identity);
+            return projectile;
         }
 
         private void OnValidate()
