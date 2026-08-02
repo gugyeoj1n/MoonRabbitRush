@@ -55,10 +55,12 @@ namespace MoonRabbitRush.Enemies.Bosses
                     _fillColor,
                     _verticalScale);
 
-                FallingAreaProjectile projectile = Instantiate(
-                    _projectilePrefab,
-                    impactPosition,
-                    Quaternion.identity);
+                FallingAreaProjectile projectile = GetProjectile(impactPosition);
+                if (projectile == null)
+                {
+                    continue;
+                }
+
                 projectile.Launch(
                     impactPosition,
                     _fallHeight,
@@ -83,6 +85,32 @@ namespace MoonRabbitRush.Enemies.Bosses
                 DelayType.DeltaTime,
                 PlayerLoopTiming.Update,
                 cancellationToken);
+        }
+
+        private FallingAreaProjectile GetProjectile(Vector2 position)
+        {
+            const PoolType poolType = PoolType.ProjectileOrbitronMissile;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_projectilePrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject projectileObject);
+            if (projectileObject == null ||
+                !projectileObject.TryGetComponent(
+                    out FallingAreaProjectile projectile))
+            {
+                return null;
+            }
+
+            projectile.transform.SetPositionAndRotation(
+                position,
+                Quaternion.identity);
+            return projectile;
         }
 
         private void OnValidate()

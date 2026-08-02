@@ -55,6 +55,7 @@ namespace MoonRabbitRush.Weapons
         private SpriteRenderer _alertRenderer;
         private SpriteRenderer _detectionRangeRenderer;
         private CircleTelegraphView _telegraph;
+        private Sprite _initialSprite;
         private WeaponLevelStats _stats;
         private GameObject _source;
         private Vector2 _startPosition;
@@ -66,9 +67,12 @@ namespace MoonRabbitRush.Weapons
         private float _elapsed;
         private MineState _state;
 
+        public bool IsActive => _state != MineState.Inactive;
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _initialSprite = _spriteRenderer.sprite;
             _initialScale = transform.localScale;
             _initialColor = _spriteRenderer.color;
         }
@@ -107,6 +111,10 @@ namespace MoonRabbitRush.Weapons
             in WeaponLevelStats stats,
             GameObject source)
         {
+            CleanupRuntimeVisuals();
+            _spriteRenderer.sprite = _initialSprite;
+            _spriteRenderer.color = _initialColor;
+            transform.localScale = _initialScale;
             _startPosition = transform.position;
             _landingPosition = landingPosition;
             _throwDuration = Mathf.Max(0.05f, throwDuration);
@@ -284,12 +292,15 @@ namespace MoonRabbitRush.Weapons
             SpawnExplosionEffect();
             _telegraph?.Release();
             _telegraph = null;
-            Destroy(gameObject);
+            _state = MineState.Inactive;
+            PoolingManager.Release(
+                PoolType.WeaponSpaceCarrotMine,
+                gameObject);
         }
 
         private void OnDisable()
         {
-            ReleaseDetectionRangeVisual();
+            CleanupRuntimeVisuals();
         }
 
         private void EnsureDetectionRangeVisual()
@@ -367,6 +378,23 @@ namespace MoonRabbitRush.Weapons
             if (_telegraph != null)
             {
                 _telegraph.Release();
+            }
+        }
+
+        private void CleanupRuntimeVisuals()
+        {
+            if (_alertRenderer != null)
+            {
+                Destroy(_alertRenderer.gameObject);
+                _alertRenderer = null;
+            }
+
+            ReleaseDetectionRangeVisual();
+
+            if (_telegraph != null)
+            {
+                _telegraph.Release();
+                _telegraph = null;
             }
         }
 

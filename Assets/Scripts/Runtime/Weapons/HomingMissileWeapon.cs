@@ -113,8 +113,25 @@ namespace MoonRabbitRush.Weapons
                     (target.transform.position - Owner.position).normalized;
             }
 
-            HomingWeaponProjectile projectile = Instantiate(
-                _projectilePrefab,
+            const PoolType poolType = PoolType.ProjectileCarrotMissile;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_projectilePrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject projectileObject);
+            if (projectileObject == null ||
+                !projectileObject.TryGetComponent(
+                    out HomingWeaponProjectile projectile))
+            {
+                return;
+            }
+
+            projectile.transform.SetPositionAndRotation(
                 Owner.position,
                 Quaternion.identity);
             projectile.Launch(

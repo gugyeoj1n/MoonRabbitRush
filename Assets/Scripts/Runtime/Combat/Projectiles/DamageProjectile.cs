@@ -123,7 +123,7 @@ namespace MoonRabbitRush.Combat
                 return;
             }
 
-            Destroy(gameObject);
+            PoolingManager.Release(PoolType.ProjectileInktoInk, gameObject);
         }
     }
 }

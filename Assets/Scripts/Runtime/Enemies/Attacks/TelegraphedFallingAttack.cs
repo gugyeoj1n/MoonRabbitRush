@@ -91,10 +91,15 @@ namespace MoonRabbitRush.Enemies
                 _fillColor,
                 _verticalScale);
 
-            _activeProjectile = Instantiate(
-                _projectilePrefab,
-                impactPosition,
-                Quaternion.identity);
+            _activeProjectile = GetProjectile(impactPosition);
+            if (_activeProjectile == null)
+            {
+                _activeTelegraph.Release();
+                _activeTelegraph = null;
+                return;
+            }
+
+            _activeProjectile.Released += HandleProjectileReleased;
             _activeProjectile.Launch(
                 impactPosition,
                 _fallHeight,
@@ -103,6 +108,46 @@ namespace MoonRabbitRush.Enemies
                 Stats.AttackDamage,
                 _damageTarget,
                 gameObject);
+        }
+
+        private void HandleProjectileReleased(FallingAreaProjectile projectile)
+        {
+            projectile.Released -= HandleProjectileReleased;
+
+            if (_activeProjectile == projectile)
+            {
+                _activeProjectile = null;
+            }
+
+            PoolingManager.Release(
+                PoolType.ProjectileOrbitronMissile,
+                projectile.gameObject);
+        }
+
+        private FallingAreaProjectile GetProjectile(Vector2 position)
+        {
+            const PoolType poolType = PoolType.ProjectileOrbitronMissile;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_projectilePrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject projectileObject);
+            if (projectileObject == null ||
+                !projectileObject.TryGetComponent(
+                    out FallingAreaProjectile projectile))
+            {
+                return null;
+            }
+
+            projectile.transform.SetPositionAndRotation(
+                position,
+                Quaternion.identity);
+            return projectile;
         }
 
         private void OnValidate()

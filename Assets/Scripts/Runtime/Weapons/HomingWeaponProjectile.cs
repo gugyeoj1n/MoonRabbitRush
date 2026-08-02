@@ -156,7 +156,9 @@ namespace MoonRabbitRush.Weapons
                 return;
             }
 
-            Destroy(gameObject);
+            PoolingManager.Release(
+                PoolType.ProjectileCarrotMissile,
+                gameObject);
         }
     }
 }
