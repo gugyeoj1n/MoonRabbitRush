@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
 namespace MoonRabbitRush.Score
 {
@@ -10,8 +11,8 @@ namespace MoonRabbitRush.Score
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            SceneManager.sceneLoaded -= HandleSceneLoaded;
-            SceneManager.sceneLoaded += HandleSceneLoaded;
+            UnitySceneManager.sceneLoaded -= HandleSceneLoaded;
+            UnitySceneManager.sceneLoaded += HandleSceneLoaded;
         }
 
         private static void HandleSceneLoaded(Scene scene, LoadSceneMode _)
@@ -23,7 +24,7 @@ namespace MoonRabbitRush.Score
             }
 
             GameObject scoreManagerObject = new("Score Manager");
-            SceneManager.MoveGameObjectToScene(scoreManagerObject, scene);
+            UnitySceneManager.MoveGameObjectToScene(scoreManagerObject, scene);
             scoreManagerObject.AddComponent<ScoreManager>();
         }
     }
