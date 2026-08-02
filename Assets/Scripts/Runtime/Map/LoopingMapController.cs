@@ -10,6 +10,7 @@ namespace MoonRabbitRush.Map
         [SerializeField] private SpriteRenderer[] _tiles;
         [SerializeField] private Camera _targetCamera;
         [SerializeField, Min(0.01f)] private float _tileScale = 2f;
+        [SerializeField, Range(0f, 1f)] private float _wrapTriggerPadding = 0.15f;
         [SerializeField] private int _sortingOrder = -100;
 
         private BoxCollider2D _loopArea;
@@ -42,6 +43,7 @@ namespace MoonRabbitRush.Map
         private void OnValidate()
         {
             _tileScale = Mathf.Max(0.01f, _tileScale);
+            _wrapTriggerPadding = Mathf.Clamp01(_wrapTriggerPadding);
 
             if (!Application.isPlaying)
             {
@@ -186,25 +188,27 @@ namespace MoonRabbitRush.Map
         private void WrapTiles()
         {
             Bounds cameraBounds = GetWrapBounds();
+            float horizontalPadding = _tileSize.x * _wrapTriggerPadding;
+            float verticalPadding = _tileSize.y * _wrapTriggerPadding;
             float wrapWidth = _tileSize.x * _gridSize;
             float wrapHeight = _tileSize.y * _gridSize;
 
-            while (cameraBounds.max.x > GetMapBounds().max.x)
+            while (cameraBounds.max.x > GetMapBounds().max.x - horizontalPadding)
             {
                 MoveColumnToOppositeSide(moveLeftColumn: true, wrapWidth);
             }
 
-            while (cameraBounds.min.x < GetMapBounds().min.x)
+            while (cameraBounds.min.x < GetMapBounds().min.x + horizontalPadding)
             {
                 MoveColumnToOppositeSide(moveLeftColumn: false, wrapWidth);
             }
 
-            while (cameraBounds.max.y > GetMapBounds().max.y)
+            while (cameraBounds.max.y > GetMapBounds().max.y - verticalPadding)
             {
                 MoveRowToOppositeSide(moveBottomRow: true, wrapHeight);
             }
 
-            while (cameraBounds.min.y < GetMapBounds().min.y)
+            while (cameraBounds.min.y < GetMapBounds().min.y + verticalPadding)
             {
                 MoveRowToOppositeSide(moveBottomRow: false, wrapHeight);
             }
