@@ -98,6 +98,7 @@ namespace MoonRabbitRush
                 pool.Clear();
 
             poolDictionary.Clear();
+            Debug.Log("Clearing all object pools on application quit.");
         }
     }
 }

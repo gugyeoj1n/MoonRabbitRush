@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MoonRabbitRush
@@ -16,6 +17,8 @@ namespace MoonRabbitRush
 
         public SoundManager SoundManager => _SoundManager;
         private SoundManager _SoundManager;
+
+        public event Action OnQuit;
 
         private void Awake()
         {
@@ -42,6 +45,20 @@ namespace MoonRabbitRush
                 Debug.LogError("CameraMaanger is not found in children of ManagerRoot.");
             if (_SoundManager == null)
                 Debug.LogError("SoundManager is not found in children of ManagerRoot.");
+
+            OnQuit += PoolingManager.Clear;
+        }
+
+        private void OnDestroy()
+        {
+            OnQuit -= PoolingManager.Clear;
+        }
+
+
+
+        private void OnApplicationQuit()
+        {
+            OnQuit?.Invoke();
         }
     }
 }
