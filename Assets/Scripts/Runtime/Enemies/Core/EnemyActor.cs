@@ -14,6 +14,7 @@ namespace MoonRabbitRush.Enemies
     {
         [SerializeField] private EnemyStatsData _stats;
         [SerializeField] private ExperienceDrop _experienceDropPrefab;
+        [SerializeField] private PoolType _poolType;
 
         [Header("Death Feedback")]
         [SerializeField, Min(0f)] private float _deathFeedbackDuration = 0.2f;
@@ -40,6 +41,7 @@ namespace MoonRabbitRush.Enemies
         public float DeathDeactivationDelay =>
             _deathFeedbackDuration + _deathHoldDuration;
         public int ScoreReward => _stats != null ? _stats.ScoreReward : 0;
+        public PoolType PoolKey => _poolType;
 
         private void Awake()
         {
@@ -119,7 +121,7 @@ namespace MoonRabbitRush.Enemies
         {
             EnemyRegistry.Unregister(this);
             _motor.Stop();
-            gameObject.SetActive(false);
+            PoolingManager.Release(_poolType, gameObject);
         }
 
         private void OnDisable()
@@ -157,8 +159,24 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
-            ExperienceDrop experienceDrop = Instantiate(
-                _experienceDropPrefab,
+            const PoolType poolType = PoolType.ExperienceCarrot;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_experienceDropPrefab).gameObject,
+                    defaultCapacity: 20,
+                    maxSize: 200);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject dropObject);
+            if (dropObject == null ||
+                !dropObject.TryGetComponent(out ExperienceDrop experienceDrop))
+            {
+                return;
+            }
+
+            experienceDrop.transform.SetPositionAndRotation(
                 transform.position,
                 Quaternion.identity);
             experienceDrop.Initialize(_lootCollector, _stats.ExperienceReward);
