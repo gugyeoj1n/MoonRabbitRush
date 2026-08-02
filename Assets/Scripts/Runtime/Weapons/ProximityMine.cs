@@ -55,6 +55,7 @@ namespace MoonRabbitRush.Weapons
         private SpriteRenderer _alertRenderer;
         private SpriteRenderer _detectionRangeRenderer;
         private CircleTelegraphView _telegraph;
+        private Sprite _initialSprite;
         private WeaponLevelStats _stats;
         private GameObject _source;
         private Vector2 _startPosition;
@@ -66,9 +67,12 @@ namespace MoonRabbitRush.Weapons
         private float _elapsed;
         private MineState _state;
 
+        public bool IsActive => _state != MineState.Inactive;
+
         private void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _initialSprite = _spriteRenderer.sprite;
             _initialScale = transform.localScale;
             _initialColor = _spriteRenderer.color;
         }
@@ -107,6 +111,10 @@ namespace MoonRabbitRush.Weapons
             in WeaponLevelStats stats,
             GameObject source)
         {
+            CleanupRuntimeVisuals();
+            _spriteRenderer.sprite = _initialSprite;
+            _spriteRenderer.color = _initialColor;
+            transform.localScale = _initialScale;
             _startPosition = transform.position;
             _landingPosition = landingPosition;
             _throwDuration = Mathf.Max(0.05f, throwDuration);
@@ -128,8 +136,7 @@ namespace MoonRabbitRush.Weapons
 
             if (_alertRenderer != null)
             {
-                Destroy(_alertRenderer.gameObject);
-                _alertRenderer = null;
+                _alertRenderer.gameObject.SetActive(false);
             }
 
             if (_state != MineState.Telegraphing)
@@ -206,14 +213,19 @@ namespace MoonRabbitRush.Weapons
 
         private void BeginAlert()
         {
-            var alertObject = new GameObject("Alert Exclamation");
-            alertObject.transform.SetParent(transform, false);
-            alertObject.transform.localPosition = _alertLocalPosition;
-            alertObject.transform.localScale = Vector3.zero;
-            _alertRenderer = alertObject.AddComponent<SpriteRenderer>();
-            _alertRenderer.sprite = _alertSprite;
-            _alertRenderer.color = Color.white;
-            _alertRenderer.sortingOrder = _spriteRenderer.sortingOrder + 2;
+            if (_alertRenderer == null)
+            {
+                var alertObject = new GameObject("Alert Exclamation");
+                alertObject.transform.SetParent(transform, false);
+                _alertRenderer = alertObject.AddComponent<SpriteRenderer>();
+                _alertRenderer.sprite = _alertSprite;
+                _alertRenderer.color = Color.white;
+                _alertRenderer.sortingOrder = _spriteRenderer.sortingOrder + 2;
+            }
+
+            _alertRenderer.gameObject.SetActive(true);
+            _alertRenderer.transform.localPosition = _alertLocalPosition;
+            _alertRenderer.transform.localScale = Vector3.zero;
             _elapsed = 0f;
             _state = MineState.Alerting;
         }
@@ -230,16 +242,22 @@ namespace MoonRabbitRush.Weapons
 
             if (progress >= 1f)
             {
-                Destroy(_alertRenderer.gameObject);
-                _alertRenderer = null;
+                _alertRenderer.gameObject.SetActive(false);
                 BeginTelegraph();
             }
         }
 
         private void BeginTelegraph()
         {
-            var telegraphObject = new GameObject("Player Mine Telegraph");
-            _telegraph = telegraphObject.AddComponent<CircleTelegraphView>();
+            _telegraph = CircleTelegraphView.GetFromPool(
+                "Player Mine Telegraph");
+            if (_telegraph == null)
+            {
+                _state = MineState.Armed;
+                return;
+            }
+
+            _telegraph.Released += HandleTelegraphReleased;
             _telegraph.Initialize(
                 transform.position,
                 _stats.AreaRadius,
@@ -249,8 +267,28 @@ namespace MoonRabbitRush.Weapons
                 _outlineColor,
                 _fillColor,
                 _verticalScale);
+            if (_telegraph == null)
+            {
+                _state = MineState.Armed;
+                return;
+            }
+
             _elapsed = 0f;
             _state = MineState.Telegraphing;
+        }
+
+        private void HandleTelegraphReleased(CircleTelegraphView telegraph)
+        {
+            telegraph.Released -= HandleTelegraphReleased;
+
+            if (_telegraph == telegraph)
+            {
+                _telegraph = null;
+            }
+
+            PoolingManager.Release(
+                PoolType.TelegraphCircle,
+                telegraph.gameObject);
         }
 
         private void UpdateTelegraph()
@@ -284,18 +322,28 @@ namespace MoonRabbitRush.Weapons
             SpawnExplosionEffect();
             _telegraph?.Release();
             _telegraph = null;
-            Destroy(gameObject);
+            _state = MineState.Inactive;
+            PoolingManager.Release(
+                PoolType.WeaponSpaceCarrotMine,
+                gameObject);
         }
 
         private void OnDisable()
         {
-            ReleaseDetectionRangeVisual();
+            CleanupRuntimeVisuals();
         }
 
         private void EnsureDetectionRangeVisual()
         {
             if (_detectionRangeSprite == null || _detectionRangeRenderer != null)
             {
+                if (_detectionRangeRenderer != null)
+                {
+                    _detectionRangeRenderer.gameObject.SetActive(true);
+                    _detectionRangeRenderer.transform.rotation =
+                        Quaternion.identity;
+                }
+
                 return;
             }
 
@@ -347,19 +395,30 @@ namespace MoonRabbitRush.Weapons
                 return;
             }
 
-            Destroy(_detectionRangeRenderer.gameObject);
-            _detectionRangeRenderer = null;
+            _detectionRangeRenderer.gameObject.SetActive(false);
         }
 
         private void SpawnExplosionEffect()
         {
-            if (_explosionEffectPrefab != null)
+            if (_explosionEffectPrefab == null)
             {
-                Instantiate(
-                    _explosionEffectPrefab,
-                    transform.position,
-                    Quaternion.identity);
+                return;
             }
+
+            PoolType poolType = _explosionEffectPrefab.PoolKey;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_explosionEffectPrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject effectObject);
+            effectObject?.transform.SetPositionAndRotation(
+                transform.position,
+                Quaternion.identity);
         }
 
         private void OnDestroy()
@@ -367,6 +426,22 @@ namespace MoonRabbitRush.Weapons
             if (_telegraph != null)
             {
                 _telegraph.Release();
+            }
+        }
+
+        private void CleanupRuntimeVisuals()
+        {
+            if (_alertRenderer != null)
+            {
+                _alertRenderer.gameObject.SetActive(false);
+            }
+
+            ReleaseDetectionRangeVisual();
+
+            if (_telegraph != null)
+            {
+                _telegraph.Release();
+                _telegraph = null;
             }
         }
 

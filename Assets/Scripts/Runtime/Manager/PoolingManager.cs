@@ -6,11 +6,23 @@ using UnityEngine.Pool;
 namespace MoonRabbitRush
 {
     public enum PoolType
-    {        
-        Enemy,
-        Mine,
-        Projectile,
-        Effect,
+    {
+        EnemyGloby,
+        EnemyInkto,
+        EnemyOrbitron,
+        EnemyBossUfo,
+        ExperienceCarrot,
+        ProjectileCarrotMissile,
+        ProjectileInktoInk,
+        ProjectileOrbitronMissile,
+        WeaponShockDrone,
+        WeaponSpaceCarrotMine,
+        EffectCarrotMissileImpact,
+        EffectShockDroneContact,
+        EffectSpaceCarrotMineExplosion,
+        TelegraphCircle,
+        TelegraphLine,
+        DamageText,
     }
     public static class PoolingManager
     {
@@ -34,6 +46,11 @@ namespace MoonRabbitRush
                 return;
             }
             poolDictionary[key] = pool;
+        }
+
+        public static bool IsRegistered(PoolType key)
+        {
+            return poolDictionary.ContainsKey(key);
         }
 
         public static void GetObject(PoolType key, out GameObject obj)

@@ -19,10 +19,8 @@ namespace MoonRabbitRush
         Wave,
     }
     /// <summary>
-    /// 간단한 데이터 바인딩 도우미와 예제.
     /// 외부 R3 패키지가 없더라도 동작하는 로컬 ObservableProperty 구현과
     /// UnityEngine.UI.Text에 바인딩하는 메서드를 제공합니다.
-    /// R3 패키지를 사용하려면 아래 주석의 R3 예시를 참고해 대체하면 됩니다.
     /// </summary>
     public static class DataBindingManager
     {
@@ -108,7 +106,6 @@ namespace MoonRabbitRush
         /// <summary>
         /// 값의 증감(+/-) 용도로 사용합니다. 전달된 값은 현재 값에 더해집니다.
         /// 해당 프로퍼티가 없으면 전달된 값으로 새로 생성합니다.
-        /// (절대값 설정이 필요하면 Register(...)를 사용하세요.)
         /// </summary>
         public static void AddValue(Property type, int delta)
         {

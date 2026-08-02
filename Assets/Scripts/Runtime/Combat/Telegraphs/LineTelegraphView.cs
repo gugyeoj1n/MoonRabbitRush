@@ -16,6 +16,35 @@ namespace MoonRabbitRush.Combat
         private float _beamElapsed;
         private bool _isBeamActive;
 
+        public static LineTelegraphView GetFromPool(string objectName)
+        {
+            const PoolType poolType = PoolType.TelegraphLine;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () =>
+                    {
+                        var lineObject = new GameObject(objectName);
+                        return lineObject
+                            .AddComponent<LineTelegraphView>()
+                            .gameObject;
+                    },
+                    defaultCapacity: 2,
+                    maxSize: 10);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject pooledObject);
+            if (pooledObject == null ||
+                !pooledObject.TryGetComponent(out LineTelegraphView line))
+            {
+                return null;
+            }
+
+            pooledObject.name = objectName;
+            return line;
+        }
+
         private void Awake()
         {
             CreateRenderersIfNeeded();
@@ -123,7 +152,10 @@ namespace MoonRabbitRush.Combat
 
         public void Release()
         {
-            Destroy(gameObject);
+            _isBeamActive = false;
+            _chargeRenderer.enabled = false;
+            _beamRenderer.enabled = false;
+            PoolingManager.Release(PoolType.TelegraphLine, gameObject);
         }
 
         private void CreateRenderersIfNeeded()

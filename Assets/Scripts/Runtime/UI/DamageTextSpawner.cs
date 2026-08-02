@@ -49,7 +49,24 @@ namespace MoonRabbitRush.UI
                 Random.Range(_horizontalOffset.x, _horizontalOffset.y),
                 Random.Range(_verticalOffset.x, _verticalOffset.y));
 
-            DamageTextView view = Instantiate(_damageTextPrefab, _container);
+            const PoolType poolType = PoolType.DamageText;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(_damageTextPrefab).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject textObject);
+            if (textObject == null ||
+                !textObject.TryGetComponent(out DamageTextView view))
+            {
+                return;
+            }
+
+            view.transform.SetParent(_container, false);
             view.Initialize(
                 amount,
                 worldPosition,

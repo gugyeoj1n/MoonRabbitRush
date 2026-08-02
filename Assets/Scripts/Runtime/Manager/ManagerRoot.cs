@@ -7,14 +7,16 @@ namespace MoonRabbitRush
     {
         public static ManagerRoot Instance { get; private set; }
 
-        public SceneManager SceneManager => Instance._SceneManager;
+        public SceneManager SceneManager => _SceneManager;
         private SceneManager _SceneManager;
-        public UIManager UIManager => Instance._UIManager;
+        public UIManager UIManager => _UIManager;
         private UIManager _UIManager;
 
-        public CameraMaanger CameraMaanger => Instance._CameraMaanger;
+        public CameraMaanger CameraMaanger => _CameraMaanger;
         private CameraMaanger _CameraMaanger;
 
+        public SoundManager SoundManager => _SoundManager;
+        private SoundManager _SoundManager;
 
         public event Action OnQuit;
 
@@ -33,13 +35,16 @@ namespace MoonRabbitRush
             _SceneManager = GetComponentInChildren<SceneManager>();
             _UIManager = GetComponentInChildren<UIManager>();
             _CameraMaanger = GetComponentInChildren<CameraMaanger>();
+            _SoundManager = GetComponentInChildren<SoundManager>();
 
             if (_SceneManager == null)
                 Debug.LogError("SceneManager is not found in children of ManagerRoot.");
             if (_UIManager == null)
                 Debug.LogError("UIManager is not found in children of ManagerRoot.");
             if (_CameraMaanger == null)
-                Debug.LogError("CameraMaanger is not found in children of ManagerRoot.");           
+                Debug.LogError("CameraMaanger is not found in children of ManagerRoot.");
+            if (_SoundManager == null)
+                Debug.LogError("SoundManager is not found in children of ManagerRoot.");
 
             OnQuit += PoolingManager.Clear;
         }

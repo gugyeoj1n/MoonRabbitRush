@@ -22,6 +22,7 @@ namespace MoonRabbitRush.UI
         private Vector3 _worldPosition;
         private Vector2 _screenOffset;
         private Color _startColor;
+        private Color _defaultColor;
         private float _elapsed;
         private CancellationTokenSource _animationCts;
 
@@ -29,6 +30,7 @@ namespace MoonRabbitRush.UI
         {
             _rectTransform = (RectTransform)transform;
             _text = GetComponent<TMP_Text>();
+            _defaultColor = _text.color;
             _text.outlineColor = _outlineColor;
             _text.outlineWidth = _outlineWidth;
         }
@@ -53,8 +55,10 @@ namespace MoonRabbitRush.UI
             _worldCamera = worldCamera;
             _container = container;
             _uiCamera = uiCamera;
-            _startColor = colorOverride ?? _text.color;
+            _startColor = colorOverride ?? _defaultColor;
             _text.color = _startColor;
+            _text.enabled = true;
+            _text.outlineColor = _outlineColor;
             _text.SetText("{0:0}", amount);
             UpdateScreenPosition(0f);
             RestartAnimation();
@@ -64,7 +68,7 @@ namespace MoonRabbitRush.UI
         {
             if (_worldCamera == null || _container == null)
             {
-                Destroy(gameObject);
+                Release();
                 return;
             }
 
@@ -134,8 +138,13 @@ namespace MoonRabbitRush.UI
 
             if (!cancellationToken.IsCancellationRequested)
             {
-                Destroy(gameObject);
+                Release();
             }
+        }
+
+        private void Release()
+        {
+            PoolingManager.Release(PoolType.DamageText, gameObject);
         }
     }
 }

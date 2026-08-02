@@ -1,4 +1,6 @@
 using System;
+using MoonRabbitRush.Enemies;
+using MoonRabbitRush.Enemies.Bosses;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,10 +21,18 @@ namespace MoonRabbitRush
         private Slider HpSlider;
         [SerializeField]
         private Slider ExpSlider;
+        [SerializeField]
+        private Slider BossHpSlider;
+        [SerializeField]
+        private TextMeshProUGUI BossCurrentHpText;
+        [SerializeField]
+        private TextMeshProUGUI BossMaxHpText;
 
         private TextMeshProUGUI _expLabel;
         private GameObject _expDivider;
         private GameObject _expMaxLabel;
+        private BossEncounterController _bossEncounterController;
+        private EnemyHealth _bossHealth;
         private IDisposable _playerExperienceSubscription;
         private IDisposable _playerMaxExperienceSubscription;
         private IDisposable _playerLevelSubscription;
@@ -36,6 +46,13 @@ namespace MoonRabbitRush
             DataBindingManager.Register(Property.PlayerHealth, 100);
             DataBindingManager.Register(Property.PlayerMaxHealth, 100);
             CacheExperienceWidgets();
+            SetBossHpVisible(false);            
+        }
+
+        private void OnEnable()
+        {
+            ResolveBossEncounterController();
+            SubscribeBossEvents();
         }
 
         private void Start()
@@ -52,6 +69,12 @@ namespace MoonRabbitRush
             DataBindingManager.BindText(Property.Wave, waveNumber);
         }
 
+        private void OnDisable()
+        {
+            UnsubscribeBossEvents();
+            UnbindBossHealth();
+        }
+
         private void OnDestroy()
         {
             DataBindingManager.UnRegister(Property.PlayerHealth);
@@ -59,6 +82,106 @@ namespace MoonRabbitRush
             _playerExperienceSubscription?.Dispose();
             _playerMaxExperienceSubscription?.Dispose();
             _playerLevelSubscription?.Dispose();
+        }
+
+        private void ResolveBossEncounterController()
+        {
+            _bossEncounterController ??= FindAnyObjectByType<BossEncounterController>();
+        }
+
+        private void SubscribeBossEvents()
+        {
+            if (_bossEncounterController == null)
+            {
+                return;
+            }
+
+            _bossEncounterController.BossSpawned -= HandleBossSpawned;
+            _bossEncounterController.BossSpawned += HandleBossSpawned;
+            _bossEncounterController.BossDefeated -= HandleBossDefeated;
+            _bossEncounterController.BossDefeated += HandleBossDefeated;
+        }
+
+        private void UnsubscribeBossEvents()
+        {
+            if (_bossEncounterController == null)
+            {
+                return;
+            }
+
+            _bossEncounterController.BossSpawned -= HandleBossSpawned;
+            _bossEncounterController.BossDefeated -= HandleBossDefeated;
+        }
+
+        private void HandleBossSpawned(EnemyActor boss)
+        {
+            BindBossHealth(boss != null ? boss.Health : null);
+        }
+
+        private void HandleBossDefeated()
+        {
+            UnbindBossHealth();
+            SetBossHpVisible(false);
+        }
+
+        private void BindBossHealth(EnemyHealth bossHealth)
+        {
+            UnbindBossHealth();
+            _bossHealth = bossHealth;
+
+            if (_bossHealth == null || BossHpSlider == null)
+            {
+                SetBossHpVisible(false);
+                return;
+            }
+
+            _bossHealth.HealthChanged += HandleBossHealthChanged;
+            SetBossHpVisible(true);
+            HandleBossHealthChanged(_bossHealth.CurrentHealth, _bossHealth.MaxHealth);
+        }
+
+        private void UnbindBossHealth()
+        {
+            if (_bossHealth == null)
+            {
+                return;
+            }
+
+            _bossHealth.HealthChanged -= HandleBossHealthChanged;
+            _bossHealth = null;
+        }
+
+        private void HandleBossHealthChanged(float current, float max)
+        {
+            if (BossHpSlider == null)
+            {
+                return;
+            }
+
+            BossHpSlider.value = max <= 0f ? 0f : current / max;
+
+            if (BossCurrentHpText != null)
+            {
+                BossCurrentHpText.SetText("{0}", Mathf.CeilToInt(current));
+            }
+
+            if (BossMaxHpText != null)
+            {
+                BossMaxHpText.SetText("{0}", Mathf.CeilToInt(max));
+            }
+        }
+
+        private void SetBossHpVisible(bool visible)
+        {
+            if (BossHpSlider != null)
+            {
+                BossHpSlider.gameObject.SetActive(visible);
+            }
+
+            if (BossMaxHpText != null)
+            {
+                BossMaxHpText.gameObject.SetActive(visible);
+            }
         }
 
         private void CacheExperienceWidgets()

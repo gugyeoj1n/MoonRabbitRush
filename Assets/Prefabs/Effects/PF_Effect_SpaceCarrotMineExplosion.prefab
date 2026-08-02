@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Combat.TimedEffect
   _duration: 0.625
+  _poolType: 12
 --- !u!95 &900300000000000005
 Animator:
   serializedVersion: 7

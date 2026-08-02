@@ -30,11 +30,26 @@ namespace MoonRabbitRush.Enemies
             Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
             Vector2 spawnPosition = _center + direction * _spawnRadius;
 
-            EnemyActor enemy = Instantiate(
-                prefab,
+            PoolType poolType = prefab.PoolKey;
+            if (!PoolingManager.IsRegistered(poolType))
+            {
+                PoolingManager.RegisterPool(
+                    poolType,
+                    () => Instantiate(prefab, transform).gameObject,
+                    defaultCapacity: 10,
+                    maxSize: 100);
+            }
+
+            PoolingManager.GetObject(poolType, out GameObject enemyObject);
+            if (enemyObject == null ||
+                !enemyObject.TryGetComponent(out EnemyActor enemy))
+            {
+                return null;
+            }
+
+            enemy.transform.SetPositionAndRotation(
                 spawnPosition,
-                Quaternion.identity,
-                transform);
+                Quaternion.identity);
             enemy.Initialize(_target);
             return enemy;
         }

@@ -89,7 +89,7 @@ namespace MoonRabbitRush.Progression
                 return;
             }
 
-            Destroy(gameObject);
+            PoolingManager.Release(PoolType.ExperienceCarrot, gameObject);
         }
 
         private void UpdateIdle()
