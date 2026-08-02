@@ -38,7 +38,7 @@ namespace MoonRabbitRush.UI
         {
             if (_waveDirector != null)
             {
-                _waveDirector.AllConfiguredWavesCompleted += HandleWavesCompleted;
+                _waveDirector.BossEncounterRequested += HandleBossEncounterRequested;
             }
         }
 
@@ -46,11 +46,11 @@ namespace MoonRabbitRush.UI
         {
             if (_waveDirector != null)
             {
-                _waveDirector.AllConfiguredWavesCompleted -= HandleWavesCompleted;
+                _waveDirector.BossEncounterRequested -= HandleBossEncounterRequested;
             }
         }
 
-        private void HandleWavesCompleted()
+        private void HandleBossEncounterRequested(int _)
         {
             if (_isPlaying || _alertRoot == null || _alertText == null)
             {
