@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MoonRabbitRush
@@ -15,6 +16,8 @@ namespace MoonRabbitRush
         private CameraMaanger _CameraMaanger;
 
 
+        public event Action OnQuit;
+
         private void Awake()
         {
             if (Instance != null)
@@ -30,6 +33,27 @@ namespace MoonRabbitRush
             _SceneManager = GetComponentInChildren<SceneManager>();
             _UIManager = GetComponentInChildren<UIManager>();
             _CameraMaanger = GetComponentInChildren<CameraMaanger>();
+
+            if (_SceneManager == null)
+                Debug.LogError("SceneManager is not found in children of ManagerRoot.");
+            if (_UIManager == null)
+                Debug.LogError("UIManager is not found in children of ManagerRoot.");
+            if (_CameraMaanger == null)
+                Debug.LogError("CameraMaanger is not found in children of ManagerRoot.");           
+
+            OnQuit += PoolingManager.Clear;
+        }
+
+        private void OnDestroy()
+        {
+            OnQuit -= PoolingManager.Clear;
+        }
+
+
+
+        private void OnApplicationQuit()
+        {
+            OnQuit?.Invoke();
         }
     }
 }
