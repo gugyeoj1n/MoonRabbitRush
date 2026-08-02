@@ -66,5 +66,18 @@ namespace MoonRabbitRush.Score
             PlayerPrefs.Save();
             return bestRecord;
         }
+
+        public static void ClearAll()
+        {
+            PlayerPrefs.DeleteKey(BestScoreKey);
+            PlayerPrefs.DeleteKey(BestWaveKey);
+            PlayerPrefs.DeleteKey(BestSurvivalKey);
+            PlayerPrefs.DeleteKey(LastScoreKey);
+            PlayerPrefs.DeleteKey(LastWaveKey);
+            PlayerPrefs.DeleteKey(LastSurvivalKey);
+            PlayerPrefs.DeleteKey(LastKillCountKey);
+            PlayerPrefs.DeleteKey(LastBossKillCountKey);
+            PlayerPrefs.Save();
+        }
     }
 }
