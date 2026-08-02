@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 1dab234d803a14a94808dc62d858f99c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -500099432790617296
+    second: BossLaserChargeRing_8F_0
+  - first:
+      213: -8307894467785365731
+    second: BossLaserChargeRing_8F_1
+  - first:
+      213: -4157903918569725364
+    second: BossLaserChargeRing_8F_2
+  - first:
+      213: -7329096325581353041
+    second: BossLaserChargeRing_8F_3
+  - first:
+      213: -6744060438467442292
+    second: BossLaserChargeRing_8F_4
+  - first:
+      213: 254145222334512007
+    second: BossLaserChargeRing_8F_5
+  - first:
+      213: 4944422033301593627
+    second: BossLaserChargeRing_8F_6
+  - first:
+      213: 7851641967668926076
+    second: BossLaserChargeRing_8F_7
+  - first:
+      213: -7071983454336425505
+    second: BossLaserChargeRing_8F_8
+  - first:
+      213: -5824125263890809606
+    second: BossLaserChargeRing_8F_9
+  - first:
+      213: -671304973747941327
+    second: BossLaserChargeRing_8F_10
+  - first:
+      213: -4080247053445127517
+    second: BossLaserChargeRing_8F_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 422
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 033142c273a4f09f0800000000000000
+      internalID: -500099432790617296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_1
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 311
+        width: 132
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d176838affd64bc80800000000000000
+      internalID: -8307894467785365731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_2
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 424
+        width: 22
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4262736a682c46c0800000000000000
+      internalID: -4157903918569725364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_3
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 290
+        width: 179
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faf4a1d19b1d94a90800000000000000
+      internalID: -7329096325581353041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_4
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 285
+        width: 192
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c89026543c84862a0800000000000000
+      internalID: -6744060438467442292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_5
+      rect:
+        serializedVersion: 2
+        x: 829
+        y: 280
+        width: 214
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b7c92bbb7e68300800000000000000
+      internalID: 254145222334512007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_6
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 276
+        width: 222
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1e5e8284ad1e9440800000000000000
+      internalID: 4944422033301593627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_7
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 271
+        width: 234
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c76947215c2a6fc60800000000000000
+      internalID: 7851641967668926076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_8
+      rect:
+        serializedVersion: 2
+        x: 1626
+        y: 265
+        width: 237
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd166da64844bdd90800000000000000
+      internalID: -7071983454336425505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_9
+      rect:
+        serializedVersion: 2
+        x: 1889
+        y: 255
+        width: 253
+        height: 251
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afcf8661eec8c2fa0800000000000000
+      internalID: -5824125263890809606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_10
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 299
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1301dcfdeab0fa6f0800000000000000
+      internalID: -671304973747941327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BossLaserChargeRing_8F_11
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 307
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a2a1974cec0067c0800000000000000
+      internalID: -4080247053445127517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BossLaserChargeRing_8F_0: -500099432790617296
+      BossLaserChargeRing_8F_1: -8307894467785365731
+      BossLaserChargeRing_8F_10: -671304973747941327
+      BossLaserChargeRing_8F_11: -4080247053445127517
+      BossLaserChargeRing_8F_2: -4157903918569725364
+      BossLaserChargeRing_8F_3: -7329096325581353041
+      BossLaserChargeRing_8F_4: -6744060438467442292
+      BossLaserChargeRing_8F_5: 254145222334512007
+      BossLaserChargeRing_8F_6: 4944422033301593627
+      BossLaserChargeRing_8F_7: 7851641967668926076
+      BossLaserChargeRing_8F_8: -7071983454336425505
+      BossLaserChargeRing_8F_9: -5824125263890809606
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

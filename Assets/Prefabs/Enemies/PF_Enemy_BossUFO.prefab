@@ -305,12 +305,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 709ba283f9f14a0b946c8f9a8a8def54, type: 3}
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.Bosses.BossSweepingLaserPattern
-  _telegraphDuration: 0.8
-  _sweepDuration: 1.3
-  _sweepAngle: 120
+  _telegraphDuration: 1.2
+  _sweepDuration: 2.1
+  _sweepAngle: 90
+  _initialPlayerOffsetAngle: 18
   _beamLength: 12
-  _telegraphWidth: 0.28
+  _chargeDiameter: 1.1
+  _originForwardOffset: 0.8
   _beamWidth: 0.55
   _damageInterval: 0.25
-  _telegraphColor: {r: 1, g: 0.3254902, b: 0.3254902, a: 0.50980395}
-  _beamColor: {r: 1, g: 0.23529412, b: 0.23529412, a: 0.9607843}
+  _beamFrameRate: 16
+  _chargeFrames:
+  - {fileID: -8307894467785365731, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: -7329096325581353041, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: -6744060438467442292, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: 254145222334512007, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: 4944422033301593627, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: 7851641967668926076, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: -7071983454336425505, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  - {fileID: -5824125263890809606, guid: 1dab234d803a14a94808dc62d858f99c, type: 3}
+  _beamFrames:
+  - {fileID: -6508635648206484677, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: 4323247435229186242, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: -8626547094364476824, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: -4853830931723015660, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: -1743452961268834845, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: 7291845232031557541, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: 7462947792065293282, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  - {fileID: 1163720913066055176, guid: a1351ebe4711745f0ac8ee64085ac448, type: 3}
+  _telegraphColor: {r: 1, g: 1, b: 1, a: 1}
+  _beamColor: {r: 1, g: 1, b: 1, a: 1}
