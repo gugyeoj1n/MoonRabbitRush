@@ -6,12 +6,12 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AOC_Orbitron
+  m_Name: AOC_BossUFO
   m_Controller: {fileID: 9100000, guid: 2b332cdae05e52644bf7d4499b8f99da, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 0a79c0cb2406d104cb292481f01789aa, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 97a3fbde35e5a144fac3438584e8d9dd, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: a46d559df2196694eaa81d60c04df48a, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: d1c052c729c5a5f46b753d5da2e1b74b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1abd95f15ed35f948a4a7776560798ed, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 0a79c0cb2406d104cb292481f01789aa, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5e9a7a0995b9e8b4db3382074ac4cafb, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: 3e28e89e61e14e34c8c332add820d33b, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: a4b4ca6cfb7a34e49a4116b89c5a19bc, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4029495c1fb6099478c42e3c89496569, type: 2}

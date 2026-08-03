@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AN_Enemy_Move_Base
+  m_Name: AN_Enemy_Idle_Base
   serializedVersion: 8
   m_Legacy: 0
   m_Compressed: 0

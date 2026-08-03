@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: c6612b3ade3002f478bd299672f7e452
+guid: e912681b45bc3c04f85b6b533aa7eafe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4181279044894584798
-    second: SmallUFO_Move_0
+      213: 4555421372210614009
+    second: SmallUFO_Move 1_0
   - first:
-      213: 3793730162094552828
-    second: SmallUFO_Move_1
+      213: -5184790628666596812
+    second: SmallUFO_Move 1_1
   - first:
-      213: -4765280057791843182
-    second: SmallUFO_Move_2
+      213: 3804591358721979831
+    second: SmallUFO_Move 1_2
   - first:
-      213: 3170768147180878546
-    second: SmallUFO_Move_3
+      213: -4806889915317157663
+    second: SmallUFO_Move 1_3
   - first:
-      213: -352181203620777677
-    second: SmallUFO_Move_4
+      213: 1115878129427764253
+    second: SmallUFO_Move 1_4
   - first:
-      213: -7998943323436420234
-    second: SmallUFO_Move_5
+      213: -5443506333299153795
+    second: SmallUFO_Move 1_5
   - first:
-      213: -8700022397367002747
-    second: SmallUFO_Move_6
+      213: 2894987723486894303
+    second: SmallUFO_Move 1_6
   - first:
-      213: -1317232278389562340
-    second: SmallUFO_Move_7
+      213: -785144720035299289
+    second: SmallUFO_Move 1_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -117,24 +117,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SmallUFO_Move_0
+      name: SmallUFO_Move 1_0
       rect:
         serializedVersion: 2
         x: 49
@@ -149,14 +136,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: edfe9b15323e60a30800000000000000
-      internalID: 4181279044894584798
+      spriteID: 9fe06d43a9b183f30800000000000000
+      internalID: 4555421372210614009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_1
+      name: SmallUFO_Move 1_1
       rect:
         serializedVersion: 2
         x: 561
@@ -171,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf6b45d7b7906a430800000000000000
-      internalID: 3793730162094552828
+      spriteID: 432ad87b46ceb08b0800000000000000
+      internalID: -5184790628666596812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_2
+      name: SmallUFO_Move 1_2
       rect:
         serializedVersion: 2
         x: 1074
@@ -193,14 +180,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2947014f8035eddb0800000000000000
-      internalID: -4765280057791843182
+      spriteID: 7b5f424eeaf9cc430800000000000000
+      internalID: 3804591358721979831
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_3
+      name: SmallUFO_Move 1_3
       rect:
         serializedVersion: 2
         x: 1587
@@ -215,14 +202,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2daf6d594d4d00c20800000000000000
-      internalID: 3170768147180878546
+      spriteID: 1e00d1b071f7a4db0800000000000000
+      internalID: -4806889915317157663
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_4
+      name: SmallUFO_Move 1_4
       rect:
         serializedVersion: 2
         x: 51
@@ -237,14 +224,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3313d9daf0dcc1bf0800000000000000
-      internalID: -352181203620777677
+      spriteID: d145b2d1f356c7f00800000000000000
+      internalID: 1115878129427764253
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_5
+      name: SmallUFO_Move 1_5
       rect:
         serializedVersion: 2
         x: 563
@@ -259,14 +246,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 673f6147d6b0ef090800000000000000
-      internalID: -7998943323436420234
+      spriteID: d746d1fa4d7c474b0800000000000000
+      internalID: -5443506333299153795
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_6
+      name: SmallUFO_Move 1_6
       rect:
         serializedVersion: 2
         x: 1073
@@ -281,14 +268,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5895ffa69bf434780800000000000000
-      internalID: -8700022397367002747
+      spriteID: fd89d870fff0d2820800000000000000
+      internalID: 2894987723486894303
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SmallUFO_Move_7
+      name: SmallUFO_Move 1_7
       rect:
         serializedVersion: 2
         x: 1585
@@ -303,8 +290,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c1469e7c83048bde0800000000000000
-      internalID: -1317232278389562340
+      spriteID: 720c509790b9a15f0800000000000000
+      internalID: -785144720035299289
       vertices: []
       indices: 
       edges: []
@@ -323,14 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SmallUFO_Move_0: 4181279044894584798
-      SmallUFO_Move_1: 3793730162094552828
-      SmallUFO_Move_2: -4765280057791843182
-      SmallUFO_Move_3: 3170768147180878546
-      SmallUFO_Move_4: -352181203620777677
-      SmallUFO_Move_5: -7998943323436420234
-      SmallUFO_Move_6: -8700022397367002747
-      SmallUFO_Move_7: -1317232278389562340
+      SmallUFO_Move 1_0: 4555421372210614009
+      SmallUFO_Move 1_1: -5184790628666596812
+      SmallUFO_Move 1_2: 3804591358721979831
+      SmallUFO_Move 1_3: -4806889915317157663
+      SmallUFO_Move 1_4: 1115878129427764253
+      SmallUFO_Move 1_5: -5443506333299153795
+      SmallUFO_Move 1_6: 2894987723486894303
+      SmallUFO_Move 1_7: -785144720035299289
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

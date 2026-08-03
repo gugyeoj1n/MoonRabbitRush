@@ -7,8 +7,10 @@ namespace MoonRabbitRush.Player
     {
         [SerializeField] private Sprite[] _idleFrames;
         [SerializeField] private Sprite[] _moveFrames;
+        [SerializeField] private Sprite[] _deathFrames;
         [SerializeField, Min(1f)] private float _idleFrameRate = 8f;
         [SerializeField, Min(1f)] private float _moveFrameRate = 10f;
+        [SerializeField, Min(1f)] private float _deathFrameRate = 8f;
         [SerializeField, Min(0f)] private float _moveThreshold = 0.01f;
         [SerializeField] private bool _flipWithMovement = true;
 
@@ -19,6 +21,7 @@ namespace MoonRabbitRush.Player
         private float _currentFrameRate;
         private float _elapsed;
         private int _frameIndex;
+        private bool _isPlayingDeath;
 
         private void Awake()
         {
@@ -29,11 +32,31 @@ namespace MoonRabbitRush.Player
 
         private void OnEnable()
         {
+            if (_health != null)
+            {
+                _health.Died += PlayDeath;
+            }
+
+            _isPlayingDeath = false;
             SetSequence(_idleFrames, _idleFrameRate);
+        }
+
+        private void OnDisable()
+        {
+            if (_health != null)
+            {
+                _health.Died -= PlayDeath;
+            }
         }
 
         private void Update()
         {
+            if (_isPlayingDeath)
+            {
+                UpdateSequence(loop: false);
+                return;
+            }
+
             if (_health != null && !_health.IsAlive)
             {
                 return;
@@ -51,18 +74,41 @@ namespace MoonRabbitRush.Player
                 isMoving ? _moveFrames : _idleFrames,
                 isMoving ? _moveFrameRate : _idleFrameRate);
 
+            UpdateSequence(loop: true);
+        }
+
+        private void PlayDeath()
+        {
+            _isPlayingDeath = true;
+            SetSequence(_deathFrames, _deathFrameRate);
+        }
+
+        private void UpdateSequence(bool loop)
+        {
             if (_currentFrames == null || _currentFrames.Length <= 1)
             {
                 return;
             }
 
-            _elapsed += Time.deltaTime;
+            _elapsed += _isPlayingDeath
+                ? Time.unscaledDeltaTime
+                : Time.deltaTime;
             float frameDuration = 1f / _currentFrameRate;
 
             while (_elapsed >= frameDuration)
             {
                 _elapsed -= frameDuration;
-                _frameIndex = (_frameIndex + 1) % _currentFrames.Length;
+                if (loop)
+                {
+                    _frameIndex = (_frameIndex + 1) % _currentFrames.Length;
+                }
+                else
+                {
+                    _frameIndex = Mathf.Min(
+                        _frameIndex + 1,
+                        _currentFrames.Length - 1);
+                }
+
                 _spriteRenderer.sprite = _currentFrames[_frameIndex];
             }
         }

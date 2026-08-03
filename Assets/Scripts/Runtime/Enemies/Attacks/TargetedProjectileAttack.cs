@@ -12,12 +12,14 @@ namespace MoonRabbitRush.Enemies
         [SerializeField, Min(0.05f)] private float _projectileLifetime = 4f;
 
         private Component _damageTarget;
+        private EnemyAnimationController _animationController;
         private float _nextAttackTime;
 
         public override void Initialize(Transform target, EnemyStatsData stats)
         {
             base.Initialize(target, stats);
             _damageTarget = target.GetComponent(typeof(IDamageable)) as Component;
+            _animationController ??= GetComponent<EnemyAnimationController>();
             _nextAttackTime = Time.time + stats.AttackInterval;
 
             if (_damageTarget == null)
@@ -45,6 +47,7 @@ namespace MoonRabbitRush.Enemies
             }
 
             _nextAttackTime = Time.time + Stats.AttackInterval;
+            _animationController?.PlayAttack();
             Vector3 spawnPosition = _muzzle != null
                 ? _muzzle.position
                 : transform.position;

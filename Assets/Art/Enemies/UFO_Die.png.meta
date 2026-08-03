@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 17914d9804dc64309817635c883f35cd
+guid: 672c9de71a43ecf4da0e47a12fb24485
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5816745944590912643
-    second: UFO_Die_0
+      213: -1975776338664140631
+    second: SmallUFO_Die_0
   - first:
-      213: 5921776091968955516
-    second: UFO_Die_1
+      213: 7250383539315939739
+    second: SmallUFO_Die_1
   - first:
-      213: 7721346067165603941
-    second: UFO_Die_2
+      213: 7391051469166932209
+    second: SmallUFO_Die_2
   - first:
-      213: 2141356027412642797
-    second: UFO_Die_3
+      213: -7978236789511537594
+    second: SmallUFO_Die_3
   - first:
-      213: 8104858605832700280
-    second: UFO_Die_4
+      213: -7627291446103982075
+    second: SmallUFO_Die_4
   - first:
-      213: -2825019000954280948
-    second: UFO_Die_5
+      213: 4994473218294115017
+    second: SmallUFO_Die_5
   - first:
-      213: -3838155439691791839
-    second: UFO_Die_6
+      213: 9116177262828470995
+    second: SmallUFO_Die_6
   - first:
-      213: 6290465102867622998
-    second: UFO_Die_7
+      213: 1945090084975841630
+    second: SmallUFO_Die_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -117,51 +117,16 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UFO_Die_0
+      name: SmallUFO_Die_0
       rect:
         serializedVersion: 2
-        x: 49
-        y: 599
-        width: 417
-        height: 377
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d73f6ffb164c64fa0800000000000000
-      internalID: -5816745944590912643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UFO_Die_1
-      rect:
-        serializedVersion: 2
-        x: 561
-        y: 616
-        width: 417
+        x: 52
+        y: 602
+        width: 411
         height: 371
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -171,20 +136,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c74e5311bff5e2250800000000000000
-      internalID: 5921776091968955516
+      spriteID: 9a05d4a53e1a494e0800000000000000
+      internalID: -1975776338664140631
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UFO_Die_2
+      name: SmallUFO_Die_1
       rect:
         serializedVersion: 2
-        x: 1071
-        y: 649
-        width: 394
-        height: 327
+        x: 564
+        y: 619
+        width: 411
+        height: 365
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,85 +158,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 568e341b65bb72b60800000000000000
-      internalID: 7721346067165603941
+      spriteID: b9914423a698e9460800000000000000
+      internalID: 7250383539315939739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UFO_Die_3
+      name: SmallUFO_Die_2
       rect:
         serializedVersion: 2
-        x: 1591
-        y: 623
-        width: 377
-        height: 331
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: deb729726ff97bd10800000000000000
-      internalID: 2141356027412642797
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UFO_Die_4
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 92
-        width: 363
-        height: 331
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8710d6be5fd3a7070800000000000000
-      internalID: 8104858605832700280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UFO_Die_5
-      rect:
-        serializedVersion: 2
-        x: 582
-        y: 48
-        width: 373
-        height: 323
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c04246caf248bc8d0800000000000000
-      internalID: -2825019000954280948
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UFO_Die_6
-      rect:
-        serializedVersion: 2
-        x: 1094
-        y: 49
-        width: 372
+        x: 1074
+        y: 652
+        width: 388
         height: 321
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -281,20 +180,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 122007886f12cbac0800000000000000
-      internalID: -3838155439691791839
+      spriteID: 1f0f258d62a429660800000000000000
+      internalID: 7391051469166932209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UFO_Die_7
+      name: SmallUFO_Die_3
       rect:
         serializedVersion: 2
-        x: 1607
-        y: 50
+        x: 1594
+        y: 626
         width: 371
-        height: 320
+        height: 325
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,8 +202,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 65c6a68cea83c4750800000000000000
-      internalID: 6290465102867622998
+      spriteID: 64c363319eb974190800000000000000
+      internalID: -7978236789511537594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallUFO_Die_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 95
+        width: 357
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 500c89447da662690800000000000000
+      internalID: -7627291446103982075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallUFO_Die_5
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 51
+        width: 367
+        height: 317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca6f902eeeef4540800000000000000
+      internalID: 4994473218294115017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallUFO_Die_6
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 52
+        width: 366
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d24264cbea238e70800000000000000
+      internalID: 9116177262828470995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SmallUFO_Die_7
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 53
+        width: 365
+        height: 314
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e519e1370295efa10800000000000000
+      internalID: 1945090084975841630
       vertices: []
       indices: 
       edges: []
@@ -323,14 +310,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UFO_Die_0: -5816745944590912643
-      UFO_Die_1: 5921776091968955516
-      UFO_Die_2: 7721346067165603941
-      UFO_Die_3: 2141356027412642797
-      UFO_Die_4: 8104858605832700280
-      UFO_Die_5: -2825019000954280948
-      UFO_Die_6: -3838155439691791839
-      UFO_Die_7: 6290465102867622998
+      SmallUFO_Die_0: -1975776338664140631
+      SmallUFO_Die_1: 7250383539315939739
+      SmallUFO_Die_2: 7391051469166932209
+      SmallUFO_Die_3: -7978236789511537594
+      SmallUFO_Die_4: -7627291446103982075
+      SmallUFO_Die_5: 4994473218294115017
+      SmallUFO_Die_6: 9116177262828470995
+      SmallUFO_Die_7: 1945090084975841630
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -12,12 +12,14 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField, Min(0f)] private float _patternInterval = 0.7f;
 
         private CancellationTokenSource _patternCts;
+        private EnemyAnimationController _animationController;
 
         public override void Initialize(
             Transform target,
             EnemyStatsData stats)
         {
             base.Initialize(target, stats);
+            _animationController ??= GetComponent<EnemyAnimationController>();
 
             if (_patterns == null || _patterns.Length == 0)
             {
@@ -61,6 +63,7 @@ namespace MoonRabbitRush.Enemies.Bosses
 
                     if (pattern != null && pattern.IsReady)
                     {
+                        _animationController?.PlayAttack();
                         await pattern.ExecuteAsync(cancellationToken);
                     }
 
