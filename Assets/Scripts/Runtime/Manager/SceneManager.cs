@@ -29,7 +29,7 @@ namespace MoonRabbitRush
             }
             finally
             {
-
+                ManagerRoot.Instance.OnMoveScene?.Invoke();
             }
 
             return true;

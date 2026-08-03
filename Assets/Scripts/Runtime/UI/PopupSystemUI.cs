@@ -7,32 +7,32 @@ namespace MoonRabbitRush
 {
     public class PopupSystemUI : UIPopup
     {
-        private CancellationTokenSource _cancelToken;
+        private CancellationTokenSource _tokenSource;
         public void OnClickResume()
         {
-
+            OnClickClose();
         }
 
         public void OnClickHome()
         {
-            if (_cancelToken != null && !_cancelToken.IsCancellationRequested)
+            if (_tokenSource != null && !_tokenSource.IsCancellationRequested)
                 return;
 
             var cancel = new CancellationTokenSource();
-            _cancelToken = cancel;
+            _tokenSource = cancel;
 
-            UniTask.Void(async () =>
+            UniTask.Void(async token =>
             {
                 try
                 {
-                    await ManagerRoot.Instance.SceneManager.TransitionTo(0, cancel.Token);
+                    await ManagerRoot.Instance.SceneManager.TransitionTo(0, token);
                 }
                 finally
                 {
                     cancel.Dispose();
-                    _cancelToken = null;
+                    _tokenSource = null;
                 }
-            });
+            }, cancel.Token);
         }
 
         public override void OnClickClose()

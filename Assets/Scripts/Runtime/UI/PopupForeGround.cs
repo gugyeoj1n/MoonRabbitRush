@@ -51,7 +51,7 @@ namespace MoonRabbitRush
             {
                 while (elapsed < duration)
                 {
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
 
                     color.a = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
 
@@ -80,7 +80,7 @@ namespace MoonRabbitRush
             {
                 while (elapsed < duration)
                 {
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.unscaledDeltaTime;
 
                     color.a = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
 

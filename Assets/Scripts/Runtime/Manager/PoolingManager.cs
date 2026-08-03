@@ -48,6 +48,19 @@ namespace MoonRabbitRush
             poolDictionary[key] = pool;
         }
 
+        public static void UnregisterPool(PoolType key)
+        {
+            if (poolDictionary.TryGetValue(key, out var pool))
+            {
+                pool.Clear();
+                poolDictionary.Remove(key);
+            }
+            else
+            {
+                Debug.LogWarning($"Pool of type {key} does not exist.");
+            }
+        }
+
         public static bool IsRegistered(PoolType key)
         {
             return poolDictionary.ContainsKey(key);
