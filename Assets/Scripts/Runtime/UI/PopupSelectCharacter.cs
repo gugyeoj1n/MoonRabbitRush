@@ -15,7 +15,7 @@ namespace MoonRabbitRush
 
         [SerializeField] private Transform _characterRect;
         [SerializeField] private CharacterSelectionCardView _cardPrefab;
-        [SerializeField] private CharacterData[] _availableCharacters;
+        [SerializeField] private CharacterCatalog _characterCatalog;
         [SerializeField] private Button _selectButton;
         [SerializeField] private Image _selectButtonImage;
 
@@ -71,12 +71,13 @@ namespace MoonRabbitRush
                 return;
             }
 
-            if (_availableCharacters == null)
+            if (_characterCatalog == null)
             {
+                Debug.LogError("Character catalog is not assigned.", this);
                 return;
             }
 
-            foreach (CharacterData character in _availableCharacters)
+            foreach (CharacterData character in _characterCatalog.Characters)
             {
                 if (character == null || !character.IsValid)
                 {

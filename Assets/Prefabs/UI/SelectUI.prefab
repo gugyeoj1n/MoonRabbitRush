@@ -191,8 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.PopupSelectCharacter
   _characterRect: {fileID: 7574341176725462993}
   _cardPrefab: {fileID: 1247042512057177119, guid: a275f4f28943d834e82b5093065a3d5f, type: 3}
-  _availableCharacters:
-  - {fileID: 11400000, guid: b2b6da67307244b0b7f0ee3995b71674, type: 2}
+  _characterCatalog: {fileID: 11400000, guid: 6e0d008375b94fd29546151d60c7b215, type: 2}
   _selectButton: {fileID: 8354972312988306921}
   _selectButtonImage: {fileID: 453355568619382603}
 --- !u!222 &29997535513573764
