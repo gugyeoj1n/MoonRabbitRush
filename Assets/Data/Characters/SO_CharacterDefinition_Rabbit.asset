@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9ed1a7a6a4b4fa7b1ae839eafe425, type: 3}
+  m_Name: SO_CharacterDefinition_Rabbit
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.CharacterData
+  _displayName: 달토끼
+  _portrait: {fileID: 0}
+  _stats: {fileID: 11400000, guid: 7430ca898ba22104bac23f54a37cf033, type: 2}
+  _startingWeapon: {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}

@@ -13,6 +13,13 @@ namespace MoonRabbitRush.Weapons
         public event Action<WeaponData, int> WeaponEquipped;
         public event Action<WeaponData, int> WeaponLeveledUp;
 
+        public void ConfigureStartingWeapon(WeaponData weapon)
+        {
+            _startingWeapons = weapon != null
+                ? new[] { weapon }
+                : Array.Empty<WeaponData>();
+        }
+
         private void Start()
         {
             if (_startingWeapons == null)

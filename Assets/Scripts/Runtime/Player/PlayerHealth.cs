@@ -22,6 +22,11 @@ namespace MoonRabbitRush.Player
         public bool IsAlive => _isInitialized && _currentHealth > 0f;
         public bool IsInvincible => IsAlive && Time.time < _invincibleUntil;
 
+        public void Configure(PlayerStatsData stats)
+        {
+            _stats = stats;
+        }
+
         private void Awake()
         {
             if (_stats == null)
