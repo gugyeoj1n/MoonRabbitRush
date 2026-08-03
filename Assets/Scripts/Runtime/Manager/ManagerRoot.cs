@@ -19,6 +19,7 @@ namespace MoonRabbitRush
         private SoundManager _SoundManager;
 
         public event Action OnQuit;
+        public Action OnMoveScene;
 
         private void Awake()
         {
@@ -47,11 +48,13 @@ namespace MoonRabbitRush
                 Debug.LogError("SoundManager is not found in children of ManagerRoot.");
 
             OnQuit += PoolingManager.Clear;
+            OnMoveScene += PoolingManager.Clear;
         }
 
         private void OnDestroy()
         {
             OnQuit -= PoolingManager.Clear;
+            OnMoveScene -= PoolingManager.Clear;
         }
 
 
