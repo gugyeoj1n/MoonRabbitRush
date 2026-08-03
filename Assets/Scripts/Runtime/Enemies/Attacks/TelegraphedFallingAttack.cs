@@ -22,6 +22,7 @@ namespace MoonRabbitRush.Enemies
             new Color32(255, 129, 129, 115);
 
         private Component _damageTarget;
+        private EnemyAnimationController _animationController;
         private CircleTelegraphView _activeTelegraph;
         private FallingAreaProjectile _activeProjectile;
         private float _nextAttackTime;
@@ -30,6 +31,7 @@ namespace MoonRabbitRush.Enemies
         {
             base.Initialize(target, stats);
             _damageTarget = target.GetComponent(typeof(IDamageable)) as Component;
+            _animationController ??= GetComponent<EnemyAnimationController>();
             _nextAttackTime = Time.time + stats.AttackInterval;
 
             if (_damageTarget == null)
@@ -78,6 +80,7 @@ namespace MoonRabbitRush.Enemies
         private void BeginAttack(Vector2 impactPosition)
         {
             _nextAttackTime = Time.time + Stats.AttackInterval;
+            _animationController?.PlayAttack();
 
             _activeTelegraph = CircleTelegraphView.GetFromPool(
                 "Circle Telegraph");

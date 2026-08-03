@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: cdb7926b33fc02d4f912a0c87b0fc4e8
+guid: eb1fe3dc38c01d44699d470a30afb331
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 512604334127727543
-    second: PurpleOctopus_Move_0
+      213: 7908642869593201686
+    second: PurpleOctopus_Move1_0
   - first:
-      213: -4052786510071369104
-    second: PurpleOctopus_Move_1
+      213: 9192858826102250427
+    second: PurpleOctopus_Move1_1
   - first:
-      213: 3704024782120607789
-    second: PurpleOctopus_Move_2
+      213: -4260817865405342901
+    second: PurpleOctopus_Move1_2
   - first:
-      213: 3309633828346195375
-    second: PurpleOctopus_Move_3
+      213: -2495712167804559344
+    second: PurpleOctopus_Move1_3
   - first:
-      213: -5894137492517000034
-    second: PurpleOctopus_Move_4
+      213: -4620187026122806485
+    second: PurpleOctopus_Move1_4
   - first:
-      213: -6153858072384709502
-    second: PurpleOctopus_Move_5
+      213: 1935256101925377236
+    second: PurpleOctopus_Move1_5
   - first:
-      213: -598235309920350061
-    second: PurpleOctopus_Move_6
+      213: 807149544693477215
+    second: PurpleOctopus_Move1_6
   - first:
-      213: 6651726145039904822
-    second: PurpleOctopus_Move_7
+      213: -4297281249856360068
+    second: PurpleOctopus_Move1_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,13 +134,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PurpleOctopus_Move_0
+      name: PurpleOctopus_Move1_0
       rect:
         serializedVersion: 2
-        x: 75
-        y: 679
-        width: 481
-        height: 480
+        x: 74
+        y: 678
+        width: 483
+        height: 482
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,19 +149,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7b3420e0de22d1700800000000000000
-      internalID: 512604334127727543
+      spriteID: 61c5781c9c421cd60800000000000000
+      internalID: 7908642869593201686
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurpleOctopus_Move_1
+      name: PurpleOctopus_Move1_1
       rect:
         serializedVersion: 2
-        x: 673
-        y: 676
-        width: 484
+        x: 672
+        y: 675
+        width: 486
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbb93208568939f70800000000000000
+      internalID: 9192858826102250427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleOctopus_Move1_2
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 667
+        width: 496
         height: 473
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -171,20 +193,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07273b4442c91c7c0800000000000000
-      internalID: -4052786510071369104
+      spriteID: b4b50e7e9b88ed4c0800000000000000
+      internalID: -4260817865405342901
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurpleOctopus_Move_2
+      name: PurpleOctopus_Move1_3
       rect:
         serializedVersion: 2
-        x: 1267
-        y: 668
-        width: 494
-        height: 471
+        x: 1839
+        y: 651
+        width: 544
+        height: 449
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,108 +215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d20ea812ae6576330800000000000000
-      internalID: 3704024782120607789
+      spriteID: 010a36891037d5dd0800000000000000
+      internalID: -2495712167804559344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PurpleOctopus_Move_3
+      name: PurpleOctopus_Move1_4
       rect:
         serializedVersion: 2
-        x: 1840
-        y: 652
-        width: 542
-        height: 447
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fade0338e6e2eed20800000000000000
-      internalID: 3309633828346195375
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurpleOctopus_Move_4
-      rect:
-        serializedVersion: 2
-        x: 45
-        y: 44
-        width: 482
-        height: 434
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e9c6635dd21d33ea0800000000000000
-      internalID: -5894137492517000034
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurpleOctopus_Move_5
-      rect:
-        serializedVersion: 2
-        x: 640
-        y: 52
-        width: 542
-        height: 447
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 28cd65d00ba199aa0800000000000000
-      internalID: -6153858072384709502
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurpleOctopus_Move_6
-      rect:
-        serializedVersion: 2
-        x: 1267
-        y: 68
-        width: 494
-        height: 471
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3901a1cb724a2b7f0800000000000000
-      internalID: -598235309920350061
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PurpleOctopus_Move_7
-      rect:
-        serializedVersion: 2
-        x: 1873
-        y: 76
+        x: 44
+        y: 43
         width: 484
-        height: 472
+        height: 436
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -303,8 +237,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6303842cfadaf4c50800000000000000
-      internalID: 6651726145039904822
+      spriteID: b2be418e06cc1efb0800000000000000
+      internalID: -4620187026122806485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleOctopus_Move1_5
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 51
+        width: 544
+        height: 449
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d45ba8db296bda10800000000000000
+      internalID: 1935256101925377236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleOctopus_Move1_6
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 67
+        width: 496
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5fa2140c32933b00800000000000000
+      internalID: 807149544693477215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurpleOctopus_Move1_7
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 75
+        width: 486
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c717d52a87dfc54c0800000000000000
+      internalID: -4297281249856360068
       vertices: []
       indices: 
       edges: []
@@ -323,14 +323,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PurpleOctopus_Move_0: 512604334127727543
-      PurpleOctopus_Move_1: -4052786510071369104
-      PurpleOctopus_Move_2: 3704024782120607789
-      PurpleOctopus_Move_3: 3309633828346195375
-      PurpleOctopus_Move_4: -5894137492517000034
-      PurpleOctopus_Move_5: -6153858072384709502
-      PurpleOctopus_Move_6: -598235309920350061
-      PurpleOctopus_Move_7: 6651726145039904822
+      PurpleOctopus_Move1_0: 7908642869593201686
+      PurpleOctopus_Move1_1: 9192858826102250427
+      PurpleOctopus_Move1_2: -4260817865405342901
+      PurpleOctopus_Move1_3: -2495712167804559344
+      PurpleOctopus_Move1_4: -4620187026122806485
+      PurpleOctopus_Move1_5: 1935256101925377236
+      PurpleOctopus_Move1_6: 807149544693477215
+      PurpleOctopus_Move1_7: -4297281249856360068
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

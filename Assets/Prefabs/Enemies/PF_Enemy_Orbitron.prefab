@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 9006477486304473560}
   - component: {fileID: 47826906064824911}
   - component: {fileID: 47826906064824912}
+  - component: {fileID: 6595798989832976333}
   m_Layer: 0
   m_Name: PF_Enemy_Orbitron
   m_TagString: Untagged
@@ -93,12 +94,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 9
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 4181279044894584798, guid: c6612b3ade3002f478bd299672f7e452, type: 3}
+  m_Sprite: {fileID: 4555421372210614009, guid: e912681b45bc3c04f85b6b533aa7eafe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.19, y: 3.78}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -170,7 +171,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.19, y: 3.78}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 4.19, y: 3.78}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -320,15 +321,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
   _deathFrames:
-  - {fileID: -5816745944590912643, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: 5921776091968955516, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: 7721346067165603941, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: 2141356027412642797, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: 8104858605832700280, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: -2825019000954280948, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: -3838155439691791839, guid: 17914d9804dc64309817635c883f35cd, type: 3}
-  - {fileID: 6290465102867622998, guid: 17914d9804dc64309817635c883f35cd, type: 3}
+  - {fileID: -1975776338664140631, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 7250383539315939739, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 7391051469166932209, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: -7978236789511537594, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: -7627291446103982075, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 4994473218294115017, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 9116177262828470995, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 1945090084975841630, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   _animator: {fileID: 9006477486304473560}
+--- !u!114 &6595798989832976333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840100000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc1df9bc3e74c7a89a33f0997b51a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyAnimationController
+  _moveThreshold: 0.01
 --- !u!1 &840100000000000013
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,139 +12,218 @@ namespace MoonRabbitRush.Editor.Animation
     {
         private const string RootDirectory = "Assets/Animations/Enemies";
         private const string BaseDirectory = RootDirectory + "/Base";
-        private const string BaseClipPath =
-            BaseDirectory + "/AN_Enemy_Move_Base.anim";
         private const string BaseControllerPath =
             BaseDirectory + "/AC_Enemy_Base.controller";
-        private const float MoveFrameRate = 8f;
-        private const int ExpectedFrameCount = 8;
+        private const string PlayerPrefabPath =
+            "Assets/Prefabs/Characters/PF_Character_Rabbit.prefab";
+        private const string PlayerDeathSheetPath =
+            "Assets/Art/Characters/Player_Die.png";
+        private const float FrameRate = 8f;
 
         private static readonly EnemyAnimationDefinition[] Definitions =
         {
             new(
                 "Globy",
+                "Assets/Art/Enemies/GreenCyclops_idle.png",
                 "Assets/Art/Enemies/GreenCyclops_Move.png",
+                null,
+                "Assets/Art/Enemies/Slime_Die.png",
                 "Assets/Prefabs/Enemies/PF_Enemy_Globy.prefab"),
             new(
                 "Inkto",
+                "Assets/Art/Enemies/PurpleOctopus_Idle.png",
                 "Assets/Art/Enemies/PurpleOctopus_Move.png",
+                "Assets/Art/Enemies/PurpleOctopus_Attack.png",
+                "Assets/Art/Enemies/PurpleOctopus_Die.png",
                 "Assets/Prefabs/Enemies/PF_Enemy_Inkto.prefab"),
             new(
                 "Orbitron",
                 "Assets/Art/Enemies/SmallUFO_Move.png",
+                "Assets/Art/Enemies/SmallUFO_Move.png",
+                "Assets/Art/Enemies/SmallUFO_Attack.png",
+                "Assets/Art/Enemies/UFO_Die.png",
                 "Assets/Prefabs/Enemies/PF_Enemy_Orbitron.prefab"),
+            new(
+                "BossUFO",
+                "Assets/Art/Enemies/Boss_Idle.png",
+                "Assets/Art/Enemies/Boss_Idle.png",
+                "Assets/Art/Enemies/Boss_Attack.png",
+                "Assets/Art/Enemies/Boss_Die.png",
+                "Assets/Prefabs/Enemies/PF_Enemy_BossUFO.prefab"),
         };
 
         [InitializeOnLoadMethod]
         private static void GenerateMissingAssets()
         {
-            bool isBaseControllerMissing =
-                AssetDatabase.LoadAssetAtPath<AnimatorController>(
-                    BaseControllerPath) == null;
-            bool isFacingViewMissing = Definitions.Any(definition =>
-            {
-                GameObject prefab =
-                    AssetDatabase.LoadAssetAtPath<GameObject>(
-                        definition.PrefabPath);
-                return prefab == null ||
-                    prefab.GetComponent<
-                        MoonRabbitRush.Enemies.EnemyFacingView>() == null;
-            });
+            const string bossControllerPath =
+                RootDirectory + "/BossUFO/AOC_BossUFO.overrideController";
+            GameObject bossPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/Prefabs/Enemies/PF_Enemy_BossUFO.prefab");
+            bool isBossBindingMissing =
+                bossPrefab == null ||
+                bossPrefab.GetComponent<Animator>() == null ||
+                bossPrefab.GetComponent<
+                    MoonRabbitRush.Enemies.EnemyAnimationController>() == null;
+            bool isFrameOrderingOutdated = IsFrameOrderingOutdated(
+                RootDirectory + "/BossUFO/AN_BossUFO_Idle.anim");
 
-            if (isBaseControllerMissing || isFacingViewMissing)
+            if (AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(
+                    bossControllerPath) == null ||
+                isBossBindingMissing ||
+                isFrameOrderingOutdated)
             {
                 EditorApplication.delayCall += Generate;
             }
         }
 
-        [MenuItem("Moon Rabbit Rush/Enemies/Generate Move Animations")]
+        [MenuItem("Moon Rabbit Rush/Enemies/Generate Animation Set")]
         public static void Generate()
         {
             EnsureDirectory(BaseDirectory);
 
-            AnimationClip baseClip = CreateOrLoadEmptyBaseClip();
-            AnimatorController baseController =
-                CreateOrUpdateBaseController(baseClip);
+            AnimationClip idleBase = CreateOrReplaceClip(
+                BaseDirectory + "/AN_Enemy_Idle_Base.anim",
+                Array.Empty<Sprite>(),
+                true);
+            AnimationClip moveBase = CreateOrReplaceClip(
+                BaseDirectory + "/AN_Enemy_Move_Base.anim",
+                Array.Empty<Sprite>(),
+                true);
+            AnimationClip attackBase = CreateOrReplaceClip(
+                BaseDirectory + "/AN_Enemy_Attack_Base.anim",
+                Array.Empty<Sprite>(),
+                false);
+            AnimatorController baseController = CreateOrUpdateBaseController(
+                idleBase,
+                moveBase,
+                attackBase);
 
             foreach (EnemyAnimationDefinition definition in Definitions)
             {
-                GenerateEnemyAssets(definition, baseController, baseClip);
+                GenerateEnemyAssets(
+                    definition,
+                    baseController,
+                    idleBase,
+                    moveBase,
+                    attackBase);
             }
 
+            BindPlayerDeathFrames();
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("Generated independent move animations for all enemies.");
+            Debug.Log("Generated enemy idle, move, attack, and death bindings.");
         }
 
         private static void GenerateEnemyAssets(
             EnemyAnimationDefinition definition,
             AnimatorController baseController,
-            AnimationClip baseClip)
+            AnimationClip idleBase,
+            AnimationClip moveBase,
+            AnimationClip attackBase)
         {
             string enemyDirectory = $"{RootDirectory}/{definition.EnemyName}";
             EnsureDirectory(enemyDirectory);
 
-            IReadOnlyList<Sprite> sprites = LoadOrderedSprites(definition);
-            string clipPath =
-                $"{enemyDirectory}/AN_{definition.EnemyName}_Move.anim";
-            string overridePath =
-                $"{enemyDirectory}/AOC_{definition.EnemyName}.overrideController";
+            IReadOnlyList<Sprite> idleSprites =
+                LoadOrderedSprites(definition.IdleSheetPath);
+            IReadOnlyList<Sprite> moveSprites =
+                LoadOrderedSprites(definition.MoveSheetPath);
+            IReadOnlyList<Sprite> attackSprites =
+                string.IsNullOrEmpty(definition.AttackSheetPath)
+                    ? idleSprites
+                    : LoadOrderedSprites(definition.AttackSheetPath);
+            IReadOnlyList<Sprite> deathSprites =
+                LoadOrderedSprites(definition.DeathSheetPath);
 
-            AnimationClip moveClip = CreateOrReplaceMoveClip(clipPath, sprites);
+            AnimationClip idleClip = CreateOrReplaceClip(
+                $"{enemyDirectory}/AN_{definition.EnemyName}_Idle.anim",
+                idleSprites,
+                true);
+            AnimationClip moveClip = CreateOrReplaceClip(
+                $"{enemyDirectory}/AN_{definition.EnemyName}_Move.anim",
+                moveSprites,
+                true);
+            AnimationClip attackClip = CreateOrReplaceClip(
+                $"{enemyDirectory}/AN_{definition.EnemyName}_Attack.anim",
+                attackSprites,
+                false);
             AnimatorOverrideController overrideController =
                 CreateOrUpdateOverrideController(
-                    overridePath,
+                    $"{enemyDirectory}/AOC_{definition.EnemyName}.overrideController",
                     baseController,
-                    baseClip,
-                    moveClip);
+                    idleBase,
+                    moveBase,
+                    attackBase,
+                    idleClip,
+                    moveClip,
+                    attackClip);
 
-            BindControllerToPrefab(definition.PrefabPath, overrideController);
+            BindPrefab(
+                definition.PrefabPath,
+                overrideController,
+                deathSprites);
         }
 
-        private static IReadOnlyList<Sprite> LoadOrderedSprites(
-            EnemyAnimationDefinition definition)
+        private static IReadOnlyList<Sprite> LoadOrderedSprites(string path)
         {
-            Sprite[] sprites = AssetDatabase
-                .LoadAllAssetsAtPath(definition.SpriteSheetPath)
+            Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(path)
                 .OfType<Sprite>()
-                .OrderByDescending(sprite => sprite.rect.y)
-                .ThenBy(sprite => sprite.rect.x)
+                .OrderBy(GetFrameIndex)
+                .ThenBy(sprite => sprite.name, StringComparer.Ordinal)
                 .ToArray();
 
-            if (sprites.Length != ExpectedFrameCount)
+            if (sprites.Length == 0)
             {
                 throw new InvalidOperationException(
-                    $"{definition.EnemyName} move sheet must contain exactly " +
-                    $"{ExpectedFrameCount} sprites, but found {sprites.Length}: " +
-                    definition.SpriteSheetPath);
+                    $"Animation sheet has no sliced sprites: {path}");
             }
 
             return sprites;
         }
 
-        private static AnimationClip CreateOrLoadEmptyBaseClip()
+        private static int GetFrameIndex(Sprite sprite)
         {
-            AnimationClip clip =
-                AssetDatabase.LoadAssetAtPath<AnimationClip>(BaseClipPath);
-
-            if (clip == null)
+            int separatorIndex = sprite.name.LastIndexOf('_');
+            if (separatorIndex >= 0 &&
+                int.TryParse(
+                    sprite.name[(separatorIndex + 1)..],
+                    out int frameIndex))
             {
-                clip = new AnimationClip
-                {
-                    name = Path.GetFileNameWithoutExtension(BaseClipPath),
-                    frameRate = MoveFrameRate,
-                };
-                AssetDatabase.CreateAsset(clip, BaseClipPath);
+                return frameIndex;
             }
 
-            return clip;
+            throw new InvalidOperationException(
+                $"Animation sprite name must end with a frame number: " +
+                sprite.name);
         }
 
-        private static AnimationClip CreateOrReplaceMoveClip(
-            string path,
-            IReadOnlyList<Sprite> sprites)
+        private static bool IsFrameOrderingOutdated(string clipPath)
         {
-            AnimationClip clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
+            AnimationClip clip =
+                AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+            if (clip == null)
+            {
+                return true;
+            }
+
+            EditorCurveBinding binding = AnimationUtility
+                .GetObjectReferenceCurveBindings(clip)
+                .FirstOrDefault();
+            ObjectReferenceKeyframe[] keyframes =
+                AnimationUtility.GetObjectReferenceCurve(clip, binding);
+            return keyframes == null ||
+                keyframes.Length == 0 ||
+                keyframes[0].value is not Sprite firstSprite ||
+                GetFrameIndex(firstSprite) != 0;
+        }
+
+        private static AnimationClip CreateOrReplaceClip(
+            string path,
+            IReadOnlyList<Sprite> sprites,
+            bool loop)
+        {
+            AnimationClip clip =
+                AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
 
             if (clip == null)
             {
@@ -153,16 +232,15 @@ namespace MoonRabbitRush.Editor.Animation
             }
 
             clip.name = Path.GetFileNameWithoutExtension(path);
-            clip.frameRate = MoveFrameRate;
-
+            clip.frameRate = FrameRate;
             var keyframes = new ObjectReferenceKeyframe[sprites.Count];
 
-            for (int i = 0; i < sprites.Count; i++)
+            for (int index = 0; index < sprites.Count; index++)
             {
-                keyframes[i] = new ObjectReferenceKeyframe
+                keyframes[index] = new ObjectReferenceKeyframe
                 {
-                    time = i / MoveFrameRate,
-                    value = sprites[i],
+                    time = index / FrameRate,
+                    value = sprites[index],
                 };
             }
 
@@ -172,18 +250,22 @@ namespace MoonRabbitRush.Editor.Animation
                 type = typeof(SpriteRenderer),
                 propertyName = "m_Sprite",
             };
-
-            AnimationUtility.SetObjectReferenceCurve(clip, binding, keyframes);
+            AnimationUtility.SetObjectReferenceCurve(
+                clip,
+                binding,
+                keyframes);
             AnimationClipSettings settings =
                 AnimationUtility.GetAnimationClipSettings(clip);
-            settings.loopTime = true;
+            settings.loopTime = loop;
             AnimationUtility.SetAnimationClipSettings(clip, settings);
             EditorUtility.SetDirty(clip);
             return clip;
         }
 
         private static AnimatorController CreateOrUpdateBaseController(
-            AnimationClip baseClip)
+            AnimationClip idleClip,
+            AnimationClip moveClip,
+            AnimationClip attackClip)
         {
             AnimatorController controller =
                 AssetDatabase.LoadAssetAtPath<AnimatorController>(
@@ -196,29 +278,93 @@ namespace MoonRabbitRush.Editor.Animation
                         BaseControllerPath);
             }
 
+            controller.parameters = new[]
+            {
+                new AnimatorControllerParameter
+                {
+                    name = "IsMoving",
+                    type = AnimatorControllerParameterType.Bool,
+                },
+                new AnimatorControllerParameter
+                {
+                    name = "Attack",
+                    type = AnimatorControllerParameterType.Trigger,
+                },
+            };
+
             AnimatorStateMachine stateMachine =
                 controller.layers[0].stateMachine;
-            AnimatorState moveState = stateMachine.states
-                .Select(childState => childState.state)
-                .FirstOrDefault(state => state.name == "Move");
-
-            if (moveState == null)
+            foreach (ChildAnimatorState childState in stateMachine.states)
             {
-                moveState = stateMachine.AddState("Move");
+                stateMachine.RemoveState(childState.state);
             }
 
-            moveState.motion = baseClip;
-            stateMachine.defaultState = moveState;
+            AnimatorState idleState = stateMachine.AddState("Idle");
+            AnimatorState moveState = stateMachine.AddState("Move");
+            AnimatorState attackState = stateMachine.AddState("Attack");
+            idleState.motion = idleClip;
+            moveState.motion = moveClip;
+            attackState.motion = attackClip;
+            stateMachine.defaultState = idleState;
+
+            AddBoolTransition(idleState, moveState, true);
+            AddBoolTransition(moveState, idleState, false);
+
+            AnimatorStateTransition attackTransition =
+                stateMachine.AddAnyStateTransition(attackState);
+            attackTransition.hasExitTime = false;
+            attackTransition.duration = 0.03f;
+            attackTransition.canTransitionToSelf = false;
+            attackTransition.AddCondition(
+                AnimatorConditionMode.If,
+                0f,
+                "Attack");
+
+            AddAttackExitTransition(attackState, moveState, true);
+            AddAttackExitTransition(attackState, idleState, false);
             EditorUtility.SetDirty(controller);
             return controller;
+        }
+
+        private static void AddBoolTransition(
+            AnimatorState source,
+            AnimatorState destination,
+            bool whenMoving)
+        {
+            AnimatorStateTransition transition = source.AddTransition(destination);
+            transition.hasExitTime = false;
+            transition.duration = 0.05f;
+            transition.AddCondition(
+                whenMoving ? AnimatorConditionMode.If : AnimatorConditionMode.IfNot,
+                0f,
+                "IsMoving");
+        }
+
+        private static void AddAttackExitTransition(
+            AnimatorState source,
+            AnimatorState destination,
+            bool whenMoving)
+        {
+            AnimatorStateTransition transition = source.AddTransition(destination);
+            transition.hasExitTime = true;
+            transition.exitTime = 1f;
+            transition.duration = 0.05f;
+            transition.AddCondition(
+                whenMoving ? AnimatorConditionMode.If : AnimatorConditionMode.IfNot,
+                0f,
+                "IsMoving");
         }
 
         private static AnimatorOverrideController
             CreateOrUpdateOverrideController(
                 string path,
                 AnimatorController baseController,
-                AnimationClip baseClip,
-                AnimationClip moveClip)
+                AnimationClip idleBase,
+                AnimationClip moveBase,
+                AnimationClip attackBase,
+                AnimationClip idleClip,
+                AnimationClip moveClip,
+                AnimationClip attackClip)
         {
             AnimatorOverrideController controller =
                 AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(path);
@@ -230,22 +376,26 @@ namespace MoonRabbitRush.Editor.Animation
             }
 
             controller.runtimeAnimatorController = baseController;
-            controller[baseClip] = moveClip;
+            controller.ApplyOverrides(new List<KeyValuePair<AnimationClip, AnimationClip>>
+            {
+                new(idleBase, idleClip),
+                new(moveBase, moveClip),
+                new(attackBase, attackClip),
+            });
             EditorUtility.SetDirty(controller);
             return controller;
         }
 
-        private static void BindControllerToPrefab(
+        private static void BindPrefab(
             string prefabPath,
-            RuntimeAnimatorController controller)
+            RuntimeAnimatorController controller,
+            IReadOnlyList<Sprite> deathFrames)
         {
-            GameObject prefabRoot =
-                PrefabUtility.LoadPrefabContents(prefabPath);
+            GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
 
             try
             {
                 Animator animator = prefabRoot.GetComponent<Animator>();
-
                 if (animator == null)
                 {
                     animator = prefabRoot.AddComponent<Animator>();
@@ -257,13 +407,67 @@ namespace MoonRabbitRush.Editor.Animation
                 animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 
                 if (prefabRoot.GetComponent<
-                        MoonRabbitRush.Enemies.EnemyFacingView>() == null)
+                        MoonRabbitRush.Enemies.EnemyAnimationController>() == null)
                 {
                     prefabRoot.AddComponent<
-                        MoonRabbitRush.Enemies.EnemyFacingView>();
+                        MoonRabbitRush.Enemies.EnemyAnimationController>();
                 }
 
+                MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation deathAnimation =
+                    prefabRoot.GetComponent<
+                        MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation>();
+                if (deathAnimation == null)
+                {
+                    deathAnimation = prefabRoot.AddComponent<
+                        MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation>();
+                }
+
+                var serializedDeathAnimation =
+                    new SerializedObject(deathAnimation);
+                SerializedProperty framesProperty =
+                    serializedDeathAnimation.FindProperty("_deathFrames");
+                framesProperty.arraySize = deathFrames.Count;
+
+                for (int index = 0; index < deathFrames.Count; index++)
+                {
+                    framesProperty.GetArrayElementAtIndex(index)
+                        .objectReferenceValue = deathFrames[index];
+                }
+
+                serializedDeathAnimation.ApplyModifiedPropertiesWithoutUndo();
                 PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(prefabRoot);
+            }
+        }
+
+        private static void BindPlayerDeathFrames()
+        {
+            IReadOnlyList<Sprite> deathFrames =
+                LoadOrderedSprites(PlayerDeathSheetPath);
+            GameObject prefabRoot =
+                PrefabUtility.LoadPrefabContents(PlayerPrefabPath);
+
+            try
+            {
+                MoonRabbitRush.Player.PlayerSpriteAnimation animation =
+                    prefabRoot.GetComponentInChildren<
+                        MoonRabbitRush.Player.PlayerSpriteAnimation>(true);
+                var serializedAnimation = new SerializedObject(animation);
+                SerializedProperty framesProperty =
+                    serializedAnimation.FindProperty("_deathFrames");
+                framesProperty.arraySize = deathFrames.Count;
+
+                for (int index = 0; index < deathFrames.Count; index++)
+                {
+                    framesProperty.GetArrayElementAtIndex(index)
+                        .objectReferenceValue = deathFrames[index];
+                }
+
+                serializedAnimation.ApplyModifiedPropertiesWithoutUndo();
+                PrefabUtility.SaveAsPrefabAsset(prefabRoot, PlayerPrefabPath);
             }
             finally
             {
@@ -283,16 +487,25 @@ namespace MoonRabbitRush.Editor.Animation
         {
             public EnemyAnimationDefinition(
                 string enemyName,
-                string spriteSheetPath,
+                string idleSheetPath,
+                string moveSheetPath,
+                string attackSheetPath,
+                string deathSheetPath,
                 string prefabPath)
             {
                 EnemyName = enemyName;
-                SpriteSheetPath = spriteSheetPath;
+                IdleSheetPath = idleSheetPath;
+                MoveSheetPath = moveSheetPath;
+                AttackSheetPath = attackSheetPath;
+                DeathSheetPath = deathSheetPath;
                 PrefabPath = prefabPath;
             }
 
             public string EnemyName { get; }
-            public string SpriteSheetPath { get; }
+            public string IdleSheetPath { get; }
+            public string MoveSheetPath { get; }
+            public string AttackSheetPath { get; }
+            public string DeathSheetPath { get; }
             public string PrefabPath { get; }
         }
     }

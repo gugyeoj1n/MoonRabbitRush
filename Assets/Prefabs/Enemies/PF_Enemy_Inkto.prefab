@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 9090906617278891084}
   - component: {fileID: 8650639507030469379}
   - component: {fileID: 8650639507030469380}
+  - component: {fileID: 1535632238010963129}
   m_Layer: 0
   m_Name: PF_Enemy_Inkto
   m_TagString: Untagged
@@ -93,12 +94,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 8
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 512604334127727543, guid: cdb7926b33fc02d4f912a0c87b0fc4e8, type: 3}
+  m_Sprite: {fileID: 5161567126575638129, guid: 5046e9e914f0d4446b7041dd825236a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.82, y: 4.82}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -169,8 +170,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.81, y: 4.7999997}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 4.82, y: 4.82}
+    newSize: {x: 4.82, y: 4.82}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -301,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyFacingView
   _horizontalDeadZone: 0.01
+  _faceTarget: 0
 --- !u!114 &8650639507030469380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +325,19 @@ MonoBehaviour:
   - {fileID: -8961506174109472352, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   - {fileID: 6491703690933290265, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   _animator: {fileID: 9090906617278891084}
+--- !u!114 &1535632238010963129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820100000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddc1df9bc3e74c7a89a33f0997b51a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyAnimationController
+  _moveThreshold: 0.01
 --- !u!1 &820100000000000013
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 57913c8b9dc282c4fb4a5af5514ac1f4
+guid: bb7d270ccf9fbe64d868877cc5d6b4ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1174023777362378357
-    second: GreenCyclops_Move_0
+      213: 7523746156851338295
+    second: GreenCyclops_Move 1_0
   - first:
-      213: -2327669588924539795
-    second: GreenCyclops_Move_1
+      213: -8515655584303456336
+    second: GreenCyclops_Move 1_1
   - first:
-      213: 128391095330382391
-    second: GreenCyclops_Move_2
+      213: 8337254648846655337
+    second: GreenCyclops_Move 1_2
   - first:
-      213: -2742654453416722798
-    second: GreenCyclops_Move_3
+      213: -2772890716264353703
+    second: GreenCyclops_Move 1_3
   - first:
-      213: 7647873986009078257
-    second: GreenCyclops_Move_4
+      213: -1378213260578676565
+    second: GreenCyclops_Move 1_4
   - first:
-      213: -8364388271446925849
-    second: GreenCyclops_Move_5
+      213: -4156602375066757198
+    second: GreenCyclops_Move 1_5
   - first:
-      213: 6086300673275056112
-    second: GreenCyclops_Move_6
+      213: -8888356922625837300
+    second: GreenCyclops_Move 1_6
   - first:
-      213: 653211166112151163
-    second: GreenCyclops_Move_7
+      213: 5185505229935763871
+    second: GreenCyclops_Move 1_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -134,7 +134,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GreenCyclops_Move_0
+      name: GreenCyclops_Move 1_0
       rect:
         serializedVersion: 2
         x: 26
@@ -149,14 +149,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b810470489705bfe0800000000000000
-      internalID: -1174023777362378357
+      spriteID: 73c95536447b96860800000000000000
+      internalID: 7523746156851338295
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_1
+      name: GreenCyclops_Move 1_1
       rect:
         serializedVersion: 2
         x: 549
@@ -171,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d6c5ca567d472bfd0800000000000000
-      internalID: -2327669588924539795
+      spriteID: 0bf550c2d5052d980800000000000000
+      internalID: -8515655584303456336
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_2
+      name: GreenCyclops_Move 1_2
       rect:
         serializedVersion: 2
         x: 1088
@@ -193,14 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 732ad7d550328c100800000000000000
-      internalID: 128391095330382391
+      spriteID: 96f9a723ee0e3b370800000000000000
+      internalID: 8337254648846655337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_3
+      name: GreenCyclops_Move 1_3
       rect:
         serializedVersion: 2
         x: 1612
@@ -215,14 +215,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 29ef37a4e4220f9d0800000000000000
-      internalID: -2742654453416722798
+      spriteID: 950b510c596b489d0800000000000000
+      internalID: -2772890716264353703
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_4
+      name: GreenCyclops_Move 1_4
       rect:
         serializedVersion: 2
         x: 82
@@ -237,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1f9950fbed4b22a60800000000000000
-      internalID: 7647873986009078257
+      spriteID: ba0a972775a9fdce0800000000000000
+      internalID: -1378213260578676565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_5
+      name: GreenCyclops_Move 1_5
       rect:
         serializedVersion: 2
         x: 577
@@ -259,14 +259,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ed56fcfe29bbeb80800000000000000
-      internalID: -8364388271446925849
+      spriteID: 2b7d9999928c056c0800000000000000
+      internalID: -4156602375066757198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_6
+      name: GreenCyclops_Move 1_6
       rect:
         serializedVersion: 2
         x: 1071
@@ -281,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0ffc7ca3732e67450800000000000000
-      internalID: 6086300673275056112
+      spriteID: c07b00ea87636a480800000000000000
+      internalID: -8888356922625837300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GreenCyclops_Move_7
+      name: GreenCyclops_Move 1_7
       rect:
         serializedVersion: 2
         x: 1573
@@ -303,8 +303,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b76fe6f381ca01900800000000000000
-      internalID: 653211166112151163
+      spriteID: f91604b588d96f740800000000000000
+      internalID: 5185505229935763871
       vertices: []
       indices: 
       edges: []
@@ -323,14 +323,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      GreenCyclops_Move_0: -1174023777362378357
-      GreenCyclops_Move_1: -2327669588924539795
-      GreenCyclops_Move_2: 128391095330382391
-      GreenCyclops_Move_3: -2742654453416722798
-      GreenCyclops_Move_4: 7647873986009078257
-      GreenCyclops_Move_5: -8364388271446925849
-      GreenCyclops_Move_6: 6086300673275056112
-      GreenCyclops_Move_7: 653211166112151163
+      GreenCyclops_Move 1_0: 7523746156851338295
+      GreenCyclops_Move 1_1: -8515655584303456336
+      GreenCyclops_Move 1_2: 8337254648846655337
+      GreenCyclops_Move 1_3: -2772890716264353703
+      GreenCyclops_Move 1_4: -1378213260578676565
+      GreenCyclops_Move 1_5: -4156602375066757198
+      GreenCyclops_Move 1_6: -8888356922625837300
+      GreenCyclops_Move 1_7: 5185505229935763871
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
