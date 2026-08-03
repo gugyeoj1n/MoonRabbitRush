@@ -193,8 +193,8 @@ MonoBehaviour:
   _stats: {fileID: 11400000, guid: 2e6c31d550184983b9094d4ac75141ad, type: 2}
   _experienceDropPrefab: {fileID: 940100000000000004, guid: 3df53ea68548464ba15e7ce9014e98a8, type: 3}
   _poolType: 3
-  _deathFeedbackDuration: 0
-  _deathHoldDuration: 3
+  _deathFeedbackDuration: 1
+  _deathHoldDuration: 2
   _receivesHitReaction: 0
   _hitKnockbackDistance: 0
   _hitReactionDuration: 0.08
@@ -377,10 +377,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
   _deathFrames:
-  - {fileID: 5977557193862558847, guid: e90266757d11b994ea79214c08a74dce, type: 3}
-  - {fileID: 825185841776706506, guid: e90266757d11b994ea79214c08a74dce, type: 3}
-  - {fileID: -1950791433477579734, guid: e90266757d11b994ea79214c08a74dce, type: 3}
   - {fileID: -6194204912685102621, guid: e90266757d11b994ea79214c08a74dce, type: 3}
+  - {fileID: 825185841776706506, guid: e90266757d11b994ea79214c08a74dce, type: 3}
+  - {fileID: 5977557193862558847, guid: e90266757d11b994ea79214c08a74dce, type: 3}
+  - {fileID: -1950791433477579734, guid: e90266757d11b994ea79214c08a74dce, type: 3}
   - {fileID: 6485840780863046144, guid: e90266757d11b994ea79214c08a74dce, type: 3}
   - {fileID: -1067916644038388161, guid: e90266757d11b994ea79214c08a74dce, type: 3}
   - {fileID: 5486610705090352681, guid: e90266757d11b994ea79214c08a74dce, type: 3}

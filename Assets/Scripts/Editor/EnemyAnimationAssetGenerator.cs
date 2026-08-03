@@ -64,9 +64,13 @@ namespace MoonRabbitRush.Editor.Animation
                 bossPrefab.GetComponent<Animator>() == null ||
                 bossPrefab.GetComponent<
                     MoonRabbitRush.Enemies.EnemyAnimationController>() == null;
+            bool isFrameOrderingOutdated = IsFrameOrderingOutdated(
+                RootDirectory + "/BossUFO/AN_BossUFO_Idle.anim");
 
             if (AssetDatabase.LoadAssetAtPath<AnimatorOverrideController>(
-                    bossControllerPath) == null || isBossBindingMissing)
+                    bossControllerPath) == null ||
+                isBossBindingMissing ||
+                isFrameOrderingOutdated)
             {
                 EditorApplication.delayCall += Generate;
             }
@@ -164,8 +168,8 @@ namespace MoonRabbitRush.Editor.Animation
         {
             Sprite[] sprites = AssetDatabase.LoadAllAssetsAtPath(path)
                 .OfType<Sprite>()
-                .OrderByDescending(sprite => sprite.rect.y)
-                .ThenBy(sprite => sprite.rect.x)
+                .OrderBy(GetFrameIndex)
+                .ThenBy(sprite => sprite.name, StringComparer.Ordinal)
                 .ToArray();
 
             if (sprites.Length == 0)
@@ -175,6 +179,42 @@ namespace MoonRabbitRush.Editor.Animation
             }
 
             return sprites;
+        }
+
+        private static int GetFrameIndex(Sprite sprite)
+        {
+            int separatorIndex = sprite.name.LastIndexOf('_');
+            if (separatorIndex >= 0 &&
+                int.TryParse(
+                    sprite.name[(separatorIndex + 1)..],
+                    out int frameIndex))
+            {
+                return frameIndex;
+            }
+
+            throw new InvalidOperationException(
+                $"Animation sprite name must end with a frame number: " +
+                sprite.name);
+        }
+
+        private static bool IsFrameOrderingOutdated(string clipPath)
+        {
+            AnimationClip clip =
+                AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+            if (clip == null)
+            {
+                return true;
+            }
+
+            EditorCurveBinding binding = AnimationUtility
+                .GetObjectReferenceCurveBindings(clip)
+                .FirstOrDefault();
+            ObjectReferenceKeyframe[] keyframes =
+                AnimationUtility.GetObjectReferenceCurve(clip, binding);
+            return keyframes == null ||
+                keyframes.Length == 0 ||
+                keyframes[0].value is not Sprite firstSprite ||
+                GetFrameIndex(firstSprite) != 0;
         }
 
         private static AnimationClip CreateOrReplaceClip(

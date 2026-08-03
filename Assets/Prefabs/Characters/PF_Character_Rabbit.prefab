@@ -140,10 +140,10 @@ MonoBehaviour:
   - {fileID: -7256551667405853657, guid: 430fc31f052344d3884792ca42d37303, type: 3}
   - {fileID: 214794443368172527, guid: 430fc31f052344d3884792ca42d37303, type: 3}
   _deathFrames:
-  - {fileID: 3584226132089610693, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: -8311989477641001193, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: 2405681977902352581, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: 1946927465861060226, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: 3584226132089610693, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: -3826548820387394334, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: -7930539339726357277, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   - {fileID: 4013463443799664908, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}

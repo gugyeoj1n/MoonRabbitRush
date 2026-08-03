@@ -316,10 +316,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
   _deathFrames:
-  - {fileID: 4844157600613733274, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
-  - {fileID: -8455420588263840565, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
-  - {fileID: 2507339787808511927, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   - {fileID: -6743513142208133883, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
+  - {fileID: -8455420588263840565, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
+  - {fileID: 4844157600613733274, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
+  - {fileID: 2507339787808511927, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   - {fileID: -3240694164474182740, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   - {fileID: 3586013167348024283, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}
   - {fileID: -8961506174109472352, guid: b55a9385c92744fc5964a6a39791a0ed, type: 3}

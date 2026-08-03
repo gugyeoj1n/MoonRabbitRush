@@ -321,14 +321,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyDeathSpriteAnimation
   _deathFrames:
+  - {fileID: -1975776338664140631, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 7250383539315939739, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   - {fileID: 7391051469166932209, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   - {fileID: -7978236789511537594, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
-  - {fileID: 7250383539315939739, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
-  - {fileID: -1975776338664140631, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   - {fileID: -7627291446103982075, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
-  - {fileID: 1945090084975841630, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
-  - {fileID: 9116177262828470995, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   - {fileID: 4994473218294115017, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 9116177262828470995, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
+  - {fileID: 1945090084975841630, guid: 672c9de71a43ecf4da0e47a12fb24485, type: 3}
   _animator: {fileID: 9006477486304473560}
 --- !u!114 &6595798989832976333
 MonoBehaviour:
