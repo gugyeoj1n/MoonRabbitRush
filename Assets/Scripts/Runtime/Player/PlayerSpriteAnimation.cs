@@ -22,12 +22,15 @@ namespace MoonRabbitRush.Player
         private float _elapsed;
         private int _frameIndex;
         private bool _isPlayingDeath;
+        private Vector3 _defaultLocalPosition;
+        private float _deathGroundY;
 
         private void Awake()
         {
             _movement = GetComponentInParent<PlayerMovement>();
             _health = GetComponentInParent<PlayerHealth>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _defaultLocalPosition = transform.localPosition;
         }
 
         private void OnEnable()
@@ -37,6 +40,7 @@ namespace MoonRabbitRush.Player
                 _health.Died += PlayDeath;
             }
 
+            transform.localPosition = _defaultLocalPosition;
             _isPlayingDeath = false;
             SetSequence(_idleFrames, _idleFrameRate);
         }
@@ -79,8 +83,10 @@ namespace MoonRabbitRush.Player
 
         private void PlayDeath()
         {
+            _deathGroundY = GetSpriteBottomY();
             _isPlayingDeath = true;
             SetSequence(_deathFrames, _deathFrameRate);
+            AlignCurrentFrameToDeathGround();
         }
 
         private void UpdateSequence(bool loop)
@@ -110,7 +116,37 @@ namespace MoonRabbitRush.Player
                 }
 
                 _spriteRenderer.sprite = _currentFrames[_frameIndex];
+                if (_isPlayingDeath)
+                {
+                    AlignCurrentFrameToDeathGround();
+                }
             }
+        }
+
+        private float GetSpriteBottomY()
+        {
+            Sprite sprite = _spriteRenderer.sprite;
+            if (sprite == null)
+            {
+                return transform.localPosition.y;
+            }
+
+            return transform.localPosition.y
+                + sprite.bounds.min.y * transform.localScale.y;
+        }
+
+        private void AlignCurrentFrameToDeathGround()
+        {
+            Sprite sprite = _spriteRenderer.sprite;
+            if (sprite == null)
+            {
+                return;
+            }
+
+            Vector3 localPosition = transform.localPosition;
+            localPosition.y = _deathGroundY
+                - sprite.bounds.min.y * transform.localScale.y;
+            transform.localPosition = localPosition;
         }
 
         private void SetSequence(Sprite[] frames, float frameRate)
