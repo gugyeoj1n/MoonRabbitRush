@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 3665347876883229949}
   - component: {fileID: 6249897018208374373}
   - component: {fileID: 6406043469929969149}
+  - component: {fileID: 7903775886752669977}
   - component: {fileID: 6208585958827249358}
   - component: {fileID: 1719272712975042423}
   - component: {fileID: 9103775886752669977}
@@ -273,6 +274,19 @@ Transform:
   - {fileID: 2631563025026958661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7903775886752669977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631563025026958653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faaff8bdc7624383a9c2ae0b7856c5b4, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.SelectedCharacterInitializer
+  _defaultCharacter: {fileID: 11400000, guid: b2b6da67307244b0b7f0ee3995b71674, type: 2}
 --- !u!50 &3665347876883229949
 Rigidbody2D:
   serializedVersion: 5
@@ -417,8 +431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponController
   _startingWeapons:
   - {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}
-  - {fileID: 11400000, guid: f2ab1c01d57042f694bbd4d1d7389576, type: 2}
-  - {fileID: 11400000, guid: c57e8fc7f1f349f0a54fdbb608fd70ee, type: 2}
 --- !u!114 &8203775886752669977
 MonoBehaviour:
   m_ObjectHideFlags: 0

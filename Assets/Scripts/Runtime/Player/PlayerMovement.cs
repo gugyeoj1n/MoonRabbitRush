@@ -20,6 +20,11 @@ namespace MoonRabbitRush.Player
         public Vector2 MoveInput => _moveInput;
         public bool CanMove => _canMove;
 
+        public void Configure(PlayerStatsData stats)
+        {
+            _stats = stats;
+        }
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
