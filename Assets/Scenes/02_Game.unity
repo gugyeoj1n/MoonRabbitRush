@@ -256,6 +256,7 @@ RectTransform:
   - {fileID: 5450629467748011839}
   - {fileID: 6423792202442377730}
   - {fileID: 2897505281148018758}
+  - {fileID: 933883908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -275,6 +276,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331320b94538ef14884ed8a370b57400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UIRoot
+--- !u!224 &933883908 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+  m_PrefabInstance: {fileID: 6115150793028821736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1133957633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -283,6 +289,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 853876385}
     m_Modifications:
+    - target: {fileID: 2181505724962710816, guid: 107f79d9ab919614bbbc31c9f70d3663, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2181505724962710816, guid: 107f79d9ab919614bbbc31c9f70d3663, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4131083158981927297, guid: 107f79d9ab919614bbbc31c9f70d3663, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -570,6 +584,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8245304258162566044, guid: 5c5fe6018a4eb7d409321f100ce1a4af, type: 3}
   m_PrefabInstance: {fileID: 1354020401}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1500014433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1500014434}
+  - component: {fileID: 1500014435}
+  m_Layer: 0
+  m_Name: UI Input System
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1500014434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500014433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2018463891}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500014435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500014433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2175e945a7048ad4da67333de6cdbbe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UIInputSystem
+  pauseAction: {fileID: -2520813409160129785, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &1622118221
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +771,7 @@ Transform:
   m_Children:
   - {fileID: 1231020689}
   - {fileID: 6590927555166155798}
+  - {fileID: 1500014434}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2018463892
@@ -2335,6 +2395,67 @@ MonoBehaviour:
   _optionContainer: {fileID: 2648395353309012577}
   _optionPrefab: {fileID: 7119010765840734063, guid: d8ecbec1063a9e84f90db142b1f513bb, type: 3}
   _optionEntranceInterval: 0.08
+--- !u!1001 &6115150793028821736
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 853876385}
+    m_Modifications:
+    - target: {fileID: 1727787105516772119, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_Name
+      value: MenuUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1727787105516772119, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6933446982771722886, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a04ea919465080d40a362fdcb2d1a885, type: 3}
 --- !u!224 &6198161924732754310
 RectTransform:
   m_ObjectHideFlags: 0

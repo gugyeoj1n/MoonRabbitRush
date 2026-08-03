@@ -26,7 +26,7 @@ namespace MoonRabbitRush
             }
         }        
 
-        public void OnClickClose()
+        public virtual void OnClickClose()
         {
             gameObject.SetActive(false);
         }
