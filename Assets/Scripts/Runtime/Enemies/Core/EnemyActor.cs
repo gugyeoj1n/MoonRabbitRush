@@ -132,8 +132,6 @@ namespace MoonRabbitRush.Enemies
 
         private void HandleDeath()
         {
-            DropExperience();
-            ScoreManager.RegisterEnemyDefeat(this);
             _motor.Stop();
 
             foreach (Collider2D enemyCollider in _colliders)
@@ -149,6 +147,9 @@ namespace MoonRabbitRush.Enemies
             CancelDeactivateTask();
             _deactivateCts = new CancellationTokenSource();
             DeactivateAfterFeedbackAsync(_deactivateCts.Token).Forget();
+
+            DropExperience();
+            ScoreManager.RegisterEnemyDefeat(this);
         }
 
         private void DropExperience()
@@ -227,6 +228,15 @@ namespace MoonRabbitRush.Enemies
             }
             catch (OperationCanceledException)
             {
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+
+                if (gameObject.activeInHierarchy && !_health.IsAlive)
+                {
+                    Deactivate();
+                }
             }
         }
 
