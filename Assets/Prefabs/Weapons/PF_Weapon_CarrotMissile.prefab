@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.HomingMissileWeapon
   _projectilePrefab: {fileID: 820100000000000006, guid: ac7424ddf0414bbd81074985754fc8c2, type: 3}
   _spreadAngle: 20
+  _volleyFireInterval: 0.08
