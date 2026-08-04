@@ -2,6 +2,12 @@ using UnityEngine;
 
 namespace MoonRabbitRush.Weapons
 {
+    public enum WeaponCategory
+    {
+        Active,
+        Passive
+    }
+
     [CreateAssetMenu(
         fileName = "SO_Weapon_",
         menuName = "Moon Rabbit Rush/Weapons/Weapon Data")]
@@ -11,6 +17,7 @@ namespace MoonRabbitRush.Weapons
         [SerializeField] private string _displayName;
         [SerializeField, TextArea] private string _description;
         [SerializeField] private Sprite _icon;
+        [SerializeField] private WeaponCategory _category;
 
         [Header("Runtime")]
         [SerializeField] private WeaponBehaviour _behaviourPrefab;
@@ -22,6 +29,7 @@ namespace MoonRabbitRush.Weapons
         public string DisplayName => _displayName;
         public string Description => _description;
         public Sprite Icon => _icon;
+        public WeaponCategory Category => _category;
         public WeaponBehaviour BehaviourPrefab => _behaviourPrefab;
         public float ActiveCooldown => Mathf.Max(0.1f, _activeCooldown);
         public int MaxLevel => _levels?.Length ?? 0;
