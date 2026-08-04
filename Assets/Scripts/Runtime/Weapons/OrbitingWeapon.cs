@@ -64,7 +64,9 @@ namespace MoonRabbitRush.Weapons
 
         private void RebuildHitboxes()
         {
-            int requiredCount = Mathf.Max(1, Stats.ProjectileCount);
+            int requiredCount = Mathf.Max(
+                1,
+                Stats.ProjectileCount + Modifiers.AdditionalWeaponCount);
 
             while (_hitboxes.Count > requiredCount)
             {

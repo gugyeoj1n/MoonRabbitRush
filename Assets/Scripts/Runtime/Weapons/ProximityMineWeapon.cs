@@ -42,7 +42,9 @@ namespace MoonRabbitRush.Weapons
 
         private void ThrowMines()
         {
-            int mineCount = Mathf.Max(1, Stats.ProjectileCount);
+            int mineCount = Mathf.Max(
+                1,
+                Stats.ProjectileCount + Modifiers.AdditionalWeaponCount);
             float baseAngle = Random.Range(0f, 360f);
 
             for (int index = 0; index < mineCount; index++)

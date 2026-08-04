@@ -91,7 +91,9 @@ namespace MoonRabbitRush.Weapons
 
         private void Fire(EnemyHealth target)
         {
-            int projectileCount = Mathf.Max(1, Stats.ProjectileCount);
+            int projectileCount = Mathf.Max(
+                1,
+                Stats.ProjectileCount + Modifiers.AdditionalWeaponCount);
 
             for (int index = 0; index < projectileCount; index++)
             {
