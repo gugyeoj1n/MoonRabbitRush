@@ -54,9 +54,10 @@ namespace MoonRabbitRush.Enemies
             float appliedDamage = Mathf.Max(1f, damage.Amount - _stats.Defense);
             _currentHealth = Mathf.Max(0f, _currentHealth - appliedDamage);
             bool died = _currentHealth <= 0f;
+            DamageInfo receivedDamage = damage;
 
             InvokeSafely(() => Damaged?.Invoke(appliedDamage));
-            InvokeSafely(() => DamageReceived?.Invoke(damage));
+            InvokeSafely(() => DamageReceived?.Invoke(receivedDamage));
             InvokeSafely(() => HealthChanged?.Invoke(
                 _currentHealth,
                 _stats.MaxHealth));
