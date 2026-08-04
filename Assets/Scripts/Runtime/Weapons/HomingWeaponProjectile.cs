@@ -110,13 +110,19 @@ namespace MoonRabbitRush.Weapons
             }
 
             Vector2 hitPoint = other.ClosestPoint(transform.position);
-            enemy.TakeDamage(new DamageInfo(_damage, hitPoint, _source));
-            SpawnImpactEffect(hitPoint);
-            _remainingHits--;
-
-            if (_remainingHits <= 0)
+            try
             {
-                Release();
+                enemy.TakeDamage(new DamageInfo(_damage, hitPoint, _source));
+                SpawnImpactEffect(hitPoint);
+            }
+            finally
+            {
+                _remainingHits--;
+
+                if (_remainingHits <= 0)
+                {
+                    Release();
+                }
             }
         }
 
