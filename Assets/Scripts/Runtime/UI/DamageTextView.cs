@@ -25,6 +25,7 @@ namespace MoonRabbitRush.UI
         private Color _defaultColor;
         private float _elapsed;
         private CancellationTokenSource _animationCts;
+        private bool _isReleased;
 
         private void Awake()
         {
@@ -49,6 +50,7 @@ namespace MoonRabbitRush.UI
             Camera uiCamera,
             Color32? colorOverride = null)
         {
+            _isReleased = false;
             _elapsed = 0f;
             _worldPosition = worldPosition;
             _screenOffset = screenOffset;
@@ -60,23 +62,27 @@ namespace MoonRabbitRush.UI
             _text.enabled = true;
             _text.outlineColor = _outlineColor;
             _text.SetText("{0:0}", amount);
-            UpdateScreenPosition(0f);
+            if (!UpdateScreenPosition(0f))
+            {
+                return;
+            }
+
             RestartAnimation();
         }
 
-        private void UpdateScreenPosition(float riseProgress)
+        private bool UpdateScreenPosition(float riseProgress)
         {
             if (_worldCamera == null || _container == null)
             {
                 Release();
-                return;
+                return false;
             }
 
             Vector3 screenPosition = _worldCamera.WorldToScreenPoint(_worldPosition);
             if (screenPosition.z < 0f)
             {
                 _text.enabled = false;
-                return;
+                return true;
             }
 
             _text.enabled = true;
@@ -91,6 +97,8 @@ namespace MoonRabbitRush.UI
                     + _screenOffset
                     + Vector2.up * (_riseDistance * riseProgress);
             }
+
+            return true;
         }
 
         private void RestartAnimation()
@@ -121,7 +129,10 @@ namespace MoonRabbitRush.UI
                 float progress = Mathf.Clamp01(_elapsed / _duration);
                 float easedProgress = 1f - Mathf.Pow(1f - progress, 2f);
 
-                UpdateScreenPosition(easedProgress);
+                if (!UpdateScreenPosition(easedProgress))
+                {
+                    return;
+                }
 
                 Color color = _startColor;
                 color.a = 1f - progress;
@@ -144,6 +155,12 @@ namespace MoonRabbitRush.UI
 
         private void Release()
         {
+            if (_isReleased)
+            {
+                return;
+            }
+
+            _isReleased = true;
             PoolingManager.Release(PoolType.DamageText, gameObject);
         }
     }
