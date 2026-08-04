@@ -57,6 +57,7 @@ namespace MoonRabbitRush.Weapons
         private CircleTelegraphView _telegraph;
         private Sprite _initialSprite;
         private WeaponLevelStats _stats;
+        private float _damage;
         private GameObject _source;
         private Vector2 _startPosition;
         private Vector2 _landingPosition;
@@ -109,6 +110,7 @@ namespace MoonRabbitRush.Weapons
             float throwDuration,
             float arcHeight,
             in WeaponLevelStats stats,
+            float damage,
             GameObject source)
         {
             CleanupRuntimeVisuals();
@@ -120,6 +122,7 @@ namespace MoonRabbitRush.Weapons
             _throwDuration = Mathf.Max(0.05f, throwDuration);
             _arcHeight = Mathf.Max(0f, arcHeight);
             _stats = stats;
+            _damage = damage;
             _source = source;
             _elapsed = 0f;
             _state = MineState.Throwing;
@@ -315,7 +318,7 @@ namespace MoonRabbitRush.Weapons
                 if (target != null && target.IsAlive)
                 {
                     target.TakeDamage(
-                        new DamageInfo(_stats.Damage, transform.position, _source));
+                        new DamageInfo(_damage, transform.position, _source));
                 }
             }
 

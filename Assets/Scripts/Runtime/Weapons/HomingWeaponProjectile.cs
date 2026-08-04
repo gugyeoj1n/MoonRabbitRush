@@ -73,6 +73,7 @@ namespace MoonRabbitRush.Weapons
             Vector2 direction,
             EnemyHealth target,
             in WeaponLevelStats stats,
+            float damage,
             GameObject source)
         {
             _direction = direction.sqrMagnitude > 0f
@@ -80,7 +81,7 @@ namespace MoonRabbitRush.Weapons
                 : Vector2.right;
             _target = target;
             _source = source;
-            _damage = stats.Damage;
+            _damage = damage;
             _speed = stats.ProjectileSpeed;
             _targetSearchRange = stats.Range;
             _remainingLifetime = stats.Duration;

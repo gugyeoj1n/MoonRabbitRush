@@ -102,11 +102,19 @@ namespace MoonRabbitRush.Weapons
 
             foreach (OrbitingWeaponHitbox hitbox in _hitboxes)
             {
-                hitbox.Configure(Stats.Damage, Stats.Cooldown, Owner.gameObject);
+                hitbox.Configure(
+                    Stats.Damage * Modifiers.DamageMultiplier,
+                    Stats.Cooldown,
+                    Owner.gameObject);
                 hitbox.SetActiveSkillVisual(_activeRemaining > 0f);
             }
 
             UpdateHitboxPositions();
+        }
+
+        protected override void OnModifiersChanged()
+        {
+            RebuildHitboxes();
         }
 
         private void UpdateHitboxPositions()

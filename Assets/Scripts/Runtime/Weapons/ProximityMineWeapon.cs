@@ -81,6 +81,7 @@ namespace MoonRabbitRush.Weapons
                     _throwDuration,
                     _arcHeight,
                     Stats,
+                    Stats.Damage * Modifiers.DamageMultiplier,
                     Owner.gameObject);
                 _spawnedMines.Add(mine);
             }
