@@ -119,9 +119,26 @@ namespace MoonRabbitRush.Enemies
 
         public void Deactivate()
         {
-            EnemyRegistry.Unregister(this);
-            _motor.Stop();
-            PoolingManager.Release(_poolType, gameObject);
+            try
+            {
+                EnemyRegistry.Unregister(this);
+                _motor.Stop();
+            }
+            finally
+            {
+                if (gameObject.activeSelf && PoolingManager.IsRegistered(_poolType))
+                {
+                    PoolingManager.Release(_poolType, gameObject);
+                }
+                else if (gameObject.activeSelf)
+                {
+                    Debug.LogWarning(
+                        $"Pool '{_poolType}' is not registered. " +
+                        "The enemy will be deactivated without pooling.",
+                        this);
+                    gameObject.SetActive(false);
+                }
+            }
         }
 
         private void OnDisable()
