@@ -139,6 +139,7 @@ namespace MoonRabbitRush.Weapons
                 target,
                 Stats,
                 Stats.Damage * Modifiers.DamageMultiplier,
+                Modifiers.SizeMultiplier,
                 Owner.gameObject);
         }
 

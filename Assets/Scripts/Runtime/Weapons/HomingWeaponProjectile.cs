@@ -15,6 +15,7 @@ namespace MoonRabbitRush.Weapons
 
         private readonly HashSet<EnemyHealth> _hitEnemies = new();
         private Rigidbody2D _rigidbody;
+        private Vector3 _initialScale;
         private EnemyHealth _target;
         private GameObject _source;
         private Vector2 _direction;
@@ -31,6 +32,7 @@ namespace MoonRabbitRush.Weapons
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _initialScale = transform.localScale;
         }
 
         private void FixedUpdate()
@@ -74,6 +76,7 @@ namespace MoonRabbitRush.Weapons
             EnemyHealth target,
             in WeaponLevelStats stats,
             float damage,
+            float sizeMultiplier,
             GameObject source)
         {
             _direction = direction.sqrMagnitude > 0f
@@ -82,6 +85,7 @@ namespace MoonRabbitRush.Weapons
             _target = target;
             _source = source;
             _damage = damage;
+            transform.localScale = _initialScale * Mathf.Max(0.01f, sizeMultiplier);
             _speed = stats.ProjectileSpeed;
             _targetSearchRange = stats.Range;
             _remainingLifetime = stats.Duration;

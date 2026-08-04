@@ -58,10 +58,12 @@ namespace MoonRabbitRush.Weapons
         private Sprite _initialSprite;
         private WeaponLevelStats _stats;
         private float _damage;
+        private float _areaRadius;
         private GameObject _source;
         private Vector2 _startPosition;
         private Vector2 _landingPosition;
         private Vector3 _initialScale;
+        private Vector3 _runtimeScale;
         private Color _initialColor;
         private float _throwDuration;
         private float _arcHeight;
@@ -111,18 +113,21 @@ namespace MoonRabbitRush.Weapons
             float arcHeight,
             in WeaponLevelStats stats,
             float damage,
+            float sizeMultiplier,
             GameObject source)
         {
             CleanupRuntimeVisuals();
             _spriteRenderer.sprite = _initialSprite;
             _spriteRenderer.color = _initialColor;
-            transform.localScale = _initialScale;
+            _runtimeScale = _initialScale * Mathf.Max(0.01f, sizeMultiplier);
+            transform.localScale = _runtimeScale;
             _startPosition = transform.position;
             _landingPosition = landingPosition;
             _throwDuration = Mathf.Max(0.05f, throwDuration);
             _arcHeight = Mathf.Max(0f, arcHeight);
             _stats = stats;
             _damage = damage;
+            _areaRadius = stats.AreaRadius * Mathf.Max(0.01f, sizeMultiplier);
             _source = source;
             _elapsed = 0f;
             _state = MineState.Throwing;
@@ -187,8 +192,8 @@ namespace MoonRabbitRush.Weapons
             _elapsed += Time.deltaTime;
             float progress = Mathf.Clamp01(_elapsed / _burrowDuration);
             transform.localScale = Vector3.Lerp(
-                _initialScale,
-                _initialScale * 0.55f,
+                _runtimeScale,
+                _runtimeScale * 0.55f,
                 progress);
 
             Color color = _initialColor;
@@ -200,7 +205,7 @@ namespace MoonRabbitRush.Weapons
                 _elapsed = 0f;
                 _spriteRenderer.sprite = _buriedSprite;
                 _spriteRenderer.color = _initialColor;
-                transform.localScale = _initialScale;
+                transform.localScale = _runtimeScale;
                 EnsureDetectionRangeVisual();
                 _state = MineState.Armed;
             }
@@ -263,7 +268,7 @@ namespace MoonRabbitRush.Weapons
             _telegraph.Released += HandleTelegraphReleased;
             _telegraph.Initialize(
                 transform.position,
-                _stats.AreaRadius,
+                _areaRadius,
                 _stats.Duration,
                 _outlineSprite,
                 _fillSprite,
@@ -310,7 +315,7 @@ namespace MoonRabbitRush.Weapons
 
             EnemyRegistry.CollectInRange(
                 transform.position,
-                _stats.AreaRadius,
+                _areaRadius,
                 _targets);
 
             foreach (EnemyHealth target in _targets)

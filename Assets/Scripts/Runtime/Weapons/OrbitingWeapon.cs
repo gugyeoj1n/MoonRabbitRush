@@ -105,6 +105,7 @@ namespace MoonRabbitRush.Weapons
                 hitbox.Configure(
                     Stats.Damage * Modifiers.DamageMultiplier,
                     Stats.Cooldown,
+                    Modifiers.SizeMultiplier,
                     Owner.gameObject);
                 hitbox.SetActiveSkillVisual(_activeRemaining > 0f);
             }
