@@ -13,6 +13,7 @@ namespace MoonRabbitRush
         EnemyBossUfo,
         ExperienceCarrot,
         ProjectileCarrotMissile,
+        ProjectileCrescentBoomerang,
         ProjectileInktoInk,
         ProjectileOrbitronMissile,
         WeaponShockDrone,

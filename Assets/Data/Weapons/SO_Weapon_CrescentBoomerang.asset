@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa4746130f74c1e819429b123fd45ef, type: 3}
+  m_Name: SO_Weapon_CrescentBoomerang
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
+  _displayName: 초승달 부메랑
+  _description: 적을 관통하며 날아갔다가 달토끼에게 돌아오는 초승달 에너지 날을 던집니다.
+  _icon: {fileID: 21300000, guid: 81394338f12c321438991f159ad7ee9c, type: 3}
+  _category: 0
+  _behaviourPrefab: {fileID: 930100000000000003, guid: d14f2c49c44a4a3e9294510f82893bcb, type: 3}
+  _activeCooldown: 12
+  _levels:
+  - _damage: 28
+    _cooldown: 2.2
+    _projectileCount: 1
+    _projectileSpeed: 8
+    _range: 5
+    _duration: 6
+    _pierceCount: 99
+    _areaRadius: 0
+  - _damage: 42
+    _cooldown: 1.8
+    _projectileCount: 2
+    _projectileSpeed: 9
+    _range: 6
+    _duration: 6
+    _pierceCount: 99
+    _areaRadius: 0
+  _passiveLevels: []
