@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: SO_CharacterDefinition_Rabbit
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.CharacterData
   _displayName: 달토끼
-  _portrait: {fileID: 0}
+  _portrait: {fileID: 21300000, guid: 5f7d217c18524d58917ee1e48b4b4d06, type: 3}
   _stats: {fileID: 11400000, guid: 7430ca898ba22104bac23f54a37cf033, type: 2}
   _startingWeapon: {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}
