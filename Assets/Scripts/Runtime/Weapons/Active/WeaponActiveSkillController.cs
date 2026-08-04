@@ -70,7 +70,10 @@ namespace MoonRabbitRush.Weapons.Active
 
         private void HandleWeaponChanged(WeaponData data, int level)
         {
-            if (data == null || level < data.MaxLevel || _slots.Count >= SlotKeys.Length)
+            if (data == null ||
+                data.Category != WeaponCategory.Active ||
+                level < data.MaxLevel ||
+                _slots.Count >= SlotKeys.Length)
             {
                 return;
             }

@@ -66,7 +66,7 @@ namespace MoonRabbitRush.Combat
             {
                 await UniTask.Delay(
                     TimeSpan.FromSeconds(_duration),
-                    DelayType.DeltaTime,
+                    DelayType.UnscaledDeltaTime,
                     PlayerLoopTiming.Update,
                     cancellationToken);
                 Release();

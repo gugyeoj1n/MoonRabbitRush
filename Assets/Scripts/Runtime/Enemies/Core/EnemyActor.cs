@@ -119,9 +119,26 @@ namespace MoonRabbitRush.Enemies
 
         public void Deactivate()
         {
-            EnemyRegistry.Unregister(this);
-            _motor.Stop();
-            PoolingManager.Release(_poolType, gameObject);
+            try
+            {
+                EnemyRegistry.Unregister(this);
+                _motor.Stop();
+            }
+            finally
+            {
+                if (gameObject.activeSelf && PoolingManager.IsRegistered(_poolType))
+                {
+                    PoolingManager.Release(_poolType, gameObject);
+                }
+                else if (gameObject.activeSelf)
+                {
+                    Debug.LogWarning(
+                        $"Pool '{_poolType}' is not registered. " +
+                        "The enemy will be deactivated without pooling.",
+                        this);
+                    gameObject.SetActive(false);
+                }
+            }
         }
 
         private void OnDisable()
@@ -132,8 +149,6 @@ namespace MoonRabbitRush.Enemies
 
         private void HandleDeath()
         {
-            DropExperience();
-            ScoreManager.RegisterEnemyDefeat(this);
             _motor.Stop();
 
             foreach (Collider2D enemyCollider in _colliders)
@@ -149,6 +164,9 @@ namespace MoonRabbitRush.Enemies
             CancelDeactivateTask();
             _deactivateCts = new CancellationTokenSource();
             DeactivateAfterFeedbackAsync(_deactivateCts.Token).Forget();
+
+            DropExperience();
+            ScoreManager.RegisterEnemyDefeat(this);
         }
 
         private void DropExperience()
@@ -227,6 +245,15 @@ namespace MoonRabbitRush.Enemies
             }
             catch (OperationCanceledException)
             {
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
+
+                if (gameObject.activeInHierarchy && !_health.IsAlive)
+                {
+                    Deactivate();
+                }
             }
         }
 

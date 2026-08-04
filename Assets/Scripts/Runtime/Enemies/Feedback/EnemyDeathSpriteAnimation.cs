@@ -14,6 +14,8 @@ namespace MoonRabbitRush.Enemies
         private EnemyHealth _health;
         private EnemyActor _actor;
         private SpriteRenderer _spriteRenderer;
+        private SpriteRenderer _shadowRenderer;
+        private Color _shadowBaseColor;
         private CancellationTokenSource _playCts;
 
         private void Awake()
@@ -21,6 +23,15 @@ namespace MoonRabbitRush.Enemies
             _health = GetComponent<EnemyHealth>();
             _actor = GetComponent<EnemyActor>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            Transform shadow = transform.Find("Ground Shadow");
+            if (shadow != null)
+            {
+                _shadowRenderer = shadow.GetComponent<SpriteRenderer>();
+                if (_shadowRenderer != null)
+                {
+                    _shadowBaseColor = _shadowRenderer.color;
+                }
+            }
 
             if (_animator == null)
             {
@@ -30,6 +41,8 @@ namespace MoonRabbitRush.Enemies
 
         private void OnEnable()
         {
+            SetShadowAlpha(_shadowBaseColor.a);
+
             if (_animator != null)
             {
                 _animator.enabled = true;
@@ -86,6 +99,8 @@ namespace MoonRabbitRush.Enemies
                     lastFrameIndex = frameIndex;
                 }
 
+                SetShadowAlpha(_shadowBaseColor.a * (1f - progress));
+
                 await UniTask.Yield(
                     PlayerLoopTiming.Update,
                     cancellationToken);
@@ -94,7 +109,20 @@ namespace MoonRabbitRush.Enemies
             if (!cancellationToken.IsCancellationRequested)
             {
                 _spriteRenderer.sprite = _deathFrames[_deathFrames.Length - 1];
+                SetShadowAlpha(0f);
             }
+        }
+
+        private void SetShadowAlpha(float alpha)
+        {
+            if (_shadowRenderer == null)
+            {
+                return;
+            }
+
+            Color color = _shadowBaseColor;
+            color.a = alpha;
+            _shadowRenderer.color = color;
         }
 
         private void CancelPlayTask()

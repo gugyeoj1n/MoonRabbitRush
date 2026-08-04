@@ -13,12 +13,24 @@ namespace MoonRabbitRush.Weapons
         private GameObject _source;
         private float _damage;
         private float _hitInterval;
+        private Vector3 _initialScale;
 
-        public void Configure(float damage, float hitInterval, GameObject source)
+        private void Awake()
+        {
+            _initialScale = transform.localScale;
+        }
+
+        public void Configure(
+            float damage,
+            float hitInterval,
+            float sizeMultiplier,
+            GameObject source)
         {
             _damage = Mathf.Max(0f, damage);
             _hitInterval = Mathf.Max(0.01f, hitInterval);
             _source = source;
+            transform.localScale =
+                _initialScale * Mathf.Max(0.01f, sizeMultiplier);
             _nextHitTimes.Clear();
         }
 

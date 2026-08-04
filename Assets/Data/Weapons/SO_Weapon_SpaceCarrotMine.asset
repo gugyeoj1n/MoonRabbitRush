@@ -15,6 +15,7 @@ MonoBehaviour:
   _displayName: 우주 당근 지뢰
   _description: 주변에 매설된 지뢰가 적을 감지하면 범위 공격을 일으킵니다.
   _icon: {fileID: 21300000, guid: 475997bf38744a6a9fbf85cc5baaee60, type: 3}
+  _category: 0
   _behaviourPrefab: {fileID: 890100000000000003, guid: b42b8c554e404d0ea38f0ae4d822859e, type: 3}
   _activeCooldown: 8
   _levels:

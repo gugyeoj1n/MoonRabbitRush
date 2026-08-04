@@ -10,10 +10,12 @@ namespace MoonRabbitRush.Weapons
     {
         [SerializeField] private HomingWeaponProjectile _projectilePrefab;
         [SerializeField, Range(0f, 180f)] private float _spreadAngle = 20f;
+        [SerializeField, Min(0.01f)] private float _volleyFireInterval = 0.08f;
         [SerializeField, Min(1)] private int _activeMissileCount = 10;
         [SerializeField, Min(0.01f)] private float _activeFireInterval = 0.08f;
 
         private float _cooldownRemaining;
+        private CancellationTokenSource _volleyCts;
         private CancellationTokenSource _activeBurstCts;
 
         private void Update()
@@ -39,7 +41,7 @@ namespace MoonRabbitRush.Weapons
                 return;
             }
 
-            Fire(target);
+            StartVolley(target);
             _cooldownRemaining = Stats.Cooldown;
         }
 
@@ -89,19 +91,45 @@ namespace MoonRabbitRush.Weapons
             }
         }
 
-        private void Fire(EnemyHealth target)
+        private void StartVolley(EnemyHealth target)
         {
-            int projectileCount = Mathf.Max(1, Stats.ProjectileCount);
+            CancelVolley();
+            _volleyCts = new CancellationTokenSource();
+            FireVolleyAsync(target, _volleyCts.Token).Forget();
+        }
 
-            for (int index = 0; index < projectileCount; index++)
+        private async UniTaskVoid FireVolleyAsync(
+            EnemyHealth target,
+            CancellationToken cancellationToken)
+        {
+            int projectileCount = Mathf.Max(
+                1,
+                Stats.ProjectileCount + Modifiers.AdditionalWeaponCount);
+
+            try
             {
-                Vector2 targetDirection =
-                    (target.transform.position - Owner.position).normalized;
-                float offset = GetSpreadOffset(index, projectileCount);
-                Vector2 launchDirection =
-                    Quaternion.Euler(0f, 0f, offset) * targetDirection;
+                for (int index = 0; index < projectileCount; index++)
+                {
+                    Vector2 targetDirection =
+                        (target.transform.position - Owner.position).normalized;
+                    float offset = GetSpreadOffset(index, projectileCount);
+                    Vector2 launchDirection =
+                        Quaternion.Euler(0f, 0f, offset) * targetDirection;
 
-                FireSingle(target, launchDirection);
+                    FireSingle(target, launchDirection);
+
+                    if (index < projectileCount - 1)
+                    {
+                        await UniTask.Delay(
+                            TimeSpan.FromSeconds(_volleyFireInterval),
+                            DelayType.DeltaTime,
+                            PlayerLoopTiming.Update,
+                            cancellationToken);
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
             }
         }
 
@@ -138,6 +166,8 @@ namespace MoonRabbitRush.Weapons
                 launchDirection,
                 target,
                 Stats,
+                Stats.Damage * Modifiers.DamageMultiplier,
+                Modifiers.SizeMultiplier,
                 Owner.gameObject);
         }
 
@@ -156,7 +186,20 @@ namespace MoonRabbitRush.Weapons
 
         private void OnDisable()
         {
+            CancelVolley();
             CancelActiveBurst();
+        }
+
+        private void CancelVolley()
+        {
+            if (_volleyCts == null)
+            {
+                return;
+            }
+
+            _volleyCts.Cancel();
+            _volleyCts.Dispose();
+            _volleyCts = null;
         }
 
         private void CancelActiveBurst()

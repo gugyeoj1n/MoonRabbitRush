@@ -15,6 +15,7 @@ MonoBehaviour:
   _displayName: 충격 드론
   _description: 플레이어 주위를 회전하며 접촉한 적에게 피해를 줍니다.
   _icon: {fileID: 21300000, guid: 022b0515a3f94b25b1f0c556ded14273, type: 3}
+  _category: 0
   _behaviourPrefab: {fileID: 870100000000000003, guid: e1fcf2621d8b4e82946caed0271b5bfd, type: 3}
   _activeCooldown: 12
   _levels:

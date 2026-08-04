@@ -53,22 +53,52 @@ namespace MoonRabbitRush.Enemies
 
             float appliedDamage = Mathf.Max(1f, damage.Amount - _stats.Defense);
             _currentHealth = Mathf.Max(0f, _currentHealth - appliedDamage);
+            bool died = _currentHealth <= 0f;
+            DamageInfo receivedDamage = damage;
 
-            Damaged?.Invoke(appliedDamage);
-            DamageReceived?.Invoke(damage);
-            DamageFeedbackEvents.RaiseDamageApplied(
+            InvokeSafely(() => Damaged?.Invoke(appliedDamage));
+            InvokeSafely(() => DamageReceived?.Invoke(receivedDamage));
+            InvokeSafely(() => HealthChanged?.Invoke(
+                _currentHealth,
+                _stats.MaxHealth));
+
+            if (died)
+            {
+                Debug.Log("[EnemyHealth] Enemy died.", this);
+                InvokeDeathSafely();
+            }
+
+            InvokeSafely(() => DamageFeedbackEvents.RaiseDamageApplied(
                 appliedDamage,
                 transform.position,
-                false);
-            HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
+                false));
             Debug.Log(
                 $"[EnemyHealth] HP: {_currentHealth:0.##}/{_stats.MaxHealth:0.##}",
                 this);
+        }
 
-            if (_currentHealth <= 0f)
+        private void InvokeDeathSafely()
+        {
+            if (Died == null)
             {
-                Debug.Log("[EnemyHealth] Enemy died.", this);
-                Died?.Invoke();
+                return;
+            }
+
+            foreach (Delegate listener in Died.GetInvocationList())
+            {
+                InvokeSafely(() => ((Action)listener).Invoke());
+            }
+        }
+
+        private void InvokeSafely(Action callback)
+        {
+            try
+            {
+                callback?.Invoke();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception, this);
             }
         }
     }

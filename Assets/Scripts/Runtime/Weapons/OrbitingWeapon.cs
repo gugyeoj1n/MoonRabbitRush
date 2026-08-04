@@ -64,7 +64,9 @@ namespace MoonRabbitRush.Weapons
 
         private void RebuildHitboxes()
         {
-            int requiredCount = Mathf.Max(1, Stats.ProjectileCount);
+            int requiredCount = Mathf.Max(
+                1,
+                Stats.ProjectileCount + Modifiers.AdditionalWeaponCount);
 
             while (_hitboxes.Count > requiredCount)
             {
@@ -102,11 +104,20 @@ namespace MoonRabbitRush.Weapons
 
             foreach (OrbitingWeaponHitbox hitbox in _hitboxes)
             {
-                hitbox.Configure(Stats.Damage, Stats.Cooldown, Owner.gameObject);
+                hitbox.Configure(
+                    Stats.Damage * Modifiers.DamageMultiplier,
+                    Stats.Cooldown,
+                    Modifiers.SizeMultiplier,
+                    Owner.gameObject);
                 hitbox.SetActiveSkillVisual(_activeRemaining > 0f);
             }
 
             UpdateHitboxPositions();
+        }
+
+        protected override void OnModifiersChanged()
+        {
+            RebuildHitboxes();
         }
 
         private void UpdateHitboxPositions()

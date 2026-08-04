@@ -24,7 +24,7 @@ namespace MoonRabbitRush.Enemies
             {
                 if (ActiveEnemies.Add(enemy))
                 {
-                    ActiveCountChanged?.Invoke(ActiveEnemies.Count);
+                    NotifyActiveCountChanged();
                 }
             }
         }
@@ -35,7 +35,29 @@ namespace MoonRabbitRush.Enemies
             {
                 if (ActiveEnemies.Remove(enemy))
                 {
-                    ActiveCountChanged?.Invoke(ActiveEnemies.Count);
+                    NotifyActiveCountChanged();
+                }
+            }
+        }
+
+        private static void NotifyActiveCountChanged()
+        {
+            Action<int> handlers = ActiveCountChanged;
+            if (handlers == null)
+            {
+                return;
+            }
+
+            int activeCount = ActiveEnemies.Count;
+            foreach (Action<int> handler in handlers.GetInvocationList())
+            {
+                try
+                {
+                    handler(activeCount);
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
                 }
             }
         }

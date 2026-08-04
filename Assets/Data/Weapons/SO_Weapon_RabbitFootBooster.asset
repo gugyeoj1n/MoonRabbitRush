@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa4746130f74c1e819429b123fd45ef, type: 3}
+  m_Name: SO_Weapon_RabbitFootBooster
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Weapons.WeaponData
+  _displayName: 토끼발 부스터
+  _description: 전투복의 추진력을 높여 플레이어의 이동 속도를 증가시킵니다.
+  _icon: {fileID: 21300000, guid: 64863f97f97c443e861421cad50fe570, type: 3}
+  _category: 1
+  _behaviourPrefab: {fileID: 910100000000000003, guid: d44402439cfc40729dd62b8385c203db, type: 3}
+  _levels: []
+  _passiveLevels:
+  - _damageBonus: 0
+    _sizeBonus: 0
+    _moveSpeedBonus: 0.1
+    _additionalWeaponCount: 0
+  - _damageBonus: 0
+    _sizeBonus: 0
+    _moveSpeedBonus: 0.2
+    _additionalWeaponCount: 0
+  _activeCooldown: 10
