@@ -13,7 +13,6 @@ namespace MoonRabbitRush
         EnemyBossUfo,
         ExperienceCarrot,
         ProjectileCarrotMissile,
-        ProjectileCrescentBoomerang,
         ProjectileInktoInk,
         ProjectileOrbitronMissile,
         WeaponShockDrone,
@@ -24,6 +23,7 @@ namespace MoonRabbitRush
         TelegraphCircle,
         TelegraphLine,
         DamageText,
+        ProjectileCrescentBoomerang,
     }
     public static class PoolingManager
     {
