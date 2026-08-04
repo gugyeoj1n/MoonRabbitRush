@@ -29,6 +29,12 @@ namespace MoonRabbitRush
     {
         private static Dictionary<PoolType, ObjectPool<GameObject>> poolDictionary = new Dictionary<PoolType, ObjectPool<GameObject>>();
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetPools()
+        {
+            poolDictionary.Clear();
+        }
+
         public static void RegisterPool(PoolType key, Func<GameObject> createFunc, int defaultCapacity = 10, int maxSize = 100)
         {
             var pool = new ObjectPool<GameObject>(
