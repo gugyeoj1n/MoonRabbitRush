@@ -2553,6 +2553,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2018463891}
   - component: {fileID: 2018463892}
+  - component: {fileID: 2018463893}
   m_Layer: 0
   m_Name: _Systems
   m_TagString: Untagged
@@ -2592,6 +2593,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.GameplayHudDataBinder
   _playerRoot: {fileID: 1354020402}
   _waveDirector: {fileID: 6868057621540435540}
+--- !u!114 &2018463893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018463890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cfea94cbbc84a1c8929b697289f5e3a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Items.WorldBuffSpawner
+  _healingCarrotIcon: {fileID: 21300000, guid: 665b7977244e49129911fefa505a2dd1, type: 3}
+  _rabbitJetpackIcon: {fileID: 21300000, guid: 9d3628e3b7734554b387c3f8bbd8212b, type: 3}
+  _moonlightShieldIcon: {fileID: 21300000, guid: d0a871ded52c484eaa2480a9552ed1b0, type: 3}
+  _shadowSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
+  _minimumInterval: 12
+  _maximumInterval: 18
+  _minimumRadius: 7
+  _maximumRadius: 11
+  _maximumActiveItems: 3
+  _healingAmount: 35
+  _speedBonus: 0.75
+  _speedDuration: 6
+  _shieldDuration: 5
 --- !u!1 &2131548916
 GameObject:
   m_ObjectHideFlags: 0

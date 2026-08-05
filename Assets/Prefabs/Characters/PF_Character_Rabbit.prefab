@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 9103775886752669977}
   - component: {fileID: 8203775886752669977}
   - component: {fileID: 8303775886752669977}
+  - component: {fileID: 8403775886752669977}
   m_Layer: 0
   m_Name: PF_Character_Rabbit
   m_TagString: Untagged
@@ -457,6 +458,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.PlayerLootCollector
   _lootRadius: 2.5
+--- !u!114 &8403775886752669977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2631563025026958653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf8e9b3554af4c3a82959eaadeb6c19b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Items.PlayerTimedBuffs
+  _shieldSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
 --- !u!1 &2631563025026958660
 GameObject:
   m_ObjectHideFlags: 0
