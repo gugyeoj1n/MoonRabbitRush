@@ -183,6 +183,6 @@ MonoBehaviour:
   _maxHealth: 300
   _spriteRenderer: {fileID: 740100000000000003}
   _healthySprite: {fileID: 21300000, guid: 86e04136a5814a8f97919671296ea667, type: 3}
-  _damagedSprite: {fileID: 0}
-  _criticalSprite: {fileID: 0}
-  _destroyedSprite: {fileID: 0}
+  _damagedSprite: {fileID: 21300000, guid: 567257032bb74849bc55ea94960527c3, type: 3}
+  _criticalSprite: {fileID: 21300000, guid: 0ae9c531f3014bbba164d06c642151a3, type: 3}
+  _destroyedSprite: {fileID: 21300000, guid: 8d3cd50853ba431fa9ad63fa47cb9558, type: 3}
