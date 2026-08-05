@@ -12,7 +12,7 @@ namespace MoonRabbitRush.Items
 
     public sealed class WorldBuffPickup : MonoBehaviour
     {
-        private const float CollectDistance = 0.8f;
+        private const float CollectDistance = 1.2f;
         private const float BobHeight = 0.12f;
         private const float BobSpeed = 2.8f;
 

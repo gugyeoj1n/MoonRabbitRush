@@ -46,7 +46,7 @@ namespace MoonRabbitRush.Items
 
                 float pulse = 1f + Mathf.Sin(Time.time * 5f) * 0.04f;
                 _shieldRenderer.transform.localScale =
-                    new Vector3(2.5f, 2.5f, 1f) * pulse;
+                    new Vector3(0.38f, 0.38f, 1f) * pulse;
             }
         }
 
@@ -96,7 +96,7 @@ namespace MoonRabbitRush.Items
 
             GameObject shieldObject = new("Moonlight Shield Visual");
             shieldObject.transform.SetParent(transform, false);
-            shieldObject.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
+            shieldObject.transform.localScale = new Vector3(0.38f, 0.38f, 1f);
             _shieldRenderer = shieldObject.AddComponent<SpriteRenderer>();
             _shieldRenderer.sprite = _shieldSprite;
             _shieldRenderer.color = new Color(0.38f, 0.9f, 1f, 0.25f);
@@ -111,9 +111,9 @@ namespace MoonRabbitRush.Items
             }
 
             _speedTrail = gameObject.AddComponent<TrailRenderer>();
-            _speedTrail.time = 0.22f;
+            _speedTrail.time = 0.7f;
             _speedTrail.minVertexDistance = 0.04f;
-            _speedTrail.startWidth = 0.75f;
+            _speedTrail.startWidth = 0.65f;
             _speedTrail.endWidth = 0.05f;
             _speedTrail.numCornerVertices = 4;
             _speedTrail.numCapVertices = 4;
@@ -123,8 +123,8 @@ namespace MoonRabbitRush.Items
                 UnityEngine.Rendering.ShadowCastingMode.Off;
             _speedTrail.receiveShadows = false;
             _speedTrail.sortingOrder = 8;
-            _speedTrail.startColor = new Color(0.25f, 0.95f, 1f, 0.62f);
-            _speedTrail.endColor = new Color(0.12f, 0.55f, 1f, 0f);
+            _speedTrail.startColor = new Color(1f, 0.94f, 0.2f, 0.9f);
+            _speedTrail.endColor = new Color(1f, 0.32f, 0.03f, 0f);
 
             Shader shader = Shader.Find("Sprites/Default");
             if (shader != null)
