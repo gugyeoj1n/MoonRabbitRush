@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101a3d1e74b24afc995122def4745e31, type: 3}
   m_Name: SO_Enemy_Orbitron
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyStatsData
-  _maxHealth: 150
-  _defense: 2
+  _maxHealth: 110
+  _defense: 1
   _moveSpeed: 0.2
-  _attackDamage: 25
-  _attackInterval: 4
+  _attackDamage: 14
+  _attackInterval: 4.5
   _experienceReward: 4

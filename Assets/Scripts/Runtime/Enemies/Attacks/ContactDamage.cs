@@ -1,5 +1,4 @@
 using MoonRabbitRush.Combat;
-using MoonRabbitRush.Player;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
@@ -22,10 +21,13 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
-            PlayerHealth playerHealth =
-                collision.collider.GetComponentInParent<PlayerHealth>();
+            Component damageTarget =
+                collision.collider.GetComponentInParent(typeof(IDamageable));
+            IDamageable damageable = damageTarget as IDamageable;
 
-            if (playerHealth == null || !playerHealth.IsAlive)
+            if (damageable == null ||
+                damageTarget is EnemyHealth ||
+                !damageable.IsAlive)
             {
                 return;
             }
@@ -35,7 +37,7 @@ namespace MoonRabbitRush.Enemies
                 ? collision.GetContact(0).point
                 : collision.transform.position;
 
-            playerHealth.TakeDamage(
+            damageable.TakeDamage(
                 new DamageInfo(Stats.AttackDamage, hitPoint, gameObject));
         }
     }

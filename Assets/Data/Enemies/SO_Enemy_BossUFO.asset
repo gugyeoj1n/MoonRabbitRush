@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101a3d1e74b24afc995122def4745e31, type: 3}
   m_Name: SO_Enemy_BossUFO
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyStatsData
-  _maxHealth: 2500
-  _defense: 3
+  _maxHealth: 1000
+  _defense: 2
   _moveSpeed: 0
-  _attackDamage: 20
-  _attackInterval: 1
+  _attackDamage: 14
+  _attackInterval: 1.2
   _experienceReward: 20

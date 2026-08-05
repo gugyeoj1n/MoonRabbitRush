@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: SO_ExperienceTable
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Progression.ExperienceTableData
   _requiredExperienceByLevel:
-  - 5
-  - 10
-  - 18
-  - 28
-  - 42
-  - 60
-  - 82
-  - 108
-  - 138
-  - 175
+  - 4
+  - 9
+  - 16
+  - 26
+  - 39
+  - 55
+  - 74
+  - 96
+  - 121
+  - 150

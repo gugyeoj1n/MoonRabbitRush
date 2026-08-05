@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101a3d1e74b24afc995122def4745e31, type: 3}
   m_Name: SO_Enemy_Globy
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyStatsData
-  _maxHealth: 40
+  _maxHealth: 32
   _defense: 0
   _moveSpeed: 0.75
-  _attackDamage: 10
-  _attackInterval: 0.75
+  _attackDamage: 6
+  _attackInterval: 1.1
   _experienceReward: 1

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 101a3d1e74b24afc995122def4745e31, type: 3}
   m_Name: SO_Enemy_Inkto
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemyStatsData
-  _maxHealth: 60
+  _maxHealth: 52
   _defense: 0
   _moveSpeed: 0.4
-  _attackDamage: 12
-  _attackInterval: 2
+  _attackDamage: 8
+  _attackInterval: 2.5
   _experienceReward: 2

@@ -1,3 +1,4 @@
+using MoonRabbitRush.Defense;
 using MoonRabbitRush.Player;
 using MoonRabbitRush.Progression;
 using MoonRabbitRush.Waves;
@@ -12,6 +13,7 @@ namespace MoonRabbitRush.UI
 
         private PlayerHealth _playerHealth;
         private PlayerExperience _playerExperience;
+        private MoonBaseHealth _baseHealth;
 
         private void Awake()
         {
@@ -29,6 +31,11 @@ namespace MoonRabbitRush.UI
             if (_playerExperience != null)
             {
                 _playerExperience.ExperienceChanged += HandleExperienceChanged;
+            }
+
+            if (_baseHealth != null)
+            {
+                _baseHealth.HealthChanged += HandleBaseHealthChanged;
             }
 
             if (_waveDirector != null)
@@ -53,12 +60,18 @@ namespace MoonRabbitRush.UI
                 _playerExperience.ExperienceChanged -= HandleExperienceChanged;
             }
 
+            if (_baseHealth != null)
+            {
+                _baseHealth.HealthChanged -= HandleBaseHealthChanged;
+            }
+
             if (_waveDirector != null)
             {
                 _waveDirector.WaveStarted -= HandleWaveStarted;
                 _waveDirector.WaveCompleted -= HandleWaveCompleted;
                 _waveDirector.RemainingEnemyCountChanged -= HandleRemainingEnemyCountChanged;
             }
+
         }
 
         private void ResolveReferences()
@@ -69,6 +82,8 @@ namespace MoonRabbitRush.UI
                 _playerExperience ??=
                     _playerRoot.GetComponent<PlayerExperience>();
             }
+
+            _baseHealth ??= FindAnyObjectByType<MoonBaseHealth>();
         }
 
         private void PublishAll()
@@ -86,6 +101,13 @@ namespace MoonRabbitRush.UI
                     _playerExperience.CurrentExperience,
                     _playerExperience.RequiredExperience,
                     _playerExperience.CurrentLevel);
+            }
+
+            if (_baseHealth != null)
+            {
+                HandleBaseHealthChanged(
+                    _baseHealth.CurrentHealth,
+                    _baseHealth.MaxHealth);
             }
 
             if (_waveDirector != null)
@@ -125,6 +147,18 @@ namespace MoonRabbitRush.UI
             DataBindingManager.SetValue(
                 Property.PlayerLevel,
                 currentLevel);
+        }
+
+        private static void HandleBaseHealthChanged(
+            float currentHealth,
+            float maxHealth)
+        {
+            DataBindingManager.SetValue(
+                Property.BaseHealth,
+                Mathf.CeilToInt(currentHealth));
+            DataBindingManager.SetValue(
+                Property.BaseMaxHealth,
+                Mathf.CeilToInt(maxHealth));
         }
 
         private void HandleWaveStarted(int wave)

@@ -1,7 +1,6 @@
 using MoonRabbitRush.Core;
 using MoonRabbitRush.Enemies;
 using MoonRabbitRush.Enemies.Bosses;
-using MoonRabbitRush.Player;
 using MoonRabbitRush.Waves;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace MoonRabbitRush.Score
     {
         public static ScoreManager Instance { get; private set; }
 
-        private PlayerHealth _playerHealth;
         private WaveDirector _waveDirector;
         private GameStateManager _gameStateManager;
         private bool _isFinalized;
@@ -91,9 +89,11 @@ namespace MoonRabbitRush.Score
             CurrentWave = Mathf.Max(CurrentWave, wave);
         }
 
-        private void HandlePlayerDied()
+        private void HandleGameStateChanged(
+            InGameState previous,
+            InGameState current)
         {
-            if (_isFinalized)
+            if (_isFinalized || current != InGameState.Dying)
             {
                 return;
             }
@@ -117,17 +117,16 @@ namespace MoonRabbitRush.Score
 
         private void ResolveReferences()
         {
-            _playerHealth ??= FindAnyObjectByType<PlayerHealth>();
             _waveDirector ??= FindAnyObjectByType<WaveDirector>();
             _gameStateManager ??= FindAnyObjectByType<GameStateManager>();
         }
 
         private void SubscribeEvents()
         {
-            if (_playerHealth != null)
+            if (_gameStateManager != null)
             {
-                _playerHealth.Died -= HandlePlayerDied;
-                _playerHealth.Died += HandlePlayerDied;
+                _gameStateManager.StateChanged -= HandleGameStateChanged;
+                _gameStateManager.StateChanged += HandleGameStateChanged;
             }
 
             if (_waveDirector != null)
@@ -139,9 +138,9 @@ namespace MoonRabbitRush.Score
 
         private void UnsubscribeEvents()
         {
-            if (_playerHealth != null)
+            if (_gameStateManager != null)
             {
-                _playerHealth.Died -= HandlePlayerDied;
+                _gameStateManager.StateChanged -= HandleGameStateChanged;
             }
 
             if (_waveDirector != null)

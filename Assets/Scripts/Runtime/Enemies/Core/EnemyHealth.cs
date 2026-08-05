@@ -8,6 +8,7 @@ namespace MoonRabbitRush.Enemies
     {
         private EnemyStatsData _stats;
         private float _currentHealth;
+        private float _maxHealth;
         private bool _isInitialized;
 
         public event Action<float, float> HealthChanged;
@@ -16,10 +17,12 @@ namespace MoonRabbitRush.Enemies
         public event Action Died;
 
         public float CurrentHealth => _currentHealth;
-        public float MaxHealth => _stats != null ? _stats.MaxHealth : 0f;
+        public float MaxHealth => _maxHealth;
         public bool IsAlive => _isInitialized && _currentHealth > 0f;
 
-        public void Initialize(EnemyStatsData stats)
+        public void Initialize(
+            EnemyStatsData stats,
+            float healthMultiplier = 1f)
         {
             _stats = stats;
 
@@ -30,6 +33,7 @@ namespace MoonRabbitRush.Enemies
             }
 
             _isInitialized = true;
+            _maxHealth = _stats.MaxHealth * Mathf.Max(0.01f, healthMultiplier);
             ResetHealth();
         }
 
@@ -40,8 +44,8 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
-            _currentHealth = _stats.MaxHealth;
-            HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
+            _currentHealth = _maxHealth;
+            HealthChanged?.Invoke(_currentHealth, _maxHealth);
         }
 
         public void TakeDamage(in DamageInfo damage)
@@ -60,7 +64,7 @@ namespace MoonRabbitRush.Enemies
             InvokeSafely(() => DamageReceived?.Invoke(receivedDamage));
             InvokeSafely(() => HealthChanged?.Invoke(
                 _currentHealth,
-                _stats.MaxHealth));
+                _maxHealth));
 
             if (died)
             {
@@ -73,9 +77,10 @@ namespace MoonRabbitRush.Enemies
                 transform.position,
                 false));
             Debug.Log(
-                $"[EnemyHealth] HP: {_currentHealth:0.##}/{_stats.MaxHealth:0.##}",
+                $"[EnemyHealth] HP: {_currentHealth:0.##}/{_maxHealth:0.##}",
                 this);
         }
+
 
         private void InvokeDeathSafely()
         {
