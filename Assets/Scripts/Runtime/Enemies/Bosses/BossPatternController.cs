@@ -8,11 +8,20 @@ namespace MoonRabbitRush.Enemies.Bosses
     public sealed class BossPatternController : EnemyBehaviour
     {
         [SerializeField] private BossAttackPattern[] _patterns;
-        [SerializeField, Min(0f)] private float _initialDelay = 0.8f;
-        [SerializeField, Min(0f)] private float _patternInterval = 0.7f;
+        [SerializeField, Min(0f)] private float _initialDelay = 1.4f;
+        [SerializeField, Min(0f)] private float _patternInterval = 1.1f;
+
+        [Header("Round Scaling")]
+        [SerializeField, Min(0f)]
+        private float _initialDelayReductionPerRound = 0.2f;
+        [SerializeField, Min(0f)]
+        private float _patternIntervalReductionPerRound = 0.15f;
+        [SerializeField, Min(0f)] private float _minimumInitialDelay = 0.5f;
+        [SerializeField, Min(0f)] private float _minimumPatternInterval = 0.35f;
 
         private CancellationTokenSource _patternCts;
         private EnemyAnimationController _animationController;
+        private int _bossRound = 1;
 
         public override void Initialize(
             Transform target,
@@ -26,9 +35,17 @@ namespace MoonRabbitRush.Enemies.Bosses
                 _patterns = GetComponents<BossAttackPattern>();
             }
 
-            CancelPatternLoop();
-            _patternCts = new CancellationTokenSource();
-            RunPatternsAsync(_patternCts.Token).Forget();
+            RestartPatternLoop();
+        }
+
+        public void ConfigureRound(int bossRound)
+        {
+            _bossRound = Mathf.Max(1, bossRound);
+
+            if (enabled && gameObject.activeInHierarchy)
+            {
+                RestartPatternLoop();
+            }
         }
 
         private void OnDisable()
@@ -40,10 +57,19 @@ namespace MoonRabbitRush.Enemies.Bosses
         {
             try
             {
-                if (_initialDelay > 0f)
+                float initialDelay = Mathf.Max(
+                    _minimumInitialDelay,
+                    _initialDelay -
+                    (_bossRound - 1) * _initialDelayReductionPerRound);
+                float patternInterval = Mathf.Max(
+                    _minimumPatternInterval,
+                    _patternInterval -
+                    (_bossRound - 1) * _patternIntervalReductionPerRound);
+
+                if (initialDelay > 0f)
                 {
                     await UniTask.Delay(
-                        TimeSpan.FromSeconds(_initialDelay),
+                        TimeSpan.FromSeconds(initialDelay),
                         DelayType.DeltaTime,
                         PlayerLoopTiming.Update,
                         cancellationToken);
@@ -67,10 +93,10 @@ namespace MoonRabbitRush.Enemies.Bosses
                         await pattern.ExecuteAsync(cancellationToken);
                     }
 
-                    if (_patternInterval > 0f)
+                    if (patternInterval > 0f)
                     {
                         await UniTask.Delay(
-                            TimeSpan.FromSeconds(_patternInterval),
+                            TimeSpan.FromSeconds(patternInterval),
                             DelayType.DeltaTime,
                             PlayerLoopTiming.Update,
                             cancellationToken);
@@ -86,6 +112,19 @@ namespace MoonRabbitRush.Enemies.Bosses
         {
             _initialDelay = Mathf.Max(0f, _initialDelay);
             _patternInterval = Mathf.Max(0f, _patternInterval);
+            _initialDelayReductionPerRound =
+                Mathf.Max(0f, _initialDelayReductionPerRound);
+            _patternIntervalReductionPerRound =
+                Mathf.Max(0f, _patternIntervalReductionPerRound);
+            _minimumInitialDelay = Mathf.Max(0f, _minimumInitialDelay);
+            _minimumPatternInterval = Mathf.Max(0f, _minimumPatternInterval);
+        }
+
+        private void RestartPatternLoop()
+        {
+            CancelPatternLoop();
+            _patternCts = new CancellationTokenSource();
+            RunPatternsAsync(_patternCts.Token).Forget();
         }
 
         private void CancelPatternLoop()

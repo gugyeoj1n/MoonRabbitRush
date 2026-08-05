@@ -238,8 +238,12 @@ MonoBehaviour:
   - {fileID: 900100000000000011}
   - {fileID: 900100000000000012}
   - {fileID: 900100000000000013}
-  _initialDelay: 0.8
-  _patternInterval: 0.7
+  _initialDelay: 1.4
+  _patternInterval: 1.1
+  _initialDelayReductionPerRound: 0.2
+  _patternIntervalReductionPerRound: 0.15
+  _minimumInitialDelay: 0.5
+  _minimumPatternInterval: 0.35
 --- !u!114 &900100000000000011
 MonoBehaviour:
   m_ObjectHideFlags: 0

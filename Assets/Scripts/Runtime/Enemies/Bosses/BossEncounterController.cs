@@ -62,9 +62,12 @@ namespace MoonRabbitRush.Enemies.Bosses
                 return;
             }
 
+            int bossRound = _waveDirector != null
+                ? Mathf.Max(1, _waveDirector.CurrentBossRound)
+                : 1;
             float healthMultiplier =
                 _firstBossHealthMultiplier +
-                Mathf.Max(0, _waveDirector.CurrentBossRound - 1) *
+                (bossRound - 1) *
                 _healthMultiplierPerRound;
             Camera worldCamera =
                 ManagerRoot.Instance?.CameraMaanger?.MainCamera;
@@ -79,6 +82,8 @@ namespace MoonRabbitRush.Enemies.Bosses
                 _enemySpawner.PlayerTarget,
                 spawnPosition,
                 healthMultiplier);
+            _activeBoss?.GetComponent<BossPatternController>()?.ConfigureRound(
+                bossRound);
             BossSpawned?.Invoke(_activeBoss);
 
             if (_activeBoss?.Health != null)
