@@ -35,7 +35,7 @@ namespace MoonRabbitRush.Enemies
             {
                 PoolingManager.RegisterPool(
                     poolType,
-                    () => Instantiate(prefab, transform).gameObject,
+                    () => Instantiate(prefab).gameObject,
                     defaultCapacity: 10,
                     maxSize: 100);
             }

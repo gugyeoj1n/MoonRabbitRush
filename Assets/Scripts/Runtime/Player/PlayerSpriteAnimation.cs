@@ -25,6 +25,15 @@ namespace MoonRabbitRush.Player
         private Vector3 _defaultLocalPosition;
         private float _deathGroundY;
 
+        public float DeathAnimationDuration
+        {
+            get
+            {
+                int transitionCount = Mathf.Max(0, (_deathFrames?.Length ?? 0) - 1);
+                return transitionCount / Mathf.Max(1f, _deathFrameRate);
+            }
+        }
+
         private void Awake()
         {
             _movement = GetComponentInParent<PlayerMovement>();
@@ -96,9 +105,7 @@ namespace MoonRabbitRush.Player
                 return;
             }
 
-            _elapsed += _isPlayingDeath
-                ? Time.unscaledDeltaTime
-                : Time.deltaTime;
+            _elapsed += Time.deltaTime;
             float frameDuration = 1f / _currentFrameRate;
 
             while (_elapsed >= frameDuration)
