@@ -1,13 +1,19 @@
 using UnityEngine;
+using MoonRabbitRush.Player;
 
 namespace MoonRabbitRush.Items
 {
     public sealed class PlayerTimedBuffs : MonoBehaviour
     {
+        [SerializeField] private Sprite _shieldSprite;
+
         private float _speedMultiplier = 1f;
         private float _speedBoostUntil;
+        private float _shieldUntil;
         private TrailRenderer _speedTrail;
         private Material _trailMaterial;
+        private SpriteRenderer _shieldRenderer;
+        private PlayerHealth _health;
 
         public float SpeedMultiplier => _speedMultiplier;
 
@@ -17,6 +23,11 @@ namespace MoonRabbitRush.Items
             return buffs != null ? buffs : player.AddComponent<PlayerTimedBuffs>();
         }
 
+        private void Awake()
+        {
+            _health = GetComponent<PlayerHealth>();
+        }
+
         private void Update()
         {
             if (_speedMultiplier > 1f && Time.time >= _speedBoostUntil)
@@ -24,12 +35,29 @@ namespace MoonRabbitRush.Items
                 _speedMultiplier = 1f;
                 SetTrailEnabled(false);
             }
+
+            if (_shieldRenderer != null && _shieldRenderer.enabled)
+            {
+                if (Time.time >= _shieldUntil)
+                {
+                    _shieldRenderer.enabled = false;
+                    return;
+                }
+
+                float pulse = 1f + Mathf.Sin(Time.time * 5f) * 0.04f;
+                _shieldRenderer.transform.localScale =
+                    new Vector3(2.5f, 2.5f, 1f) * pulse;
+            }
         }
 
         private void OnDisable()
         {
             _speedMultiplier = 1f;
             SetTrailEnabled(false);
+            if (_shieldRenderer != null)
+            {
+                _shieldRenderer.enabled = false;
+            }
         }
 
         private void OnDestroy()
@@ -47,6 +75,32 @@ namespace MoonRabbitRush.Items
             EnsureSpeedTrail();
             _speedTrail.Clear();
             SetTrailEnabled(true);
+        }
+
+        public void ActivateMoonlightShield(float duration)
+        {
+            float safeDuration = Mathf.Max(0.1f, duration);
+            _shieldUntil = Time.time + safeDuration;
+            _health ??= GetComponent<PlayerHealth>();
+            _health?.GrantInvincibility(safeDuration);
+            EnsureShieldVisual();
+            _shieldRenderer.enabled = true;
+        }
+
+        private void EnsureShieldVisual()
+        {
+            if (_shieldRenderer != null)
+            {
+                return;
+            }
+
+            GameObject shieldObject = new("Moonlight Shield Visual");
+            shieldObject.transform.SetParent(transform, false);
+            shieldObject.transform.localScale = new Vector3(2.5f, 2.5f, 1f);
+            _shieldRenderer = shieldObject.AddComponent<SpriteRenderer>();
+            _shieldRenderer.sprite = _shieldSprite;
+            _shieldRenderer.color = new Color(0.38f, 0.9f, 1f, 0.25f);
+            _shieldRenderer.sortingOrder = 12;
         }
 
         private void EnsureSpeedTrail()

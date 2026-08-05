@@ -41,8 +41,7 @@ namespace MoonRabbitRush.Items
                 return;
             }
 
-            if (FindObjectsByType<WorldBuffPickup>(
-                    FindObjectsSortMode.None).Length < _maximumActiveItems)
+            if (FindObjectsByType<WorldBuffPickup>().Length < _maximumActiveItems)
             {
                 SpawnRandomPickup();
             }

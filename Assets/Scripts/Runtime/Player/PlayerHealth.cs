@@ -100,6 +100,18 @@ namespace MoonRabbitRush.Player
             HealthChanged?.Invoke(_currentHealth, _stats.MaxHealth);
         }
 
+        public void GrantInvincibility(float duration)
+        {
+            if (!IsAlive || duration <= 0f)
+            {
+                return;
+            }
+
+            _invincibleUntil = Mathf.Max(
+                _invincibleUntil,
+                Time.time + duration);
+        }
+
         private void Die()
         {
             _invincibleUntil = 0f;

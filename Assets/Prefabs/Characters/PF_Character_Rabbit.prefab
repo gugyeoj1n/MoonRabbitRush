@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8e9b3554af4c3a82959eaadeb6c19b, type: 3}
   m_Name:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Items.PlayerTimedBuffs
+  _shieldSprite: {fileID: -1877968215413300707, guid: 948a742b065514a42a5b899d744008ec, type: 3}
 --- !u!1 &2631563025026958660
 GameObject:
   m_ObjectHideFlags: 0

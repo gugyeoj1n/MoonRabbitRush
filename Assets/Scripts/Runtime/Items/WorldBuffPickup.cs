@@ -71,6 +71,8 @@ namespace MoonRabbitRush.Items
                         .ActivateSpeedBoost(_effectValue, _duration);
                     break;
                 case WorldBuffType.MoonlightShield:
+                    PlayerTimedBuffs.GetOrAdd(_playerHealth.gameObject)
+                        .ActivateMoonlightShield(_duration);
                     break;
             }
 
