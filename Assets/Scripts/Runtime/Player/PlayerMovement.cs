@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MoonRabbitRush.Weapons;
+using MoonRabbitRush.Items;
 
 namespace MoonRabbitRush.Player
 {
@@ -17,6 +18,7 @@ namespace MoonRabbitRush.Player
         private Vector2 _moveInput;
         private Vector2 _externalVelocity;
         private PlayerCombatModifiers _combatModifiers;
+        private PlayerTimedBuffs _timedBuffs;
         private bool _canMove = true;
 
         public Vector2 MoveInput => _moveInput;
@@ -31,6 +33,7 @@ namespace MoonRabbitRush.Player
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _combatModifiers = PlayerCombatModifiers.GetOrAdd(gameObject);
+            _timedBuffs = PlayerTimedBuffs.GetOrAdd(gameObject);
             _moveAction = GetComponent<PlayerInput>().actions?.FindAction(
                 MoveActionName,
                 throwIfNotFound: false);
@@ -66,7 +69,9 @@ namespace MoonRabbitRush.Player
             }
 
             float moveSpeed =
-                _stats.MoveSpeed * _combatModifiers.MoveSpeedMultiplier;
+                _stats.MoveSpeed *
+                _combatModifiers.MoveSpeedMultiplier *
+                _timedBuffs.SpeedMultiplier;
             Vector2 velocity = _moveInput * moveSpeed + _externalVelocity;
 
             if (velocity == Vector2.zero)

@@ -67,6 +67,9 @@ namespace MoonRabbitRush.Items
                     _playerHealth.Heal(_effectValue);
                     break;
                 case WorldBuffType.RabbitJetpack:
+                    PlayerTimedBuffs.GetOrAdd(_playerHealth.gameObject)
+                        .ActivateSpeedBoost(_effectValue, _duration);
+                    break;
                 case WorldBuffType.MoonlightShield:
                     break;
             }
