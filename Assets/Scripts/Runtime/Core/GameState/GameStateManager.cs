@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using MoonRabbitRush.Defense;
 using MoonRabbitRush.Player;
 using MoonRabbitRush.Waves;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace MoonRabbitRush.Core
 
         private PlayerHealth _playerHealth;
         private PlayerSpriteAnimation _playerAnimation;
+        private MoonBaseHealth _baseHealth;
         private CancellationTokenSource _deathSequenceCts;
 
         public InGameState CurrentState { get; private set; } =
@@ -32,17 +34,22 @@ namespace MoonRabbitRush.Core
 
         private void Awake()
         {
-            ResolvePlayerHealth();
+            ResolveTargets();
             ApplyTimeScale(CurrentState);
         }
 
         private void OnEnable()
         {
-            ResolvePlayerHealth();
+            ResolveTargets();
 
             if (_playerHealth != null)
             {
                 _playerHealth.Died += HandlePlayerDied;
+            }
+
+            if (_baseHealth != null)
+            {
+                _baseHealth.Destroyed += HandleBaseDestroyed;
             }
         }
 
@@ -51,6 +58,11 @@ namespace MoonRabbitRush.Core
             if (_playerHealth != null)
             {
                 _playerHealth.Died -= HandlePlayerDied;
+            }
+
+            if (_baseHealth != null)
+            {
+                _baseHealth.Destroyed -= HandleBaseDestroyed;
             }
         }
 
@@ -120,7 +132,7 @@ namespace MoonRabbitRush.Core
             };
         }
 
-        private void ResolvePlayerHealth()
+        private void ResolveTargets()
         {
             if (_playerHealth == null && _playerRoot != null)
             {
@@ -128,9 +140,26 @@ namespace MoonRabbitRush.Core
                 _playerAnimation =
                     _playerRoot.GetComponentInChildren<PlayerSpriteAnimation>();
             }
+
+            _baseHealth ??= FindAnyObjectByType<MoonBaseHealth>();
         }
 
         private void HandlePlayerDied()
+        {
+            float animationDuration = _playerAnimation != null
+                ? _playerAnimation.DeathAnimationDuration
+                : 0.875f;
+            BeginDefeatSequence(_playerRoot, animationDuration);
+        }
+
+        private void HandleBaseDestroyed()
+        {
+            BeginDefeatSequence(_baseHealth.transform, 0.875f);
+        }
+
+        private void BeginDefeatSequence(
+            Transform focusTarget,
+            float animationDuration)
         {
             if (!TryChangeState(InGameState.Dying))
             {
@@ -139,10 +168,15 @@ namespace MoonRabbitRush.Core
 
             FindAnyObjectByType<WaveDirector>()?.Stop();
             _deathSequenceCts = new CancellationTokenSource();
-            PlayDeathSequenceAsync(_deathSequenceCts.Token).Forget();
+            PlayDeathSequenceAsync(
+                focusTarget,
+                animationDuration,
+                _deathSequenceCts.Token).Forget();
         }
 
         private async UniTaskVoid PlayDeathSequenceAsync(
+            Transform focusTarget,
+            float animationDuration,
             CancellationToken cancellationToken)
         {
             try
@@ -151,14 +185,12 @@ namespace MoonRabbitRush.Core
                 if (cameraManager != null)
                 {
                     cameraManager.ZoomInAsync(
+                        focusTarget,
                         _deathZoomMultiplier,
                         _deathZoomDuration,
                         cancellationToken).Forget();
                 }
 
-                float animationDuration = _playerAnimation != null
-                    ? _playerAnimation.DeathAnimationDuration
-                    : 0.875f;
                 float slowAnimationDuration =
                     animationDuration * _deathSlowMotionPortion;
                 float slowRealDuration =

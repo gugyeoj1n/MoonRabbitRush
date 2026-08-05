@@ -498,6 +498,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9100000001}
+  - {fileID: 9200000002}
   - {fileID: 1354020402}
   - {fileID: 5117939482899961541}
   - {fileID: 8640977703042645006}
@@ -1461,7 +1462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8245304258162566044, guid: 5c5fe6018a4eb7d409321f100ce1a4af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8245304258162566044, guid: 5c5fe6018a4eb7d409321f100ce1a4af, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3604,7 +3605,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5012b596fc3ac26471d9aa567cfd36b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Enemies.EnemySpawner
-  _target: {fileID: 1354020402}
+  _playerTarget: {fileID: 1354020402}
+  _baseTarget: {fileID: 9200000002}
   _center: {x: 0, y: 0}
   _spawnRadius: 10
 --- !u!222 &3242020790767318288
@@ -4897,6 +4899,56 @@ MonoBehaviour:
   _killCountText: {fileID: 970058994}
   _homeButton: {fileID: 5104388154857045402}
   _restartButton: {fileID: 966016895}
+--- !u!1001 &9200000001
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 672052587}
+    m_Modifications:
+    - target: {fileID: 740100000000000001, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_Name
+      value: Moon Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+--- !u!4 &9200000002 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 740100000000000002, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
+  m_PrefabInstance: {fileID: 9200000001}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

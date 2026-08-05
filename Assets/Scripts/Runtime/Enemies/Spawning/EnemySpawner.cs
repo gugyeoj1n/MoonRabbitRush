@@ -1,18 +1,29 @@
-using MoonRabbitRush.Player;
+using MoonRabbitRush.Combat;
+using MoonRabbitRush.Progression;
 using UnityEngine;
 
 namespace MoonRabbitRush.Enemies
 {
     public sealed class EnemySpawner : MonoBehaviour
     {
-        [SerializeField] private Transform _target;
+        [SerializeField] private Transform _playerTarget;
+        [SerializeField] private Transform _baseTarget;
 
         [Header("Spawn Rule")]
         [SerializeField] private Vector2 _center = Vector2.zero;
         [SerializeField, Min(0f)] private float _spawnRadius = 10f;
 
+        private PlayerLootCollector _playerLootCollector;
+
+        public Transform PlayerTarget => _playerTarget;
+
         private void Awake()
         {
+            _playerLootCollector =
+                _playerTarget != null
+                    ? _playerTarget.GetComponent<PlayerLootCollector>()
+                    : null;
+
             if (!TryResolveReferences())
             {
                 enabled = false;
@@ -21,7 +32,12 @@ namespace MoonRabbitRush.Enemies
 
         public EnemyActor Spawn(EnemyActor prefab)
         {
-            if (prefab == null || !TryResolveReferences())
+            return Spawn(prefab, ResolveRegularEnemyTarget());
+        }
+
+        public EnemyActor Spawn(EnemyActor prefab, Transform target)
+        {
+            if (prefab == null || target == null || !TryResolveReferences())
             {
                 return null;
             }
@@ -50,13 +66,35 @@ namespace MoonRabbitRush.Enemies
             enemy.transform.SetPositionAndRotation(
                 spawnPosition,
                 Quaternion.identity);
-            enemy.Initialize(_target);
+            enemy.Initialize(target, _playerLootCollector);
             return enemy;
+        }
+
+        private Transform ResolveRegularEnemyTarget()
+        {
+            if (IsAlive(_baseTarget))
+            {
+                return _baseTarget;
+            }
+
+            return IsAlive(_playerTarget) ? _playerTarget : null;
+        }
+
+        private static bool IsAlive(Transform target)
+        {
+            if (target == null)
+            {
+                return false;
+            }
+
+            Component targetComponent =
+                target.GetComponent(typeof(IDamageable));
+            return targetComponent is IDamageable damageable && damageable.IsAlive;
         }
 
         private bool TryResolveReferences()
         {
-            if (_target == null)
+            if (_playerTarget == null)
             {
                 Debug.LogError("Player target was not found.", this);
                 return false;

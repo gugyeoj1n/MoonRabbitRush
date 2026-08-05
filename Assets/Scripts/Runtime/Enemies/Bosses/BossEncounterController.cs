@@ -59,7 +59,9 @@ namespace MoonRabbitRush.Enemies.Bosses
                 return;
             }
 
-            _activeBoss = _enemySpawner.Spawn(_bossPrefab);
+            _activeBoss = _enemySpawner.Spawn(
+                _bossPrefab,
+                _enemySpawner.PlayerTarget);
             BossSpawned?.Invoke(_activeBoss);
 
             if (_activeBoss?.Health != null)

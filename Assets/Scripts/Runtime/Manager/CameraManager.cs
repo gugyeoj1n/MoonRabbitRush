@@ -82,6 +82,7 @@ namespace MoonRabbitRush
         }
 
         public async UniTask ZoomInAsync(
+            Transform focusTarget,
             float sizeMultiplier,
             float duration,
             CancellationToken cancellationToken)
@@ -90,6 +91,11 @@ namespace MoonRabbitRush
             if (_playerCamera == null)
             {
                 return;
+            }
+
+            if (focusTarget != null)
+            {
+                _playerCamera.Target.TrackingTarget = focusTarget;
             }
 
             float startSize = _playerCamera.Lens.OrthographicSize;
@@ -116,6 +122,18 @@ namespace MoonRabbitRush
             }
 
             _playerCamera.Lens.OrthographicSize = targetSize;
+        }
+
+        public UniTask ZoomInAsync(
+            float sizeMultiplier,
+            float duration,
+            CancellationToken cancellationToken)
+        {
+            return ZoomInAsync(
+                null,
+                sizeMultiplier,
+                duration,
+                cancellationToken);
         }
 
         private void ResolveShakeTarget()

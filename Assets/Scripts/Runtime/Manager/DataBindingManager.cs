@@ -12,6 +12,8 @@ namespace MoonRabbitRush
         None = 0,
         PlayerHealth,
         PlayerMaxHealth,
+        BaseHealth,
+        BaseMaxHealth,
         PlayerExperience,
         PlayerMaxExperience,
         PlayerLevel,
