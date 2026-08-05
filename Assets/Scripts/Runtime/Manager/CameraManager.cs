@@ -1,3 +1,6 @@
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -76,6 +79,43 @@ namespace MoonRabbitRush
             _shakeFrequency = Mathf.Max(
                 _shakeFrequency,
                 frequency > 0f ? frequency : _defaultFrequency);
+        }
+
+        public async UniTask ZoomInAsync(
+            float sizeMultiplier,
+            float duration,
+            CancellationToken cancellationToken)
+        {
+            ResolveShakeTarget();
+            if (_playerCamera == null)
+            {
+                return;
+            }
+
+            float startSize = _playerCamera.Lens.OrthographicSize;
+            float targetSize = startSize * Mathf.Clamp(sizeMultiplier, 0.1f, 1f);
+
+            if (duration <= 0f)
+            {
+                _playerCamera.Lens.OrthographicSize = targetSize;
+                return;
+            }
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                elapsed += Time.unscaledDeltaTime;
+                float progress = Mathf.Clamp01(elapsed / duration);
+                float easedProgress = 1f - Mathf.Pow(1f - progress, 3f);
+                _playerCamera.Lens.OrthographicSize = Mathf.Lerp(
+                    startSize,
+                    targetSize,
+                    easedProgress);
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
+            }
+
+            _playerCamera.Lens.OrthographicSize = targetSize;
         }
 
         private void ResolveShakeTarget()

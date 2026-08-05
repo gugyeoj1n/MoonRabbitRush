@@ -5,6 +5,7 @@ namespace MoonRabbitRush.Core
         Playing,
         LevelUp,
         Paused,
+        Dying,
         GameOver
     }
 }
