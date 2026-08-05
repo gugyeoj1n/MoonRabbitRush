@@ -15,6 +15,9 @@ namespace MoonRabbitRush.Enemies.Bosses
         [SerializeField] private EnemySpawner _enemySpawner;
         [SerializeField] private EnemyActor _bossPrefab;
         [SerializeField] private WaveDirector _waveDirector;
+        [SerializeField, Min(0f)] private float _bossSpawnRadius = 5f;
+        [SerializeField, Min(0.01f)] private float _firstBossHealthMultiplier = 1f;
+        [SerializeField, Min(0f)] private float _healthMultiplierPerRound = 0.5f;
         [SerializeField, Min(0f)] private float _bossDeathShakeDuration = 1f;
         [SerializeField, Min(0f)] private float _bossDeathShakeAmplitude = 0.4f;
         [SerializeField, Min(0f)] private float _bossDeathShakeFrequency = 9f;
@@ -59,9 +62,23 @@ namespace MoonRabbitRush.Enemies.Bosses
                 return;
             }
 
-            _activeBoss = _enemySpawner.Spawn(
+            float healthMultiplier =
+                _firstBossHealthMultiplier +
+                Mathf.Max(0, _waveDirector.CurrentBossRound - 1) *
+                _healthMultiplierPerRound;
+            Camera worldCamera =
+                ManagerRoot.Instance?.CameraMaanger?.MainCamera;
+            Vector2 spawnCenter = worldCamera != null
+                ? worldCamera.transform.position
+                : _enemySpawner.PlayerTarget.position;
+            Vector2 spawnPosition =
+                spawnCenter +
+                UnityEngine.Random.insideUnitCircle * _bossSpawnRadius;
+            _activeBoss = _enemySpawner.SpawnAt(
                 _bossPrefab,
-                _enemySpawner.PlayerTarget);
+                _enemySpawner.PlayerTarget,
+                spawnPosition,
+                healthMultiplier);
             BossSpawned?.Invoke(_activeBoss);
 
             if (_activeBoss?.Health != null)

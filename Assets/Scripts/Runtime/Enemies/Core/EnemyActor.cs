@@ -75,6 +75,14 @@ namespace MoonRabbitRush.Enemies
             Transform target,
             PlayerLootCollector lootCollector)
         {
+            Initialize(target, lootCollector, 1f);
+        }
+
+        public void Initialize(
+            Transform target,
+            PlayerLootCollector lootCollector,
+            float healthMultiplier)
+        {
             if (_stats == null)
             {
                 Debug.LogError($"{nameof(EnemyStatsData)} is not assigned.", this);
@@ -87,7 +95,7 @@ namespace MoonRabbitRush.Enemies
                 return;
             }
 
-            _health.Initialize(_stats);
+            _health.Initialize(_stats, healthMultiplier);
             _motor.Initialize(_stats);
             Target = target;
             _lootCollector = lootCollector;
