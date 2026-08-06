@@ -6,37 +6,74 @@ namespace MoonRabbitRush
 {
     public class SoundManager : MonoBehaviour
     {
-        private static readonly Dictionary<Sound, string> ResourcePaths = new()
+        private static readonly Dictionary<Sound, List<string>> ResourcePaths = new()
         {
-            { Sound.PlayerHit, "Audio/SFX/SFX_PlayerHit" },
-            { Sound.PlayerDeath, "Audio/SFX/SFX_PlayerDeath" },
-            { Sound.EnemyHit, "Audio/SFX/SFX_EnemyHit" },
-            { Sound.EnemyDeath, "Audio/SFX/SFX_EnemyDeath" },
-            { Sound.BossAlert, "Audio/SFX/SFX_BossAlert" },
-            { Sound.LevelUp, "Audio/SFX/SFX_LevelUp" },
-            { Sound.WeaponFire, "Audio/SFX/SFX_WeaponFire" },
-            { Sound.UiClick, "Audio/SFX/SFX_UiClick" },
+            {
+                Sound.BGM,
+                new List<string>()
+                {
+                    "Audio/BGM/Start/Start_01", "Audio/BGM/Start/Start_02"
+                }
+            },
         };
 
-        private const int SfxSourcePoolSize = 8;
+        private Dictionary<AudioClip, Sound> _loadedClips = new Dictionary<AudioClip, Sound>();
+        private Dictionary<string, AudioClip> _clipCache = new Dictionary<string, AudioClip>();
 
-        private readonly Dictionary<Sound, AudioClip> _clipCache = new();
-        private readonly Dictionary<Sound, AudioClip> _registeredClips = new();
+        private const int SfxSourcePoolSize = 8;
 
         private AudioSource[] _sfxSources;
         private int _nextSourceIndex;
 
         private float _sfxVolume = 1f;
-
+        private float _bgmVolume = 1f;
         public float SfxVolume
         {
             get => _sfxVolume;
-            set => _sfxVolume = Mathf.Clamp01(value);
+            set
+            {
+                _sfxVolume = Mathf.Clamp01(value);
+                SetSFXVolume(_sfxVolume);
+            }
+        }
+
+        public float BgmVolume
+        {
+            get => _bgmVolume;
+            set
+            {
+                _bgmVolume = Mathf.Clamp01(value);
+                SetBGMVolume(_bgmVolume);
+            }
         }
 
         private void Awake()
         {
             InitializeSources();
+        }
+
+        private void SetBGMVolume(float bgmVolume)
+        {            
+            foreach (var source in _sfxSources)
+            {
+                if (source.clip != null && _loadedClips.TryGetValue(source.clip, out var sound))
+                {
+                    if (sound == Sound.BGM)
+                        source.volume = _bgmVolume;
+                }
+            }
+        }
+
+        private void SetSFXVolume(float sfxVolume)
+        {
+            foreach (var source in _sfxSources)
+            {
+                if (source.clip != null && _loadedClips.TryGetValue(source.clip, out var sound))
+                {
+                    if (sound == Sound.SFX)
+                        source.volume = _sfxVolume;
+                }
+            }
         }
 
         private void InitializeSources()
@@ -50,8 +87,21 @@ namespace MoonRabbitRush
 
                 _sfxSources[i] = source;
             }
-        }
 
+            foreach (var resource in ResourcePaths)
+            {
+                foreach (var source in resource.Value)
+                {
+                    var clip = Resources.Load<AudioClip>(source);
+                    if (clip != null)
+                    {
+                        _loadedClips[clip] = resource.Key;
+                        _clipCache[source] = clip;
+                    }
+                }
+            }
+        }
+        
         private AudioSource GetSource()
         {
             var source = _sfxSources[_nextSourceIndex];
@@ -61,12 +111,25 @@ namespace MoonRabbitRush
             return source;
         }
 
-        public void Play(Sound sound)
+        public void Play(string sound, bool playOnAwake = false)
         {
             Play(sound, 1f);
         }
 
-        public void Play(Sound sound, float volumeScale)
+        public void Stop(string sound)
+        {
+            if(!TryGetClip(sound, out var clip))
+                return;
+            foreach (var source in _sfxSources)
+            {
+                if (source.isPlaying && source.clip == clip)
+                {
+                    source.Stop();
+                }
+            }
+        }        
+
+        public void Play(string sound, float volumeScale)
         {
             if (!TryGetClip(sound, out var clip))
                 return;
@@ -77,53 +140,34 @@ namespace MoonRabbitRush
             source.PlayOneShot(clip, volume);
         }
 
-        public void Register(Sound sound, string resourcesPath)
+        public void PlayBGM(string sound, bool loop = true)
         {
-            if (sound == Sound.None)
-            {
-                Debug.LogError("[SoundManager] Cannot register Sound.None.");
+            if (!TryGetClip(sound, out var clip))
                 return;
-            }
 
-            if (string.IsNullOrWhiteSpace(resourcesPath))
-            {
-                Debug.LogError($"[SoundManager] Cannot register empty path for {sound}.");
-                return;
-            }
-
-            ResourcePaths[sound] = resourcesPath;
-            _clipCache.Remove(sound);
-            _registeredClips.Remove(sound);
+            var source = GetSource();
+            source.clip = clip;
+            source.loop = loop;
+            source.volume = _bgmVolume;
+            source.Play();
         }
 
-        private bool TryGetClip(Sound sound, out AudioClip clip)
+        private bool TryGetClip(string path, out AudioClip clip)
         {
-            if (_registeredClips.TryGetValue(sound, out clip))
+            if (_clipCache.TryGetValue(path, out clip))
             {
                 return true;
             }
 
-            if (_clipCache.TryGetValue(sound, out clip))
+            clip = Resources.Load<AudioClip>(path);
+            if (clip != null)
             {
+                _clipCache[path] = clip;
                 return true;
             }
 
-            if (!ResourcePaths.TryGetValue(sound, out var resourcesPath))
-            {
-                Debug.LogError($"[SoundManager] Unregistered sound: {sound}");
-                clip = null;
-                return false;
-            }
-
-            clip = Resources.Load<AudioClip>(resourcesPath);
-            if (clip == null)
-            {
-                Debug.LogError($"[SoundManager] Missing audio clip at Resources/{resourcesPath} for {sound}.");
-                return false;
-            }
-
-            _clipCache[sound] = clip;
-            return true;
-        }           
+            Debug.LogError($"[SoundManager] Audio clip not found at Resources/{path}");
+            return false;
+        }
     }
 }

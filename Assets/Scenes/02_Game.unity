@@ -552,7 +552,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b885aa24ccab43838c7e2bf23cba57ed, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.BaseHealthBarView
   _healthBarRoot: {fileID: 1954461589}
   _baseHealth: {fileID: 9200000003}
@@ -654,13 +654,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1133957634}
   - {fileID: 1951762628}
   - {fileID: 4873850590276001405}
   - {fileID: 781538832}
   - {fileID: 5450629467748011839}
   - {fileID: 6423792202442377730}
   - {fileID: 2897505281148018758}
+  - {fileID: 1133957634}
   - {fileID: 933883908}
   - {fileID: 1274428343}
   m_Father: {fileID: 0}
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1330,7 +1330,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1efe8e06ca94f0f89b26d1c2bdb95ce, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.BaseDirectionIndicator
   _iconRoot: {fileID: 1136572277}
   _directionArrow: {fileID: 1793901390}
@@ -1655,7 +1655,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2217,7 +2217,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2517,7 +2517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7507283269704746671, guid: 32aef3e56281e9848a2db87ea0402ae5, type: 3}
       propertyPath: m_Sprite
-      value:
+      value: 
       objectReference: {fileID: 21300000, guid: dc055720e60d6468f9a066a2c12de99c, type: 3}
     - target: {fileID: 7507283269704746671, guid: 32aef3e56281e9848a2db87ea0402ae5, type: 3}
       propertyPath: m_Color.b
@@ -2603,7 +2603,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cfea94cbbc84a1c8929b697289f5e3a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Items.WorldBuffSpawner
   _healingCarrotIcon: {fileID: 21300000, guid: 665b7977244e49129911fefa505a2dd1, type: 3}
   _rabbitJetpackIcon: {fileID: 21300000, guid: 9d3628e3b7734554b387c3f8bbd8212b, type: 3}
@@ -3706,6 +3706,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 740100000000000006, guid: 14c209ac268b4648afc00db8d3a80528, type: 3}
   m_PrefabInstance: {fileID: 9200000001}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796cb4b827ce4549948c84ce7b2fd75f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Defense.MoonBaseHealth
 --- !u!222 &351521362011174366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3885,7 +3891,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b53259ee26404f31b45adb1bdf23ea62, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.GameOverUIController
   _gameStateManager: {fileID: 4626767931489275137}
   _gameOverRoot: {fileID: 1274428342}
@@ -4159,6 +4165,7 @@ MonoBehaviour:
   _baseTarget: {fileID: 9200000002}
   _center: {x: 0, y: 0}
   _spawnRadius: 10
+  _cameraEdgePadding: 3
 --- !u!222 &3242020790767318288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5080,6 +5087,9 @@ MonoBehaviour:
   _enemySpawner: {fileID: 3062476927640098404}
   _bossPrefab: {fileID: 900100000000000006, guid: 8cc1fd80b14d447aa44ae12e9a536d2f, type: 3}
   _waveDirector: {fileID: 0}
+  _bossSpawnRadius: 5
+  _firstBossHealthMultiplier: 1
+  _healthMultiplierPerRound: 0.5
   _bossDeathShakeDuration: 1
   _bossDeathShakeAmplitude: 0.4
   _bossDeathShakeFrequency: 9
