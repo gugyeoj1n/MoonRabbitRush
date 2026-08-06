@@ -17,6 +17,8 @@ namespace MoonRabbitRush
         [SerializeField]
         private GameObject BtnClickToStart;
         [SerializeField]
+        private GameObject BtnSetting;
+        [SerializeField]
         private GameObject FadeObject;
         [SerializeField]
         private TextMeshProUGUI TextClickToStart;
@@ -41,6 +43,7 @@ namespace MoonRabbitRush
             BtnClickToStart.SetActive(false);
             BtnStart.SetActive(true);
             BtnHowToPlay.SetActive(true);
+            BtnSetting.SetActive(true);
         }
 
         public void OnClickSelectCharacter()
@@ -51,6 +54,11 @@ namespace MoonRabbitRush
         public void OnClickHowToPlay()
         {
 
+        }
+
+        public void OnClickSetting()
+        {
+            Manager.EnablePopup<PopupSetting>();
         }
 
         private async UniTaskVoid FadeInOutText()
