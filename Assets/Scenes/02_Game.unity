@@ -1625,6 +1625,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 666cd6797a4b9e4498d39f5e7db121c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.PopupGameOver
+  _scoreText: {fileID: 2131548918}
+  _survivalTimeText: {fileID: 1265670044}
+  _killCountText: {fileID: 970058994}
+  _homeButton: {fileID: 5104388154857045402}
+  _restartButton: {fileID: 966016895}
 --- !u!1 &1279584231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3965,12 +3970,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.UI.GameOverUIController
   _gameStateManager: {fileID: 4626767931489275137}
-  _gameOverRoot: {fileID: 1274428342}
-  _scoreText: {fileID: 2131548918}
-  _survivalTimeText: {fileID: 1265670044}
-  _killCountText: {fileID: 970058994}
-  _homeButton: {fileID: 5104388154857045402}
-  _restartButton: {fileID: 966016895}
 --- !u!1 &1011456540186398536
 GameObject:
   m_ObjectHideFlags: 0
