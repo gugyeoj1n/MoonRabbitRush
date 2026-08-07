@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 740100000000000002}
   - component: {fileID: 740100000000000003}
   - component: {fileID: 740100000000000004}
-  - component: {fileID: 740100000000000005}
   - component: {fileID: 740100000000000006}
+  - component: {fileID: 8013414649947136223}
   m_Layer: 0
   m_Name: PF_MoonBase
   m_TagString: Untagged
@@ -122,8 +122,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &740100000000000005
-BoxCollider2D:
+--- !u!114 &740100000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740100000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796cb4b827ce4549948c84ce7b2fd75f, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Defense.MoonBaseHealth
+  _maxHealth: 300
+  _spriteRenderer: {fileID: 740100000000000003}
+  _healthySprite: {fileID: 21300000, guid: 86e04136a5814a8f97919671296ea667, type: 3}
+  _damagedSprite: {fileID: 21300000, guid: 567257032bb74849bc55ea94960527c3, type: 3}
+  _criticalSprite: {fileID: 21300000, guid: 0ae9c531f3014bbba164d06c642151a3, type: 3}
+  _destroyedSprite: {fileID: 21300000, guid: 8d3cd50853ba431fa9ad63fa47cb9558, type: 3}
+--- !u!58 &8013414649947136223
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -156,33 +174,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.2}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.8984375, y: 4.8984375}
-    newSize: {x: 4.8984375, y: 4.8984375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 4.2, y: 3.2}
-  m_EdgeRadius: 0.25
---- !u!114 &740100000000000006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740100000000000001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 796cb4b827ce4549948c84ce7b2fd75f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Defense.MoonBaseHealth
-  _maxHealth: 300
-  _spriteRenderer: {fileID: 740100000000000003}
-  _healthySprite: {fileID: 21300000, guid: 86e04136a5814a8f97919671296ea667, type: 3}
-  _damagedSprite: {fileID: 21300000, guid: 567257032bb74849bc55ea94960527c3, type: 3}
-  _criticalSprite: {fileID: 21300000, guid: 0ae9c531f3014bbba164d06c642151a3, type: 3}
-  _destroyedSprite: {fileID: 21300000, guid: 8d3cd50853ba431fa9ad63fa47cb9558, type: 3}
+  m_Offset: {x: 0, y: 0.15}
+  m_Radius: 2.2
