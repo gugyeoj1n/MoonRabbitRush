@@ -19,6 +19,7 @@ namespace MoonRabbitRush
         PlayerLevel,
         MonsterRemain,
         Wave,
+        CameraShakeEnabled,
     }
     /// <summary>
     /// 외부 R3 패키지가 없더라도 동작하는 로컬 ObservableProperty 구현과
@@ -53,6 +54,47 @@ namespace MoonRabbitRush
         // R3의 IReactiveProperty<T> / ReactiveProperty<T>를 사용하는 바인딩 유틸
         // 이름으로 관리하는 정수형 ReactiveProperty 저장소
         static readonly Dictionary<Property, ReactiveProperty<int>> _intProperties = new Dictionary<Property, ReactiveProperty<int>>();
+        static readonly Dictionary<Property, ReactiveProperty<bool>> _boolProperties = new Dictionary<Property, ReactiveProperty<bool>>();
+
+        public static void Register(Property type, bool initialValue)
+        {
+            if (_boolProperties.TryGetValue(type, out var rp))
+            {
+                //rp.Value = initialValue;
+            }
+            else
+            {
+                var newRp = new ReactiveProperty<bool>(initialValue);
+                _boolProperties[type] = newRp;
+            }
+        }
+        
+
+        public static void BindToggle(Property type, Toggle toggle)
+        {
+            if (toggle == null) 
+                return;
+            ReactiveProperty<bool> property = null;
+            if (!_boolProperties.TryGetValue(type, out property))
+            {
+                property = new ReactiveProperty<bool>(false);
+                _boolProperties[type] = property;
+            }
+            toggle.isOn = property.Value;
+            // Toggle의 값이 변경될 때 ReactiveProperty에 반영
+            toggle.onValueChanged.AddListener(value =>
+            {
+                property.Value = value;
+            });
+            // ReactiveProperty의 값이 변경될 때 Toggle에 반영
+            property.Subscribe(value =>
+            {
+                if (toggle != null && toggle.isOn != value)
+                {
+                    toggle.isOn = value;
+                }
+            });
+        }
 
         /// <summary>
         /// 이름으로 ReactiveProperty<int>를 생성하거나 기존 항목의 값을 설정합니다.
@@ -88,6 +130,19 @@ namespace MoonRabbitRush
                 }
                 return true;
             }
+            if (_boolProperties.TryGetValue(type, out var property))
+            {
+                _boolProperties.Remove(type);
+                try
+                {
+                    (property as IDisposable)?.Dispose();
+                }
+                catch
+                {
+                    Debug.LogError("Property Dispose Error!");
+                }
+                return true;
+            }
             return false;
         }
 
@@ -103,6 +158,11 @@ namespace MoonRabbitRush
         public static bool TryGetProperty(Property type, out ReactiveProperty<int> property)
         {
             return _intProperties.TryGetValue(type, out property);
+        }
+
+        public static bool TryGetProperty(Property type, out ReactiveProperty<bool> property)
+        {
+            return _boolProperties.TryGetValue(type, out property);
         }
 
         /// <summary>
@@ -153,7 +213,18 @@ namespace MoonRabbitRush
         public static bool TryGetValue(Property type, out int value)
         {
             value = default;
-            if (TryGetProperty(type, out var p))
+            if (TryGetProperty(type, out ReactiveProperty<int> p))
+            {
+                value = p.Value;
+                return true;
+            }
+            return false;
+        }
+
+        public static bool TryGetValue(Property type, out bool value)
+        {
+            value = default;
+            if (TryGetProperty(type, out ReactiveProperty<bool> p))
             {
                 value = p.Value;
                 return true;
@@ -200,8 +271,8 @@ namespace MoonRabbitRush
         {
             void Refresh()
             {
-                TryGetValue(current, out var cur);
-                TryGetValue(max, out var total);
+                TryGetValue(current, out int cur);
+                TryGetValue(max, out int total);
 
                 slider.value = total == 0 ? 0f : (float)cur / total;
             }

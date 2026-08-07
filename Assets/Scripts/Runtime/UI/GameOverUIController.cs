@@ -57,7 +57,7 @@ namespace MoonRabbitRush.UI
             }
 
             RefreshResult();
-            _gameOverRoot.SetActive(true);
+            _gameOverRoot.SetActive(true);            
         }
 
         private void RefreshResult()

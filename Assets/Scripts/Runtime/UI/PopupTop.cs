@@ -1,6 +1,7 @@
-using System;
+using MoonRabbitRush.Core;
 using MoonRabbitRush.Enemies;
 using MoonRabbitRush.Enemies.Bosses;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,8 @@ namespace MoonRabbitRush
         private TextMeshProUGUI BossCurrentHpText;
         [SerializeField]
         private TextMeshProUGUI BossMaxHpText;
+        [SerializeField]
+        private GameStateManager _gameStateManager;
 
         private TextMeshProUGUI _expLabel;
         private GameObject _expDivider;
@@ -40,7 +43,6 @@ namespace MoonRabbitRush
         private int _requiredExperience;
         private int _currentLevel = 1;
 
-        // Register와 UnRegister는 UI말고 수정하는 곳에서 하도록 개선
         protected override void Awake()
         {
             base.Awake();
@@ -54,6 +56,7 @@ namespace MoonRabbitRush
         {
             ResolveBossEncounterController();
             SubscribeBossEvents();
+            _gameStateManager.StateChanged += HandleStateChanged;
         }
 
         private void Start()
@@ -74,6 +77,7 @@ namespace MoonRabbitRush
         {
             UnsubscribeBossEvents();
             UnbindBossHealth();
+            _gameStateManager.StateChanged -= HandleStateChanged;
         }
 
         private void OnDestroy()
@@ -277,6 +281,16 @@ namespace MoonRabbitRush
                     Mathf.Clamp01((float)_currentExperience / _requiredExperience)
                     * 100f);
             _expLabel.SetText("Lv. {0} ({1}%)", _currentLevel, percentage);
+        }
+
+        private void HandleStateChanged(InGameState previous, InGameState current)
+        {
+            if (current != InGameState.GameOver)
+            {
+                return;
+            }
+
+            gameObject.SetActive(false);
         }
     }
 }

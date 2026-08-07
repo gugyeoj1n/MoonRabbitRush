@@ -19,7 +19,7 @@ namespace MoonRabbitRush
                 Sound.SFX,
                 new List<string>()
                 {
-                    "Audio/SFX/Click/Click_01",
+                    "Audio/SFX/Click/Click_01","Audio/SFX/GameOver/GameOver_01",
                 }
             },
         };
@@ -146,6 +146,9 @@ namespace MoonRabbitRush
             float volume = Mathf.Clamp01(_sfxVolume * volumeScale);
 
             var source = GetSource();
+            if (source == null)
+                return;
+
             source.PlayOneShot(clip, volume);
         }
 
@@ -155,6 +158,9 @@ namespace MoonRabbitRush
                 return;
 
             var source = GetSource();
+            if (source == null)
+                return;
+
             source.clip = clip;
             source.loop = loop;
             source.volume = _bgmVolume;

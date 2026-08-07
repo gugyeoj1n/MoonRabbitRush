@@ -11,22 +11,41 @@ namespace MoonRabbitRush
         private Slider _sfxSlider;
         [SerializeField]
         private Slider _bgmSlider;
+        [SerializeField]
+        private Toggle _toggle;
+        [SerializeField]
+        private GameObject _cameraShakeOn;
+        [SerializeField]
+        private GameObject _cameraShakeOff;
         private CancellationTokenSource _tokenSource;
         private SoundManager _soundManager => ManagerRoot.Instance.SoundManager;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            DataBindingManager.Register(Property.CameraShakeEnabled, true);
+            DataBindingManager.BindToggle(Property.CameraShakeEnabled, _toggle);
+        }
 
         private void OnEnable()
         {
             _sfxSlider.value = _soundManager.SfxVolume;
             _bgmSlider.value = _soundManager.BgmVolume;
+            if (DataBindingManager.TryGetValue(Property.CameraShakeEnabled, out bool ison))
+                _toggle.isOn = ison;
 
+            _cameraShakeOn.SetActive(ison);
+            _cameraShakeOff.SetActive(!ison);
             _sfxSlider.onValueChanged.AddListener(OnSfxVolumeChanged);
             _bgmSlider.onValueChanged.AddListener(OnBgmVolumeChanged);
+            _toggle.onValueChanged.AddListener(OnToggleValueChanged);
         }
 
         private void OnDisable()
         {
             _sfxSlider.onValueChanged.RemoveListener(OnSfxVolumeChanged);
             _bgmSlider.onValueChanged.RemoveListener(OnBgmVolumeChanged);
+            _toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
         }
 
         private void OnSfxVolumeChanged(float value)
@@ -38,6 +57,13 @@ namespace MoonRabbitRush
         {
             _soundManager.BgmVolume = value;
         }        
+
+        private void OnToggleValueChanged(bool isOn)
+        {
+            _cameraShakeOn.SetActive(isOn);
+            _cameraShakeOff.SetActive(!isOn);
+        }
+
         public void OnClickResume()
         {
             OnClickClose();
