@@ -43,7 +43,6 @@ namespace MoonRabbitRush
         private int _requiredExperience;
         private int _currentLevel = 1;
 
-        // Register와 UnRegister는 UI말고 수정하는 곳에서 하도록 개선
         protected override void Awake()
         {
             base.Awake();
