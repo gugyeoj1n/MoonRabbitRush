@@ -122,6 +122,8 @@ namespace MoonRabbitRush
                 return;
             foreach (var source in _sfxSources)
             {
+                if (source == null)
+                    continue;
                 if (source.isPlaying && source.clip == clip)
                 {
                     source.Stop();
