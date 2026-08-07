@@ -54,7 +54,7 @@ namespace MoonRabbitRush
 
         public void OnClickHowToPlay()
         {
-
+            Manager.EnablePopup<PopupHowToPlay>();
         }
 
         public void OnClickSetting()
