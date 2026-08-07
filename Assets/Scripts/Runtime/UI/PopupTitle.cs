@@ -25,8 +25,9 @@ namespace MoonRabbitRush
         private Image[] ImgClickToStart;
 
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             ImgClickToStart = FadeObject.GetComponentsInChildren<Image>(true);
         }
 

@@ -11,8 +11,9 @@ namespace MoonRabbitRush
         [SerializeField]
         private Image FadeImage;
         private RectTransform rect;
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             rect = GetComponent<RectTransform>();
         }
 

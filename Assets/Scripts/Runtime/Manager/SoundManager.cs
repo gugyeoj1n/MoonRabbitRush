@@ -15,6 +15,13 @@ namespace MoonRabbitRush
                     "Audio/BGM/Start/Start_01", "Audio/BGM/Start/Start_02"
                 }
             },
+            {
+                Sound.SFX,
+                new List<string>()
+                {
+                    "Audio/SFX/Click/Click_01",
+                }
+            },
         };
 
         private Dictionary<AudioClip, Sound> _loadedClips = new Dictionary<AudioClip, Sound>();

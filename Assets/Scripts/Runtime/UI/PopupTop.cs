@@ -41,8 +41,9 @@ namespace MoonRabbitRush
         private int _currentLevel = 1;
 
         // Register와 UnRegister는 UI말고 수정하는 곳에서 하도록 개선
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             DataBindingManager.Register(Property.PlayerHealth, 100);
             DataBindingManager.Register(Property.PlayerMaxHealth, 100);
             CacheExperienceWidgets();
