@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3aa9ed1a7a6a4b4fa7b1ae839eafe425, type: 3}
   m_Name: SO_CharacterDefinition_CyberRabbit
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.CharacterData
-  _displayName: 메카래빗 네온
+  _displayName: 메카 토끼
   _portrait: {fileID: 21300000, guid: 1d0657fb73d8419eabf135760a8aff20, type: 3}
   _idleFrames:
   - {fileID: 8926563337254248322, guid: bb5574199f5bcb04e950e74c30cdaf1a, type: 3}
