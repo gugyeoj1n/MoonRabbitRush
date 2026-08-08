@@ -39,6 +39,12 @@ namespace MoonRabbitRush
         {
             ResolveShakeTarget();
 
+            if (!IsCameraShakeEnabled())
+            {
+                ResetShake();
+                return;
+            }
+
             if (_shakeDurationRemaining <= 0f)
             {
                 ResetShake();
@@ -67,7 +73,7 @@ namespace MoonRabbitRush
             float amplitude,
             float frequency = -1f)
         {
-            if (duration <= 0f || amplitude <= 0f)
+            if (!IsCameraShakeEnabled() || duration <= 0f || amplitude <= 0f)
             {
                 return;
             }
@@ -79,6 +85,14 @@ namespace MoonRabbitRush
             _shakeFrequency = Mathf.Max(
                 _shakeFrequency,
                 frequency > 0f ? frequency : _defaultFrequency);
+        }
+
+        private static bool IsCameraShakeEnabled()
+        {
+            return !DataBindingManager.TryGetValue(
+                       Property.CameraShakeEnabled,
+                       out bool isEnabled)
+                   || isEnabled;
         }
 
         public async UniTask ZoomInAsync(
