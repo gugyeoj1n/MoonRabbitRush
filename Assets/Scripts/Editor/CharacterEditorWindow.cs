@@ -193,6 +193,8 @@ namespace MoonRabbitRush.Editor.Characters
             EditorGUILayout.Space(8f);
             DrawDisplaySection();
             EditorGUILayout.Space(8f);
+            DrawAnimationSection();
+            EditorGUILayout.Space(8f);
             DrawGameplaySection();
             EditorGUILayout.Space(12f);
             DrawAssetSection();
@@ -300,6 +302,16 @@ namespace MoonRabbitRush.Editor.Characters
                 missingFields.Add("Starting Weapon");
             }
 
+            if (_selectedCharacter.IdleFrames == null
+                || _selectedCharacter.IdleFrames.Length == 0
+                || _selectedCharacter.MoveFrames == null
+                || _selectedCharacter.MoveFrames.Length == 0
+                || _selectedCharacter.DeathFrames == null
+                || _selectedCharacter.DeathFrames.Length == 0)
+            {
+                missingFields.Add("Animation Frames");
+            }
+
             EditorGUILayout.HelpBox(
                 $"Required fields: {string.Join(", ", missingFields)}",
                 MessageType.Error);
@@ -346,6 +358,23 @@ namespace MoonRabbitRush.Editor.Characters
                 EditorGUILayout.EndVertical();
                 EditorGUILayout.EndHorizontal();
             }
+        }
+
+        private void DrawAnimationSection()
+        {
+            EditorGUILayout.LabelField("Animation", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(
+                _serializedCharacter.FindProperty("_idleFrames"),
+                new GUIContent("Idle Frames"),
+                includeChildren: true);
+            EditorGUILayout.PropertyField(
+                _serializedCharacter.FindProperty("_moveFrames"),
+                new GUIContent("Move Frames"),
+                includeChildren: true);
+            EditorGUILayout.PropertyField(
+                _serializedCharacter.FindProperty("_deathFrames"),
+                new GUIContent("Death Frames"),
+                includeChildren: true);
         }
 
         private void DrawAssetSection()

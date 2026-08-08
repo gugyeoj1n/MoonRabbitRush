@@ -29,6 +29,10 @@ namespace MoonRabbitRush.Characters
 
             GetComponent<PlayerMovement>().Configure(CurrentCharacter.Stats);
             GetComponent<PlayerHealth>().Configure(CurrentCharacter.Stats);
+            GetComponentInChildren<PlayerSpriteAnimation>(true)?.Configure(
+                CurrentCharacter.IdleFrames,
+                CurrentCharacter.MoveFrames,
+                CurrentCharacter.DeathFrames);
             GetComponent<WeaponController>().ConfigureStartingWeapon(
                 CurrentCharacter.StartingWeapon);
         }

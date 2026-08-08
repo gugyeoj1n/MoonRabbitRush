@@ -34,6 +34,22 @@ namespace MoonRabbitRush.Player
             }
         }
 
+        public void Configure(
+            Sprite[] idleFrames,
+            Sprite[] moveFrames,
+            Sprite[] deathFrames)
+        {
+            _idleFrames = idleFrames;
+            _moveFrames = moveFrames;
+            _deathFrames = deathFrames;
+
+            if (_spriteRenderer != null && isActiveAndEnabled)
+            {
+                _currentFrames = null;
+                SetSequence(_idleFrames, _idleFrameRate);
+            }
+        }
+
         private void Awake()
         {
             _movement = GetComponentInParent<PlayerMovement>();

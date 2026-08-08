@@ -14,5 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.CharacterData
   _displayName: 달토끼
   _portrait: {fileID: 21300000, guid: 5f7d217c18524d58917ee1e48b4b4d06, type: 3}
+  _idleFrames:
+  - {fileID: -467307283419413426, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  - {fileID: -5258030014049578038, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  - {fileID: 6236088313408774587, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  - {fileID: -1461283530703516926, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  - {fileID: 9073950842162242612, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  - {fileID: 4245344421344247407, guid: 0b49d81bdab734b66836ce87b4d95dd0, type: 3}
+  _moveFrames:
+  - {fileID: 5783845613238359697, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: 3776925235656121009, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: -2038746532259067284, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: -8600767225393619908, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: 3902785190531141062, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: -4027534767478697367, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: -7256551667405853657, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  - {fileID: 214794443368172527, guid: 430fc31f052344d3884792ca42d37303, type: 3}
+  _deathFrames:
+  - {fileID: -8311989477641001193, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: 2405681977902352581, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: 1946927465861060226, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: 3584226132089610693, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: -3826548820387394334, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: -7930539339726357277, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: 4013463443799664908, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
+  - {fileID: -3147672871090789755, guid: 16ada23491cc28546a7ebc9a04c21ecf, type: 3}
   _stats: {fileID: 11400000, guid: 7430ca898ba22104bac23f54a37cf033, type: 2}
   _startingWeapon: {fileID: 11400000, guid: ce8a47ac94fc4e09b316680a35f2fc01, type: 2}
