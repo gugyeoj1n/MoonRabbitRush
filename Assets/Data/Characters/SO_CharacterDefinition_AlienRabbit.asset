@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aa9ed1a7a6a4b4fa7b1ae839eafe425, type: 3}
+  m_Name: SO_CharacterDefinition_AlienRabbit
+  m_EditorClassIdentifier: MoonRabbitRush.Runtime::MoonRabbitRush.Characters.CharacterData
+  _displayName: 별토끼 루미
+  _portrait: {fileID: -3815438097548954632, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  _idleFrames:
+  - {fileID: -3815438097548954632, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  - {fileID: 934915603172206728, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  - {fileID: 8632982032110329717, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  - {fileID: 1800280016078259849, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  - {fileID: -8195475452018424787, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  - {fileID: -3582449002100890053, guid: 002907ae826ce084ebc15a824df375ac, type: 3}
+  _moveFrames:
+  - {fileID: 2972971455293711216, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 9001534115272147615, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 1366826050995279722, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 8570442772571348145, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 429991671423672253, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 5214484301767946294, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: 8817350323383973864, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  - {fileID: -8496997898116809594, guid: dc9f9711fd027ee4685ead2fe3985e11, type: 3}
+  _deathFrames:
+  - {fileID: 4041201053070599357, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: -2757900922066390397, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: -5508575797729979261, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: -6673739594806439795, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: -8437294986269686151, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: 7303606433249023737, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: 5944320115713866145, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  - {fileID: -8896457408537510986, guid: 29724a18a739a36478436647bb2e85bf, type: 3}
+  _stats: {fileID: 11400000, guid: ee40068a9b114673be8ba548c2c8d8fc, type: 2}
+  _startingWeapon: {fileID: 11400000, guid: e25f13a9df1a43efa7dc1f26a36ecac8, type: 2}
